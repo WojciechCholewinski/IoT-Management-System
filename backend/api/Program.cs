@@ -1,5 +1,7 @@
 using api;
 using api.Entities;
+using api.Services;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,11 @@ builder.Services.AddControllers();
 
 builder.Services.AddDbContext<IoT_DbContext>();
 builder.Services.AddScoped<ApiSeeder>();
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+builder.Services.AddScoped<IDeviceService, DeviceService>();
+
+
 
 var app = builder.Build();
 
