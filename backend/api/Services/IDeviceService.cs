@@ -5,6 +5,6 @@ namespace api.Services
 {
     public interface IDeviceService
     {
-        public ActionResult<IEnumerable<DeviceDto>> GetAll();
+        IEnumerable<DeviceDto> GetAll();
     }
 }

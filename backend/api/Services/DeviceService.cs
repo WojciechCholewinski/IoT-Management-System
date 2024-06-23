@@ -16,7 +16,7 @@ namespace api.Services
             _dbContext = dbContext;
             _mapper = mapper;
         }
-        public ActionResult<IEnumerable<DeviceDto>> GetAll()
+        public IEnumerable<DeviceDto> GetAll()
         {
             var devices = 
                 _dbContext
