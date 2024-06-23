@@ -12,6 +12,14 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<IoT_DbContext>();
 builder.Services.AddScoped<ApiSeeder>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontendClient", builder =>
+        builder.AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowAnyOrigin()
+        );
+});
 
 builder.Services.AddScoped<IDeviceService, DeviceService>();
 
@@ -20,6 +28,8 @@ builder.Services.AddScoped<IDeviceService, DeviceService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+app.UseCors("FrontendClient");
 
 var scope = app.Services.CreateScope();
 var seeder = scope.ServiceProvider.GetRequiredService<ApiSeeder>();
