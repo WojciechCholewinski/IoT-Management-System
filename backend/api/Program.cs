@@ -20,6 +20,7 @@ builder.Services.AddCors(options =>
         .AllowAnyOrigin()
         );
 });
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IDeviceService, DeviceService>();
 
@@ -36,6 +37,12 @@ var seeder = scope.ServiceProvider.GetRequiredService<ApiSeeder>();
 seeder.Seed();
 
 app.UseHttpsRedirection();
+
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "IoT API");
+});
 
 app.UseAuthorization();
 
