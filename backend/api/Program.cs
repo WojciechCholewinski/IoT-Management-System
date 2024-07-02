@@ -23,7 +23,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IDeviceService, DeviceService>();
-
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 
 var app = builder.Build();

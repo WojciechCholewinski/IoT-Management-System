@@ -16,6 +16,14 @@ namespace api
         {
             if (_dbContext.Database.CanConnect())
             {
+                if (!_dbContext.Roles.Any())
+                {
+                    var roles = GetRoles();
+                    _dbContext.Roles.AddRange(roles);
+
+                    _dbContext.SaveChanges();
+                }
+
                 if (!_dbContext.Devices.Any())
                 {
                     SeedLocations();
@@ -46,6 +54,15 @@ namespace api
             }
         }
 
+        private IEnumerable<Role> GetRoles()
+        {
+            var roles = new List<Role>()
+            {
+                new Role { Name = "Admin" },
+                new Role { Name = "User" }
+            };
+            return roles; 
+        }
         private IEnumerable<Device> GetDevices()
         {
             var myRoom = _dbContext.LocationTypes.FirstOrDefault(l => l.Name == "My room");
