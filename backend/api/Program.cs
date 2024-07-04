@@ -1,6 +1,11 @@
 using api;
 using api.Entities;
+using api.Models;
+using api.Models.Validators;
 using api.Services;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Identity;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,9 +13,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+// Enables automatic validation of models using FluentValidation:
+builder.Services.AddFluentValidationAutoValidation();
+// Registers FluentValidation client-side adapters for integration with client-side validation:
+builder.Services.AddFluentValidationClientsideAdapters();
 
 builder.Services.AddDbContext<IoT_DbContext>();
 builder.Services.AddScoped<ApiSeeder>();
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddCors(options =>
 {
