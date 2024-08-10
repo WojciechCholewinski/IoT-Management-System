@@ -425,3 +425,14 @@ mobile/ios/Flutter/flutter_export_environment.sh
 mobile/ios/Flutter/Generated.xcconfig
 mobile/ios/Runner/GeneratedPluginRegistrant.h
 mobile/ios/Runner/GeneratedPluginRegistrant.m
+
+mobile/linux/flutter/generated_plugin_registrant.cc
+mobile/linux/flutter/generated_plugins.cmake
+mobile/macos/flutter/GeneratedPluginRegistrant.swift
+mobile/windows/flutter/generated_plugin_registrant.cc
+mobile/windows/flutter/generated_plugins.cmake
+
+flutter/**/Generated*
+Flutter/**/Generated*
+flutter/**/generated*
+Flutter/**/generated*
