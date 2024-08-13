@@ -295,6 +295,57 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'pl': 'Home',
     },
   },
+  // Settings
+  {
+    's8y4qas9': {
+      'en': 'Michał Kowalski',
+      'pl': 'Michał Kowalski',
+    },
+    'fuxxrqyb': {
+      'en': 'michal@domainname.com',
+      'pl': 'michal@domainname.com',
+    },
+    'c0nxkpd6': {
+      'en': 'Change Name',
+      'pl': 'Zmień nazwę',
+    },
+    '302zxkxl': {
+      'en': 'Change Password',
+      'pl': 'Zmień hasło',
+    },
+    'kgk1oke7': {
+      'en': 'Account Settings',
+      'pl': 'Ustawienia konta',
+    },
+    'mptimmco': {
+      'en': 'Light ',
+      'pl': 'Jasny',
+    },
+    'rv4mlumu': {
+      'en': 'Dark',
+      'pl': 'Ciemny',
+    },
+    'syhnp2eh': {
+      'en': 'Follow us on',
+      'pl': 'Zaobserwuj nas na',
+    },
+    's7fufo0f': {
+      'en': 'App Version',
+      'pl': 'Wersja aplikacji',
+    },
+    '83pndnwh': {
+      'en': 'v0.0.1',
+      'pl': 'v0.0.1',
+    },
+    'gr0jjko0': {
+      'en': 'Log Out',
+      'pl': 'Wyloguj',
+    },
+    'kn4hai48': {
+      'en': 'Account',
+      'pl': 'Konto',
+    },
+  },
   // Miscellaneous
   {
     'knrdk3vc': {
