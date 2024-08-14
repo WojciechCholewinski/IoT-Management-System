@@ -173,59 +173,123 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'pl': 'Strona główna',
     },
   },
-  // ScenesandAutomations
+  // Dashboard
   {
-    '9bfk1yj7': {
-      'en': 'Typ akcji',
-      'pl': 'Typ akcji',
+    'bu43kf6r': {
+      'en': 'Devices',
+      'pl': 'Urządzenia',
     },
-    'opo3f2y4': {
-      'en': 'Wybierz',
-      'pl': 'Wybierz',
+    '93rethis': {
+      'en': 'Items',
+      'pl': 'Przykłady',
     },
-    'r1h7izzx': {
-      'en': 'Scena',
-      'pl': 'Scena',
+    'plzrdals': {
+      'en': 'Desk Lighting',
+      'pl': 'Oświetlenie biurka',
     },
-    '5cz301xj': {
-      'en': 'Film',
-      'pl': 'Film',
+    '3zxte3fr': {
+      'en': 'Hallway Lighting',
+      'pl': 'Oświetlenie korytarza',
     },
-    'qdfa3e53': {
-      'en': 'ON',
-      'pl': 'ON',
+    'p4qmuu1o': {
+      'en': 'Under Lighting',
+      'pl': 'Podświetlenie',
     },
-    'du5oa7fg': {
-      'en': 'Scena',
-      'pl': 'Scena',
+    'g6pnozgc': {
+      'en': 'Kitchen Lighting',
+      'pl': 'Oświetlenie - kuchnia',
     },
-    '4gtc7jyb': {
-      'en': 'Noc',
-      'pl': 'Noc',
+    '6mf7cfze': {
+      'en': 'Drawer Lock',
+      'pl': 'Zamek',
     },
-    'lglza26m': {
-      'en': 'OFF',
-      'pl': 'OFF',
+    'qlnw92vr': {
+      'en': 'Roller Blinds - W',
+      'pl': 'Rolety - W',
     },
-    'dl0rseez': {
-      'en': 'Automatyzacja',
-      'pl': 'Automatyzacja',
+    'c8yobyvg': {
+      'en': 'Roller Blinds - M',
+      'pl': 'Rolety - M',
     },
-    'c9isfkq2': {
-      'en': 'Poranek',
+    'f71vzcfj': {
+      'en': 'Roller Blinds - D',
+      'pl': 'Rolety - D',
+    },
+    '7vcccpii': {
+      'en': 'Air Conditioner',
+      'pl': 'Klimatyzacja',
+    },
+    'bxfg1fql': {
+      'en': 'Air Purifier',
+      'pl': 'Oczyszczacz powietrza',
+    },
+    '7b571fjt': {
+      'en': 'Soil Moisture',
+      'pl': 'Wilgotność gleby',
+    },
+    'v57gv5ne': {
+      'en': 'Temperature',
+      'pl': 'Temperatura',
+    },
+    'jt4uj0mr': {
+      'en': 'Automations',
+      'pl': 'Automatyzacje',
+    },
+    '549pvf1t': {
+      'en': 'Categories',
+      'pl': 'Kategorie',
+    },
+    'wuotgig8': {
+      'en': 'Morning',
       'pl': 'Poranek',
     },
-    'pj9nmc76': {
-      'en': 'OFF',
-      'pl': 'OFF',
+    '4wlnwox5': {
+      'en': 'Night',
+      'pl': 'Noc',
     },
-    'y7assae8': {
-      'en': 'IoT menager',
-      'pl': 'IoT menager',
+    'maf2os6u': {
+      'en': 'Plants',
+      'pl': 'Rośliny',
     },
-    'f2ogag63': {
-      'en': 'Home',
-      'pl': 'Home',
+    '8x0mj5ui': {
+      'en': 'Welcome Home',
+      'pl': 'Witaj w domu',
+    },
+    'ehhwxzv4': {
+      'en': 'Wardrobe Lighting',
+      'pl': 'Oświetlenie szafy',
+    },
+    'fsep9m08': {
+      'en': 'Kitchen Lighting',
+      'pl': 'Oświetlenie -kuchnia',
+    },
+    'erg0mogz': {
+      'en': 'Scenes',
+      'pl': 'Sceny',
+    },
+    'i6bei8ge': {
+      'en': 'Categories',
+      'pl': 'Kategorie',
+    },
+    'migymr3q': {
+      'en': 'Movie',
+      'pl': 'Film',
+    },
+    '4gx722hc': {
+      'en': 'Study Mode',
+      'pl': 'Tryb nauki',
+    },
+    'ullzwey1': {
+      'en': 'All Blinds',
+      'pl': 'Wszystkie rolety',
+    },
+    'min55hm8': {
+      'en': 'Devices',
+      'pl': 'Urządzenia',
+    },
+    'goel5txg': {
+      'en': 'Menu',
+      'pl': 'Menu',
     },
   },
   // RegisterPage

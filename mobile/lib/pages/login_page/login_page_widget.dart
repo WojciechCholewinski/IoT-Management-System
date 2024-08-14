@@ -456,7 +456,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     0.0, 16.0, 0.0, 0.0),
                                 child: ShteyButtonWidget(
                                   onPressed: () async {
-                                    context.pushNamed('ScenesandAutomations');
+                                    context.pushNamed('Dashboard');
                                   },
                                   text: ShteyLocalizations.of(context).getText(
                                     '9hrm2ep9' /* Zaloguj się */,

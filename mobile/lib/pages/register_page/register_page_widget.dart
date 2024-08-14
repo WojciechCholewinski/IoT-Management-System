@@ -595,7 +595,7 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                                     0.0, 16.0, 0.0, 0.0),
                                 child: ShteyButtonWidget(
                                   onPressed: () async {
-                                    context.pushNamed('ScenesandAutomations');
+                                    context.pushNamed('Dashboard');
                                   },
                                   text: ShteyLocalizations.of(context).getText(
                                     '9gw170iv' /* Utwórz konto */,

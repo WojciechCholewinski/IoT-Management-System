@@ -42,9 +42,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const LoginPageWidget(),
         ),
         ShteyRoute(
-          name: 'ScenesandAutomations',
-          path: '/scenesandAutomations',
-          builder: (context, params) => const ScenesandAutomationsWidget(),
+          name: 'Dashboard',
+          path: '/dashboard',
+          builder: (context, params) => const DashboardWidget(),
         ),
         ShteyRoute(
           name: 'Settings',
