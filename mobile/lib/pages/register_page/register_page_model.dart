@@ -1,4 +1,4 @@
-import '../../app_ui/util.dart';
+import '/app_ui/util.dart';
 import 'register_page_widget.dart' show RegisterPageWidget;
 import 'package:flutter/material.dart';
 

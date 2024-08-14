@@ -1,4 +1,4 @@
-import '../../app_ui/util.dart';
+import '/app_ui/util.dart';
 import 'login_page_widget.dart' show LoginPageWidget;
 import 'package:flutter/material.dart';
 

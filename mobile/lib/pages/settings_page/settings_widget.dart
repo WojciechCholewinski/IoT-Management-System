@@ -1,8 +1,8 @@
-import '../../app_ui/animations.dart';
-import '../../app_ui/icon_button.dart';
-import '../../app_ui/theme.dart';
-import '../../app_ui/util.dart';
-import '../../app_ui/widgets.dart';
+import '/app_ui/animations.dart';
+import '/app_ui/icon_button.dart';
+import '/app_ui/theme.dart';
+import '/app_ui/util.dart';
+import '/app_ui/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -287,7 +287,7 @@ class _SettingsWidgetState extends State<SettingsWidget>
                   size: 30.0,
                 ),
                 onPressed: () async {
-                  context.pop();
+                  context.pushNamed('Dashboard');
                 },
               ),
             ),
@@ -822,8 +822,8 @@ class _SettingsWidgetState extends State<SettingsWidget>
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 1.0, 0.0, 0.0),
                               child: ShteyButtonWidget(
-                                onPressed: () {
-                                  print('Button pressed ...');
+                                onPressed: () async {
+                                  context.pushNamed('RegisterPage');
                                 },
                                 text: ShteyLocalizations.of(context).getText(
                                   'gr0jjko0' /* Log Out */,

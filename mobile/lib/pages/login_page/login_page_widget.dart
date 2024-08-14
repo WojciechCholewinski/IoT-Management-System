@@ -1,6 +1,6 @@
-import '../../app_ui/theme.dart';
-import '../../app_ui/util.dart';
-import '../../app_ui/widgets.dart';
+import '/app_ui/theme.dart';
+import '/app_ui/util.dart';
+import '/app_ui/widgets.dart';
 import 'package:flutter/material.dart';
 import 'login_page_model.dart';
 export 'login_page_model.dart';
@@ -68,18 +68,16 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                       child: Material(
                         color: Colors.transparent,
                         elevation: 0.0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
+                        shape: const CircleBorder(),
                         child: Container(
-                          width: 48.0,
-                          height: 48.0,
+                          width: 81.0,
+                          height: 81.0,
                           decoration: BoxDecoration(
                             color: IoT_Theme.of(context).secondaryBackground,
                             image: DecorationImage(
                               fit: BoxFit.cover,
                               image: Image.asset(
-                                'assets/images/1.png',
+                                'assets/images/logo.png',
                               ).image,
                             ),
                             boxShadow: const [
@@ -93,7 +91,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                 spreadRadius: 0.0,
                               )
                             ],
-                            borderRadius: BorderRadius.circular(12.0),
+                            shape: BoxShape.circle,
                           ),
                         ),
                       ),
@@ -169,7 +167,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                 child: Text(
                                               ShteyLocalizations.of(context)
                                                   .getText(
-                                                'dmahbs2t' /* Email */,
+                                                'dmahbs2t' /* E-mail */,
                                               ),
                                               style: IoT_Theme.of(context)
                                                   .bodyMedium
@@ -207,7 +205,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                               hintText:
                                                   ShteyLocalizations.of(context)
                                                       .getText(
-                                                'fdv4wylj' /* Adres e-mail */,
+                                                'fdv4wylj' /* E-mail */,
                                               ),
                                               hintStyle: IoT_Theme.of(context)
                                                   .bodyMedium
@@ -439,7 +437,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                 child: SelectionArea(
                                     child: Text(
                                   ShteyLocalizations.of(context).getText(
-                                    'ivvfx7ad' /* Nie pamiętasz hasła? */,
+                                    'ivvfx7ad' /* Forgot password? */,
                                   ),
                                   style: IoT_Theme.of(context)
                                       .bodyMedium
@@ -459,7 +457,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     context.pushNamed('Dashboard');
                                   },
                                   text: ShteyLocalizations.of(context).getText(
-                                    '9hrm2ep9' /* Zaloguj się */,
+                                    '9hrm2ep9' /* Sign in */,
                                   ),
                                   options: ShteyButtonOptions(
                                     width: double.infinity,
@@ -517,7 +515,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Image.network(
-                                              'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png',
+                                              'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1024px-Google_%22G%22_logo.svg.png',
                                               width: 24.0,
                                               height: 24.0,
                                               fit: BoxFit.cover,
@@ -566,7 +564,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           SelectionArea(
                               child: Text(
                             ShteyLocalizations.of(context).getText(
-                              'rzhq191w' /* Nie masz konta?  */,
+                              'rzhq191w' /* Don't have an account? */,
                             ),
                             style: IoT_Theme.of(context).bodyMedium.override(
                                   fontFamily: 'Inter',
@@ -579,7 +577,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               context.pushNamed('RegisterPage');
                             },
                             text: ShteyLocalizations.of(context).getText(
-                              'vkwuasvj' /* Zarejestruj się */,
+                              'vkwuasvj' /* Sign up */,
                             ),
                             options: ShteyButtonOptions(
                               height: 40.0,

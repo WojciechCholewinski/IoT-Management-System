@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '/index.dart';
-import '../util.dart';
+import '/main.dart';
+import '/app_ui/util.dart';
 
 export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
@@ -44,12 +45,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         ShteyRoute(
           name: 'Dashboard',
           path: '/dashboard',
-          builder: (context, params) => const DashboardWidget(),
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'Dashboard')
+              : const DashboardWidget(),
         ),
         ShteyRoute(
           name: 'Settings',
           path: '/settings',
-          builder: (context, params) => const SettingsWidget(),
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'Settings')
+              : const SettingsWidget(),
         ),
         ShteyRoute(
           name: 'RegisterPage',

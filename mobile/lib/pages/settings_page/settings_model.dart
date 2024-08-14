@@ -1,4 +1,4 @@
-import '../../app_ui/util.dart';
+import '/app_ui/util.dart';
 import 'settings_widget.dart' show SettingsWidget;
 import 'package:flutter/material.dart';
 

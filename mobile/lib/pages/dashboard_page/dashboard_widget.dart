@@ -1,8 +1,8 @@
-import '../../app_ui/button_tabbar.dart';
-import '../../app_ui/icon_button.dart';
-import '../../app_ui/theme.dart';
-import '../../app_ui/toggle_icon.dart';
-import '../../app_ui/util.dart';
+import '/app_ui/button_tabbar.dart';
+import '/app_ui/icon_button.dart';
+import '/app_ui/theme.dart';
+import '/app_ui/toggle_icon.dart';
+import '/app_ui/util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dashboard_model.dart';
@@ -72,21 +72,24 @@ class _DashboardWidgetState extends State<DashboardWidget>
             ),
           ),
         ),
-        appBar: AppBar(
-          backgroundColor: IoT_Theme.of(context).secondaryBackground,
-          automaticallyImplyLeading: false,
-          title: Text(
-            ShteyLocalizations.of(context).getText(
-              'min55hm8' /* Urządzenia */,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(40.0),
+          child: AppBar(
+            backgroundColor: IoT_Theme.of(context).secondaryBackground,
+            automaticallyImplyLeading: false,
+            title: Text(
+              ShteyLocalizations.of(context).getText(
+                'min55hm8' /* Devices */,
+              ),
+              style: IoT_Theme.of(context).titleLarge.override(
+                    fontFamily: 'Inter',
+                    letterSpacing: 0.0,
+                  ),
             ),
-            style: IoT_Theme.of(context).titleLarge.override(
-                  fontFamily: 'Inter',
-                  letterSpacing: 0.0,
-                ),
+            actions: const [],
+            centerTitle: false,
+            elevation: 0.0,
           ),
-          actions: const [],
-          centerTitle: false,
-          elevation: 0.0,
         ),
         body: Column(
           mainAxisSize: MainAxisSize.max,

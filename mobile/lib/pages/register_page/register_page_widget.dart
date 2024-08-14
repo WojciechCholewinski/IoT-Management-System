@@ -1,6 +1,6 @@
-import '../../app_ui/theme.dart';
-import '../../app_ui/util.dart';
-import '../../app_ui/widgets.dart';
+import '/app_ui/theme.dart';
+import '/app_ui/util.dart';
+import '/app_ui/widgets.dart';
 import 'package:flutter/material.dart';
 import 'register_page_model.dart';
 export 'register_page_model.dart';
@@ -71,18 +71,16 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                       child: Material(
                         color: Colors.transparent,
                         elevation: 0.0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
+                        shape: const CircleBorder(),
                         child: Container(
-                          width: 48.0,
-                          height: 48.0,
+                          width: 81.0,
+                          height: 81.0,
                           decoration: BoxDecoration(
                             color: IoT_Theme.of(context).secondaryBackground,
                             image: DecorationImage(
                               fit: BoxFit.cover,
                               image: Image.asset(
-                                'assets/images/1.png',
+                                'assets/images/logo.png',
                               ).image,
                             ),
                             boxShadow: const [
@@ -96,7 +94,7 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                                 spreadRadius: 0.0,
                               )
                             ],
-                            borderRadius: BorderRadius.circular(12.0),
+                            shape: BoxShape.circle,
                           ),
                         ),
                       ),
@@ -210,7 +208,7 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                                               hintText:
                                                   ShteyLocalizations.of(context)
                                                       .getText(
-                                                'e27ubjzv' /* Adres e-mail */,
+                                                'e27ubjzv' /* E-mail */,
                                               ),
                                               hintStyle: IoT_Theme.of(context)
                                                   .bodyMedium
@@ -295,7 +293,7 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                                                   child: Text(
                                                 ShteyLocalizations.of(context)
                                                     .getText(
-                                                  'u60wusr5' /* Hasło */,
+                                                  'u60wusr5' /* Password */,
                                                 ),
                                                 style: IoT_Theme.of(context)
                                                     .bodyMedium
@@ -449,7 +447,7 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                                                   child: Text(
                                                 ShteyLocalizations.of(context)
                                                     .getText(
-                                                  'pm08xcwv' /* Powtórz hasło */,
+                                                  'pm08xcwv' /* Confirm password */,
                                                 ),
                                                 style: IoT_Theme.of(context)
                                                     .bodyMedium
@@ -595,10 +593,10 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                                     0.0, 16.0, 0.0, 0.0),
                                 child: ShteyButtonWidget(
                                   onPressed: () async {
-                                    context.pushNamed('Dashboard');
+                                    context.pushNamed('LoginPage');
                                   },
                                   text: ShteyLocalizations.of(context).getText(
-                                    '9gw170iv' /* Utwórz konto */,
+                                    '9gw170iv' /* Sign up */,
                                   ),
                                   options: ShteyButtonOptions(
                                     width: double.infinity,
@@ -641,7 +639,7 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                           SelectionArea(
                               child: Text(
                             ShteyLocalizations.of(context).getText(
-                              'whvx2see' /* Masz już konto? */,
+                              'whvx2see' /* Already have an account? */,
                             ),
                             style: IoT_Theme.of(context).bodyMedium.override(
                                   fontFamily: 'Inter',
@@ -657,7 +655,7 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                                 context.pushNamed('LoginPage');
                               },
                               text: ShteyLocalizations.of(context).getText(
-                                'mjxxmjno' /* Zaloguj się */,
+                                'mjxxmjno' /* Sign in */,
                               ),
                               options: ShteyButtonOptions(
                                 height: 40.0,
