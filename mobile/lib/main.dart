@@ -62,7 +62,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Aiomee',
+      title: 'Aiomee - with API',
       localizationsDelegates: const [
         ShteyLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
