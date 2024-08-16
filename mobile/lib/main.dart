@@ -138,6 +138,10 @@ class _NavBarPageState extends State<NavBarPage> {
               Icons.format_list_bulleted_rounded,
               size: 24.0,
             ),
+            activeIcon: const Icon(
+              Icons.format_list_bulleted_rounded,
+              size: 30.0,
+            ),
             label: ShteyLocalizations.of(context).getText(
               'goel5txg' /* Menu */,
             ),
@@ -147,6 +151,10 @@ class _NavBarPageState extends State<NavBarPage> {
             icon: const Icon(
               Icons.account_circle_outlined,
               size: 24.0,
+            ),
+            activeIcon: const Icon(
+              Icons.account_circle_outlined,
+              size: 30.0,
             ),
             label: ShteyLocalizations.of(context).getText(
               'kn4hai48' /* Account */,

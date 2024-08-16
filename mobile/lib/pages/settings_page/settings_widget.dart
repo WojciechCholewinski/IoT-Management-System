@@ -1,5 +1,6 @@
 import '/app_ui/animations.dart';
 import '/app_ui/icon_button.dart';
+import '/app_ui/language_selector.dart';
 import '/app_ui/theme.dart';
 import '/app_ui/util.dart';
 import '/app_ui/widgets.dart';
@@ -190,6 +191,26 @@ class _SettingsWidgetState extends State<SettingsWidget>
           ),
         ],
       ),
+      'containerOnPageLoadAnimation5': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          VisibilityEffect(duration: 300.ms),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 300.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 300.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(0.0, 60.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
       'textOnPageLoadAnimation3': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
         effectsBuilder: () => [
@@ -214,6 +235,44 @@ class _SettingsWidgetState extends State<SettingsWidget>
         trigger: AnimationTrigger.onPageLoad,
         effectsBuilder: () => [
           VisibilityEffect(duration: 300.ms),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 300.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 300.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(0.0, 60.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'textOnPageLoadAnimation4': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 300.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 300.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(0.0, 60.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'textOnPageLoadAnimation5': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
           FadeEffect(
             curve: Curves.easeInOut,
             delay: 300.0.ms,
@@ -297,193 +356,81 @@ class _SettingsWidgetState extends State<SettingsWidget>
         ),
         body: SafeArea(
           top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Card(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                color: IoT_Theme.of(context).primary,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50.0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(60.0),
-                    child: Image.network(
-                      'https://pics.png',
-                      width: 100.0,
-                      height: 100.0,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ).animateOnPageLoad(animationsMap['cardOnPageLoadAnimation']!),
-              Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
-                child: Text(
-                  ShteyLocalizations.of(context).getText(
-                    's8y4qas9' /* Michał Kowalski */,
-                  ),
-                  style: IoT_Theme.of(context).headlineSmall.override(
-                        fontFamily: 'Readex Pro',
-                        letterSpacing: 0.0,
-                      ),
-                ).animateOnPageLoad(animationsMap['textOnPageLoadAnimation1']!),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                child: Text(
-                  ShteyLocalizations.of(context).getText(
-                    'fuxxrqyb' /* michal@domainname.com */,
-                  ),
-                  style: IoT_Theme.of(context).titleSmall.override(
-                        fontFamily: 'Inter',
-                        color: IoT_Theme.of(context).secondary,
-                        letterSpacing: 0.0,
-                      ),
-                ).animateOnPageLoad(animationsMap['textOnPageLoadAnimation2']!),
-              ),
-              Divider(
-                height: 44.0,
-                thickness: 1.0,
-                indent: 24.0,
-                endIndent: 24.0,
-                color: IoT_Theme.of(context).alternate,
-              ).animateOnPageLoad(animationsMap['dividerOnPageLoadAnimation']!),
-              Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: IoT_Theme.of(context).secondaryBackground,
-                    borderRadius: BorderRadius.circular(12.0),
-                    border: Border.all(
-                      color: IoT_Theme.of(context).alternate,
-                      width: 2.0,
-                    ),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Card(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  color: IoT_Theme.of(context).primary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50.0),
                   ),
                   child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        8.0, 12.0, 8.0, 12.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              8.0, 0.0, 0.0, 0.0),
-                          child: Icon(
-                            Icons.account_circle_outlined,
-                            color: IoT_Theme.of(context).primaryText,
-                            size: 24.0,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              12.0, 0.0, 0.0, 0.0),
-                          child: Text(
-                            ShteyLocalizations.of(context).getText(
-                              'c0nxkpd6' /* Change Name */,
-                            ),
-                            style: IoT_Theme.of(context).bodyMedium.override(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0.0,
-                                ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Align(
-                            alignment: const AlignmentDirectional(1.0, 0.0),
-                            child: Icon(
-                              Icons.chevron_right_rounded,
-                              color: IoT_Theme.of(context).secondaryText,
-                              size: 24.0,
-                            ),
-                          ),
-                        ),
-                      ],
+                    padding: const EdgeInsets.all(2.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(60.0),
+                      child: Image.asset(
+                        'assets/images/ProfilePhoto.png',
+                        width: 100.0,
+                        height: 100.0,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
+                ).animateOnPageLoad(animationsMap['cardOnPageLoadAnimation']!),
+                Padding(
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                  child: Text(
+                    ShteyLocalizations.of(context).getText(
+                      's8y4qas9' /* Michał Kowalski */,
+                    ),
+                    style: IoT_Theme.of(context).headlineSmall.override(
+                          fontFamily: 'Readex Pro',
+                          letterSpacing: 0.0,
+                        ),
+                  ).animateOnPageLoad(
+                      animationsMap['textOnPageLoadAnimation1']!),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                  child: Text(
+                    ShteyLocalizations.of(context).getText(
+                      'fuxxrqyb' /* michal@domainname.com */,
+                    ),
+                    style: IoT_Theme.of(context).titleSmall.override(
+                          fontFamily: 'Inter',
+                          color: IoT_Theme.of(context).secondary,
+                          letterSpacing: 0.0,
+                        ),
+                  ).animateOnPageLoad(
+                      animationsMap['textOnPageLoadAnimation2']!),
+                ),
+                Divider(
+                  height: 44.0,
+                  thickness: 1.0,
+                  indent: 24.0,
+                  endIndent: 24.0,
+                  color: IoT_Theme.of(context).alternate,
                 ).animateOnPageLoad(
-                    animationsMap['containerOnPageLoadAnimation1']!),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: IoT_Theme.of(context).secondaryBackground,
-                    borderRadius: BorderRadius.circular(12.0),
-                    border: Border.all(
-                      color: IoT_Theme.of(context).alternate,
-                      width: 2.0,
+                    animationsMap['dividerOnPageLoadAnimation']!),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      16.0, 12.0, 16.0, 0.0),
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: IoT_Theme.of(context).secondaryBackground,
+                      borderRadius: BorderRadius.circular(12.0),
+                      border: Border.all(
+                        color: IoT_Theme.of(context).alternate,
+                        width: 2.0,
+                      ),
                     ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        8.0, 12.0, 8.0, 12.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              8.0, 0.0, 0.0, 0.0),
-                          child: Icon(
-                            Icons.password,
-                            color: IoT_Theme.of(context).primaryText,
-                            size: 24.0,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              12.0, 0.0, 0.0, 0.0),
-                          child: Text(
-                            ShteyLocalizations.of(context).getText(
-                              '302zxkxl' /* Change Password */,
-                            ),
-                            style: IoT_Theme.of(context).bodyMedium.override(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0.0,
-                                ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Align(
-                            alignment: const AlignmentDirectional(1.0, 0.0),
-                            child: Icon(
-                              Icons.chevron_right_rounded,
-                              color: IoT_Theme.of(context).secondaryText,
-                              size: 24.0,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ).animateOnPageLoad(
-                    animationsMap['containerOnPageLoadAnimation2']!),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: IoT_Theme.of(context).secondaryBackground,
-                    borderRadius: BorderRadius.circular(12.0),
-                    border: Border.all(
-                      color: IoT_Theme.of(context).alternate,
-                      width: 2.0,
-                    ),
-                  ),
-                  child: Align(
-                    alignment: const AlignmentDirectional(1.0, 0.0),
                     child: Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
                           8.0, 12.0, 8.0, 12.0),
@@ -494,7 +441,7 @@ class _SettingsWidgetState extends State<SettingsWidget>
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 8.0, 0.0, 0.0, 0.0),
                             child: Icon(
-                              Icons.settings_outlined,
+                              Icons.account_circle_outlined,
                               color: IoT_Theme.of(context).primaryText,
                               size: 24.0,
                             ),
@@ -504,7 +451,7 @@ class _SettingsWidgetState extends State<SettingsWidget>
                                 12.0, 0.0, 0.0, 0.0),
                             child: Text(
                               ShteyLocalizations.of(context).getText(
-                                'kgk1oke7' /* Account Settings */,
+                                'c0nxkpd6' /* Change Name */,
                               ),
                               style: IoT_Theme.of(context).bodyMedium.override(
                                     fontFamily: 'Inter',
@@ -517,7 +464,7 @@ class _SettingsWidgetState extends State<SettingsWidget>
                               alignment: const AlignmentDirectional(1.0, 0.0),
                               child: Icon(
                                 Icons.chevron_right_rounded,
-                                color: IoT_Theme.of(context).secondaryText,
+                                color: IoT_Theme.of(context).primary,
                                 size: 24.0,
                               ),
                             ),
@@ -525,342 +472,517 @@ class _SettingsWidgetState extends State<SettingsWidget>
                         ],
                       ),
                     ),
-                  ),
-                ).animateOnPageLoad(
-                    animationsMap['containerOnPageLoadAnimation3']!),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Container(
-                  width: double.infinity,
-                  height: 50.0,
-                  decoration: BoxDecoration(
-                    color: IoT_Theme.of(context).primaryBackground,
-                    borderRadius: BorderRadius.circular(12.0),
-                    border: Border.all(
-                      color: IoT_Theme.of(context).lineColor,
-                      width: 1.0,
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              setDarkModeSetting(context, ThemeMode.light);
-                            },
-                            child: Container(
-                              width: 115.0,
-                              height: 100.0,
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).brightness ==
-                                        Brightness.light
-                                    ? IoT_Theme.of(context).secondaryBackground
-                                    : IoT_Theme.of(context).primaryBackground,
-                                borderRadius: BorderRadius.circular(10.0),
-                                border: Border.all(
-                                  color: Theme.of(context).brightness ==
-                                          Brightness.light
-                                      ? IoT_Theme.of(context).lineColor
-                                      : IoT_Theme.of(context).primaryBackground,
-                                  width: 1.0,
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.wb_sunny_rounded,
-                                    color: Theme.of(context).brightness ==
-                                            Brightness.light
-                                        ? IoT_Theme.of(context).primaryText
-                                        : IoT_Theme.of(context).secondaryText,
-                                    size: 16.0,
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            4.0, 0.0, 0.0, 0.0),
-                                    child: Text(
-                                      ShteyLocalizations.of(context).getText(
-                                        'mptimmco' /* Light  */,
-                                      ),
-                                      style: IoT_Theme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Inter',
-                                            color:
-                                                Theme.of(context).brightness ==
-                                                        Brightness.light
-                                                    ? IoT_Theme.of(context)
-                                                        .primaryText
-                                                    : IoT_Theme.of(context)
-                                                        .secondaryText,
-                                            letterSpacing: 0.0,
-                                          ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              setDarkModeSetting(context, ThemeMode.dark);
-                            },
-                            child: Container(
-                              width: 115.0,
-                              height: 100.0,
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).brightness ==
-                                        Brightness.dark
-                                    ? IoT_Theme.of(context).secondaryBackground
-                                    : IoT_Theme.of(context).primaryBackground,
-                                borderRadius: BorderRadius.circular(10.0),
-                                border: Border.all(
-                                  color: Theme.of(context).brightness ==
-                                          Brightness.dark
-                                      ? IoT_Theme.of(context).lineColor
-                                      : IoT_Theme.of(context).primaryBackground,
-                                  width: 1.0,
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.nightlight_round,
-                                    color: Theme.of(context).brightness ==
-                                            Brightness.dark
-                                        ? IoT_Theme.of(context).primaryText
-                                        : IoT_Theme.of(context).secondaryText,
-                                    size: 16.0,
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            4.0, 0.0, 0.0, 0.0),
-                                    child: Text(
-                                      ShteyLocalizations.of(context).getText(
-                                        'rv4mlumu' /* Dark */,
-                                      ),
-                                      style: IoT_Theme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Inter',
-                                            color:
-                                                Theme.of(context).brightness ==
-                                                        Brightness.dark
-                                                    ? IoT_Theme.of(context)
-                                                        .primaryText
-                                                    : IoT_Theme.of(context)
-                                                        .secondaryText,
-                                            letterSpacing: 0.0,
-                                          ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ).animateOnPageLoad(
-                    animationsMap['containerOnPageLoadAnimation4']!),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(16.0, 14.0, 0.0, 8.0),
-                child: Text(
-                  ShteyLocalizations.of(context).getText(
-                    'syhnp2eh' /* Follow us on */,
-                  ),
-                  style: IoT_Theme.of(context).labelMedium.override(
-                        fontFamily: 'Inter',
-                        letterSpacing: 0.0,
+                  ).animateOnPageLoad(
+                      animationsMap['containerOnPageLoadAnimation1']!),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      16.0, 12.0, 16.0, 0.0),
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: IoT_Theme.of(context).secondaryBackground,
+                      borderRadius: BorderRadius.circular(12.0),
+                      border: Border.all(
+                        color: IoT_Theme.of(context).alternate,
+                        width: 2.0,
                       ),
-                ).animateOnPageLoad(animationsMap['textOnPageLoadAnimation3']!),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 14.0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IotIconButton(
-                      borderColor: IoT_Theme.of(context).alternate,
-                      borderRadius: 12.0,
-                      borderWidth: 1.0,
-                      buttonSize: 48.0,
-                      fillColor: IoT_Theme.of(context).secondaryBackground,
-                      icon: FaIcon(
-                        FontAwesomeIcons.youtube,
-                        color: IoT_Theme.of(context).secondaryText,
-                        size: 24.0,
-                      ),
-                      onPressed: () {
-                        print('IconButton pressed ...');
-                      },
                     ),
-                    IotIconButton(
-                      borderColor: IoT_Theme.of(context).alternate,
-                      borderRadius: 12.0,
-                      borderWidth: 1.0,
-                      buttonSize: 48.0,
-                      fillColor: IoT_Theme.of(context).secondaryBackground,
-                      icon: FaIcon(
-                        FontAwesomeIcons.instagram,
-                        color: IoT_Theme.of(context).secondaryText,
-                        size: 24.0,
-                      ),
-                      onPressed: () {
-                        print('IconButton pressed ...');
-                      },
-                    ),
-                    IotIconButton(
-                      borderColor: IoT_Theme.of(context).alternate,
-                      borderRadius: 12.0,
-                      borderWidth: 1.0,
-                      buttonSize: 48.0,
-                      fillColor: IoT_Theme.of(context).secondaryBackground,
-                      icon: FaIcon(
-                        FontAwesomeIcons.facebookF,
-                        color: IoT_Theme.of(context).secondaryText,
-                        size: 24.0,
-                      ),
-                      onPressed: () {
-                        print('IconButton pressed ...');
-                      },
-                    ),
-                    IotIconButton(
-                      borderColor: IoT_Theme.of(context).alternate,
-                      borderRadius: 12.0,
-                      borderWidth: 1.0,
-                      buttonSize: 48.0,
-                      fillColor: IoT_Theme.of(context).secondaryBackground,
-                      icon: FaIcon(
-                        FontAwesomeIcons.linkedinIn,
-                        color: IoT_Theme.of(context).secondaryText,
-                        size: 24.0,
-                      ),
-                      onPressed: () {
-                        print('IconButton pressed ...');
-                      },
-                    ),
-                  ].divide(const SizedBox(width: 8.0)),
-                ).animateOnPageLoad(animationsMap['rowOnPageLoadAnimation']!),
-              ),
-              Align(
-                alignment: const AlignmentDirectional(0.0, 1.0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Align(
-                      alignment: const AlignmentDirectional(0.0, 1.0),
-                      child: Column(
+                    child: Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          8.0, 12.0, 8.0, 12.0),
+                      child: Row(
                         mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Align(
-                            alignment: const AlignmentDirectional(0.0, 0.0),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 1.0, 0.0, 0.0),
-                              child: Text(
-                                ShteyLocalizations.of(context).getText(
-                                  's7fufo0f' /* App Version */,
-                                ),
-                                style:
-                                    IoT_Theme.of(context).titleLarge.override(
-                                          fontFamily: 'Inter',
-                                          letterSpacing: 0.0,
-                                        ),
-                              ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                8.0, 0.0, 0.0, 0.0),
+                            child: Icon(
+                              Icons.password,
+                              color: IoT_Theme.of(context).primaryText,
+                              size: 24.0,
                             ),
                           ),
-                          Align(
-                            alignment: const AlignmentDirectional(0.0, 1.0),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 1.0, 0.0, 10.0),
-                              child: Text(
-                                ShteyLocalizations.of(context).getText(
-                                  '83pndnwh' /* v0.0.1 */,
-                                ),
-                                style:
-                                    IoT_Theme.of(context).labelMedium.override(
-                                          fontFamily: 'Inter',
-                                          letterSpacing: 0.0,
-                                        ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                12.0, 0.0, 0.0, 0.0),
+                            child: Text(
+                              ShteyLocalizations.of(context).getText(
+                                '302zxkxl' /* Change Password */,
                               ),
-                            ),
-                          ),
-                          Align(
-                            alignment: const AlignmentDirectional(0.0, 1.0),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 1.0, 0.0, 0.0),
-                              child: ShteyButtonWidget(
-                                onPressed: () async {
-                                  context.pushNamed('RegisterPage');
-                                },
-                                text: ShteyLocalizations.of(context).getText(
-                                  'gr0jjko0' /* Log Out */,
-                                ),
-                                options: ShteyButtonOptions(
-                                  width: 150.0,
-                                  height: 44.0,
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  iconPadding:
-                                      const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 0.0),
-                                  color:
-                                      IoT_Theme.of(context).primaryBackground,
-                                  textStyle:
-                                      IoT_Theme.of(context).bodyLarge.override(
-                                            fontFamily: 'Inter',
-                                            letterSpacing: 0.0,
-                                          ),
-                                  elevation: 0.0,
-                                  borderSide: BorderSide(
-                                    color: IoT_Theme.of(context).alternate,
-                                    width: 1.0,
+                              style: IoT_Theme.of(context).bodyMedium.override(
+                                    fontFamily: 'Inter',
+                                    letterSpacing: 0.0,
                                   ),
-                                  borderRadius: BorderRadius.circular(38.0),
-                                ),
-                              ).animateOnPageLoad(
-                                  animationsMap['buttonOnPageLoadAnimation']!),
+                            ),
+                          ),
+                          Expanded(
+                            child: Align(
+                              alignment: const AlignmentDirectional(1.0, 0.0),
+                              child: Icon(
+                                Icons.chevron_right_rounded,
+                                color: IoT_Theme.of(context).primary,
+                                size: 24.0,
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                  ],
+                  ).animateOnPageLoad(
+                      animationsMap['containerOnPageLoadAnimation2']!),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      16.0, 12.0, 16.0, 0.0),
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: IoT_Theme.of(context).secondaryBackground,
+                      borderRadius: BorderRadius.circular(12.0),
+                      border: Border.all(
+                        color: IoT_Theme.of(context).alternate,
+                        width: 2.0,
+                      ),
+                    ),
+                    child: Align(
+                      alignment: const AlignmentDirectional(1.0, 0.0),
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            8.0, 12.0, 8.0, 12.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  8.0, 0.0, 0.0, 0.0),
+                              child: Icon(
+                                Icons.settings_outlined,
+                                color: IoT_Theme.of(context).primaryText,
+                                size: 24.0,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  12.0, 0.0, 0.0, 0.0),
+                              child: Text(
+                                ShteyLocalizations.of(context).getText(
+                                  'kgk1oke7' /* Account Settings */,
+                                ),
+                                style:
+                                    IoT_Theme.of(context).bodyMedium.override(
+                                          fontFamily: 'Inter',
+                                          letterSpacing: 0.0,
+                                        ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Align(
+                                alignment: const AlignmentDirectional(1.0, 0.0),
+                                child: Icon(
+                                  Icons.chevron_right_rounded,
+                                  color: IoT_Theme.of(context).primary,
+                                  size: 24.0,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ).animateOnPageLoad(
+                      animationsMap['containerOnPageLoadAnimation3']!),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      16.0, 12.0, 16.0, 0.0),
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: IoT_Theme.of(context).secondaryBackground,
+                      borderRadius: BorderRadius.circular(12.0),
+                      border: Border.all(
+                        color: IoT_Theme.of(context).alternate,
+                        width: 2.0,
+                      ),
+                    ),
+                    child: Align(
+                      alignment: const AlignmentDirectional(
+                          1.0, 0.0), // Ustawienie wyrównania do prawej strony
+                      child: Container(
+                        width: double
+                            .infinity, // Ustawienie szerokości na pełną szerokość kontenera
+                        child: IotLanguageSelector(
+                          width: 360.0,
+                          backgroundColor:
+                              IoT_Theme.of(context).secondaryBackground,
+                          borderColor: Colors.transparent,
+                          dropdownColor:
+                              IoT_Theme.of(context).secondaryBackground,
+                          dropdownIconColor: IoT_Theme.of(context).primary,
+                          borderRadius: 8.0,
+                          textStyle: TextStyle(
+                            color: IoT_Theme.of(context).primaryText,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 14.0,
+                          ),
+                          hideFlags: false,
+                          flagSize: 28.0,
+                          flagTextGap: 15.0,
+                          currentLanguage:
+                              ShteyLocalizations.of(context).languageCode,
+                          languages: ShteyLocalizations.languages(),
+                          onChanged: (lang) => setAppLanguage(context, lang),
+                        ),
+                      ),
+                    ),
+                  ).animateOnPageLoad(
+                      animationsMap['containerOnPageLoadAnimation4']!),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Container(
+                    width: double.infinity,
+                    height: 50.0,
+                    decoration: BoxDecoration(
+                      color: IoT_Theme.of(context).primaryBackground,
+                      borderRadius: BorderRadius.circular(12.0),
+                      border: Border.all(
+                        color: IoT_Theme.of(context).lineColor,
+                        width: 1.0,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                setDarkModeSetting(context, ThemeMode.light);
+                              },
+                              child: Container(
+                                width: 115.0,
+                                height: 100.0,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).brightness ==
+                                          Brightness.light
+                                      ? IoT_Theme.of(context)
+                                          .secondaryBackground
+                                      : IoT_Theme.of(context).primaryBackground,
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  border: Border.all(
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.light
+                                        ? IoT_Theme.of(context).lineColor
+                                        : IoT_Theme.of(context)
+                                            .primaryBackground,
+                                    width: 1.0,
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.wb_sunny_rounded,
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.light
+                                          ? IoT_Theme.of(context).primaryText
+                                          : IoT_Theme.of(context).secondaryText,
+                                      size: 16.0,
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              4.0, 0.0, 0.0, 0.0),
+                                      child: Text(
+                                        ShteyLocalizations.of(context).getText(
+                                          'mptimmco' /* Light  */,
+                                        ),
+                                        style: IoT_Theme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              color: Theme.of(context)
+                                                          .brightness ==
+                                                      Brightness.light
+                                                  ? IoT_Theme.of(context)
+                                                      .primaryText
+                                                  : IoT_Theme.of(context)
+                                                      .secondaryText,
+                                              letterSpacing: 0.0,
+                                            ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                setDarkModeSetting(context, ThemeMode.dark);
+                              },
+                              child: Container(
+                                width: 115.0,
+                                height: 100.0,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).brightness ==
+                                          Brightness.dark
+                                      ? IoT_Theme.of(context)
+                                          .secondaryBackground
+                                      : IoT_Theme.of(context).primaryBackground,
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  border: Border.all(
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? IoT_Theme.of(context).lineColor
+                                        : IoT_Theme.of(context)
+                                            .primaryBackground,
+                                    width: 1.0,
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.nightlight_round,
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? IoT_Theme.of(context).primaryText
+                                          : IoT_Theme.of(context).secondaryText,
+                                      size: 16.0,
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              4.0, 0.0, 0.0, 0.0),
+                                      child: Text(
+                                        ShteyLocalizations.of(context).getText(
+                                          'rv4mlumu' /* Dark */,
+                                        ),
+                                        style: IoT_Theme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              color: Theme.of(context)
+                                                          .brightness ==
+                                                      Brightness.dark
+                                                  ? IoT_Theme.of(context)
+                                                      .primaryText
+                                                  : IoT_Theme.of(context)
+                                                      .secondaryText,
+                                              letterSpacing: 0.0,
+                                            ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ).animateOnPageLoad(
+                      animationsMap['containerOnPageLoadAnimation5']!),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      16.0, 14.0, 0.0, 8.0),
+                  child: Text(
+                    ShteyLocalizations.of(context).getText(
+                      'syhnp2eh' /* Follow us on */,
+                    ),
+                    style: IoT_Theme.of(context).labelMedium.override(
+                          fontFamily: 'Inter',
+                          letterSpacing: 0.0,
+                        ),
+                  ).animateOnPageLoad(
+                      animationsMap['textOnPageLoadAnimation3']!),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      16.0, 0.0, 16.0, 14.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IotIconButton(
+                        borderColor: IoT_Theme.of(context).alternate,
+                        borderRadius: 12.0,
+                        borderWidth: 1.0,
+                        buttonSize: 48.0,
+                        fillColor: IoT_Theme.of(context).secondaryBackground,
+                        icon: FaIcon(
+                          FontAwesomeIcons.youtube,
+                          color: IoT_Theme.of(context).secondaryText,
+                          size: 24.0,
+                        ),
+                        onPressed: () {
+                          print('IconButton pressed ...');
+                        },
+                      ),
+                      IotIconButton(
+                        borderColor: IoT_Theme.of(context).alternate,
+                        borderRadius: 12.0,
+                        borderWidth: 1.0,
+                        buttonSize: 48.0,
+                        fillColor: IoT_Theme.of(context).secondaryBackground,
+                        icon: FaIcon(
+                          FontAwesomeIcons.instagram,
+                          color: IoT_Theme.of(context).secondaryText,
+                          size: 24.0,
+                        ),
+                        onPressed: () {
+                          print('IconButton pressed ...');
+                        },
+                      ),
+                      IotIconButton(
+                        borderColor: IoT_Theme.of(context).alternate,
+                        borderRadius: 12.0,
+                        borderWidth: 1.0,
+                        buttonSize: 48.0,
+                        fillColor: IoT_Theme.of(context).secondaryBackground,
+                        icon: FaIcon(
+                          FontAwesomeIcons.facebookF,
+                          color: IoT_Theme.of(context).secondaryText,
+                          size: 24.0,
+                        ),
+                        onPressed: () {
+                          print('IconButton pressed ...');
+                        },
+                      ),
+                      IotIconButton(
+                        borderColor: IoT_Theme.of(context).alternate,
+                        borderRadius: 12.0,
+                        borderWidth: 1.0,
+                        buttonSize: 48.0,
+                        fillColor: IoT_Theme.of(context).secondaryBackground,
+                        icon: FaIcon(
+                          FontAwesomeIcons.linkedinIn,
+                          color: IoT_Theme.of(context).secondaryText,
+                          size: 24.0,
+                        ),
+                        onPressed: () {
+                          print('IconButton pressed ...');
+                        },
+                      ),
+                    ].divide(const SizedBox(width: 8.0)),
+                  ).animateOnPageLoad(animationsMap['rowOnPageLoadAnimation']!),
+                ),
+                Align(
+                  alignment: const AlignmentDirectional(0.0, 1.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Align(
+                        alignment: const AlignmentDirectional(0.0, 1.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Align(
+                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 1.0, 0.0, 0.0),
+                                child: Text(
+                                  ShteyLocalizations.of(context).getText(
+                                    's7fufo0f' /* App Version */,
+                                  ),
+                                  style:
+                                      IoT_Theme.of(context).titleLarge.override(
+                                            fontFamily: 'Inter',
+                                            fontSize: 20.0,
+                                            letterSpacing: 0.0,
+                                          ),
+                                ).animateOnPageLoad(
+                                    animationsMap['textOnPageLoadAnimation4']!),
+                              ),
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(0.0, 1.0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 1.0, 0.0, 10.0),
+                                child: Text(
+                                  ShteyLocalizations.of(context).getText(
+                                    '83pndnwh' /* v0.0.1 */,
+                                  ),
+                                  style: IoT_Theme.of(context)
+                                      .labelMedium
+                                      .override(
+                                        fontFamily: 'Inter',
+                                        letterSpacing: 0.0,
+                                      ),
+                                ).animateOnPageLoad(
+                                    animationsMap['textOnPageLoadAnimation5']!),
+                              ),
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(0.0, 1.0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 1.0, 0.0, 10.0),
+                                child: ShteyButtonWidget(
+                                  onPressed: () async {
+                                    context.pushNamed('RegisterPage');
+                                  },
+                                  text: ShteyLocalizations.of(context).getText(
+                                    'gr0jjko0' /* Log Out */,
+                                  ),
+                                  options: ShteyButtonOptions(
+                                    width: 150.0,
+                                    height: 44.0,
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                    iconPadding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                    color:
+                                        IoT_Theme.of(context).primaryBackground,
+                                    textStyle: IoT_Theme.of(context)
+                                        .bodyLarge
+                                        .override(
+                                          fontFamily: 'Inter',
+                                          letterSpacing: 0.0,
+                                        ),
+                                    elevation: 0.0,
+                                    borderSide: BorderSide(
+                                      color: IoT_Theme.of(context).alternate,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(38.0),
+                                  ),
+                                ).animateOnPageLoad(animationsMap[
+                                    'buttonOnPageLoadAnimation']!),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -27,12 +27,11 @@ class RegisterPageModel extends IotModel<RegisterPageWidget> {
   }
 
   // State field(s) for PasswordField widget.
-  FocusNode? passwordFieldFocusNode1;
-  TextEditingController? passwordFieldTextController1;
-  late bool passwordFieldVisibility1;
-  String? Function(BuildContext, String?)?
-      passwordFieldTextController1Validator;
-  String? _passwordFieldTextController1Validator(
+  FocusNode? passwordFieldFocusNode;
+  TextEditingController? passwordFieldTextController;
+  late bool passwordFieldVisibility;
+  String? Function(BuildContext, String?)? passwordFieldTextControllerValidator;
+  String? _passwordFieldTextControllerValidator(
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return ShteyLocalizations.of(context).getText(
@@ -43,21 +42,21 @@ class RegisterPageModel extends IotModel<RegisterPageWidget> {
     return null;
   }
 
-  // State field(s) for PasswordField widget.
-  FocusNode? passwordFieldFocusNode2;
-  TextEditingController? passwordFieldTextController2;
-  late bool passwordFieldVisibility2;
+  // State field(s) for ConfirmPasswordField widget.
+  FocusNode? confirmPasswordFieldFocusNode;
+  TextEditingController? confirmPasswordFieldTextController;
+  late bool confirmPasswordFieldVisibility;
   String? Function(BuildContext, String?)?
-      passwordFieldTextController2Validator;
+      confirmPasswordFieldTextControllerValidator;
 
   @override
   void initState(BuildContext context) {
     emailAddressFieldTextControllerValidator =
         _emailAddressFieldTextControllerValidator;
-    passwordFieldVisibility1 = false;
-    passwordFieldTextController1Validator =
-        _passwordFieldTextController1Validator;
-    passwordFieldVisibility2 = false;
+    passwordFieldVisibility = false;
+    passwordFieldTextControllerValidator =
+        _passwordFieldTextControllerValidator;
+    confirmPasswordFieldVisibility = false;
   }
 
   @override
@@ -66,10 +65,10 @@ class RegisterPageModel extends IotModel<RegisterPageWidget> {
     emailAddressFieldFocusNode?.dispose();
     emailAddressFieldTextController?.dispose();
 
-    passwordFieldFocusNode1?.dispose();
-    passwordFieldTextController1?.dispose();
+    passwordFieldFocusNode?.dispose();
+    passwordFieldTextController?.dispose();
 
-    passwordFieldFocusNode2?.dispose();
-    passwordFieldTextController2?.dispose();
+    confirmPasswordFieldFocusNode?.dispose();
+    confirmPasswordFieldTextController?.dispose();
   }
 }
