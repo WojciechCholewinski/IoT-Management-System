@@ -410,6 +410,97 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'pl': 'Konto',
     },
   },
+  // AutomationDetails
+  {
+    'd3t1dj3t': {
+      'en': 'Automation Details',
+      'pl': 'Szczegóły automatyzacji',
+    },
+    '98r4z6ug': {
+      'en': 'Automation Name',
+      'pl': 'Nazwa automatyzacji',
+    },
+    'g9h4mc3r': {
+      'en': 'Active',
+      'pl': 'Aktywna',
+    },
+    'usbnwlnd': {
+      'en': 'Select days:',
+      'pl': 'Wybierz dni:',
+    },
+    'm9miabzw': {
+      'en': 'Mon',
+      'pl': 'Pon',
+    },
+    '0fmj2kgr': {
+      'en': 'Tue',
+      'pl': 'Wt',
+    },
+    '0c7mmagq': {
+      'en': 'Wed',
+      'pl': 'Śr',
+    },
+    '84ff23w4': {
+      'en': 'Thu',
+      'pl': 'Czw',
+    },
+    'ky402mn0': {
+      'en': 'Fri',
+      'pl': 'Pt',
+    },
+    '9wuxhajc': {
+      'en': 'Sat',
+      'pl': 'Sob',
+    },
+    'ayddrvfp': {
+      'en': 'Sun',
+      'pl': 'Nd',
+    },
+    'uybdasex': {
+      'en': 'Set Time:',
+      'pl': 'Ustaw czas:',
+    },
+    '2y212ecm': {
+      'en': '08:00',
+      'pl': '08:00',
+    },
+    'ki34z6bq': {
+      'en': 'Included Devices',
+      'pl': 'Połączone urządzenia',
+    },
+    'lzgzah3i': {
+      'en': 'Desk Lighting',
+      'pl': 'Oświetlenie biurka',
+    },
+    '4neufju5': {
+      'en': 'Hallway Lighting',
+      'pl': 'Oświetlenie korytarza',
+    },
+    '0jp8ufnw': {
+      'en': 'Under Lighting',
+      'pl': 'Podświetlenie',
+    },
+    'hj7cn8k3': {
+      'en': 'Kitchen Lighting',
+      'pl': 'Oświetlenie - kuchnia',
+    },
+    'vreqovho': {
+      'en': 'Drawer Lock',
+      'pl': 'Zamek',
+    },
+    'o12qfnsn': {
+      'en': 'Roller Blinds W',
+      'pl': 'Rolety - W',
+    },
+    'bhgq8iyc': {
+      'en': 'Air Conditioner',
+      'pl': 'Klimatyzacja',
+    },
+    'rq1mzqny': {
+      'en': 'Add Device',
+      'pl': 'Dodaj urządzenie',
+    },
+  },
   // Miscellaneous
   {
     'knrdk3vc': {

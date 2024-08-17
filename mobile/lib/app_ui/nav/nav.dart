@@ -60,6 +60,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'RegisterPage',
           path: '/registerPage',
           builder: (context, params) => const RegisterPageWidget(),
+        ),
+        ShteyRoute(
+          name: 'AutomationDetails',
+          path: '/automationDetails',
+          builder: (context, params) => const AutomationDetailsWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
