@@ -1,3 +1,4 @@
+import 'package:provider/provider.dart';
 import '/app_ui/icon_button.dart';
 import '/app_ui/theme.dart';
 import '/app_ui/util.dart';
@@ -62,6 +63,8 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final appState = Provider.of<ShteyAppState>(context);
+
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -200,38 +203,16 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                           child: AspectRatio(
                             aspectRatio:
                                 1.0, // Proporcja 1:1 zapewniająca kształt koła
-                            child: ShteyButtonWidget(
+                            child: DaySelectionButton(
+                              context: context,
+                              text: ShteyLocalizations.of(context)
+                                  .getText('m9miabzw' /* Mon */),
+                              isSelected: appState.Monday,
                               onPressed: () async {
-                                ShteyAppState().Monday =
-                                    !ShteyAppState().Monday;
-                                setState(() {});
+                                appState.update(() {
+                                  appState.Monday = !appState.Monday;
+                                });
                               },
-                              text: ShteyLocalizations.of(context).getText(
-                                'm9miabzw' /* Mon */,
-                              ),
-                              options: ShteyButtonOptions(
-                                height: 50.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                iconPadding:
-                                    const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                color: IoT_Theme.of(context).alternate,
-                                textStyle: IoT_Theme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Inter',
-                                      color: IoT_Theme.of(context).primaryText,
-                                      fontSize: 10.0,
-                                      letterSpacing: 0.0,
-                                    ),
-                                elevation: 3.0,
-                                borderSide: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(24.0),
-                              ),
                             ),
                           ),
                         ),
@@ -242,38 +223,16 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                           child: AspectRatio(
                             aspectRatio:
                                 1.0, // Proporcja 1:1 zapewniająca kształt koła
-                            child: ShteyButtonWidget(
+                            child: DaySelectionButton(
+                              context: context,
+                              text: ShteyLocalizations.of(context)
+                                  .getText('0fmj2kgr' /* Tue */),
+                              isSelected: appState.Tuesday,
                               onPressed: () async {
-                                ShteyAppState().Tuesday =
-                                    !ShteyAppState().Tuesday;
-                                setState(() {});
+                                appState.update(() {
+                                  appState.Tuesday = !appState.Tuesday;
+                                });
                               },
-                              text: ShteyLocalizations.of(context).getText(
-                                '0fmj2kgr' /* Tue */,
-                              ),
-                              options: ShteyButtonOptions(
-                                height: 50.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                iconPadding:
-                                    const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                color: IoT_Theme.of(context).alternate,
-                                textStyle: IoT_Theme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Inter',
-                                      color: IoT_Theme.of(context).primaryText,
-                                      fontSize: 10.0,
-                                      letterSpacing: 0.0,
-                                    ),
-                                elevation: 3.0,
-                                borderSide: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(24.0),
-                              ),
                             ),
                           ),
                         ),
@@ -284,38 +243,16 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                           child: AspectRatio(
                             aspectRatio:
                                 1.0, // Proporcja 1:1 zapewniająca kształt koła
-                            child: ShteyButtonWidget(
+                            child: DaySelectionButton(
+                              context: context,
+                              text: ShteyLocalizations.of(context)
+                                  .getText('0c7mmagq' /* Wed */),
+                              isSelected: appState.Wednesday,
                               onPressed: () async {
-                                ShteyAppState().Wednesday =
-                                    !ShteyAppState().Wednesday;
-                                setState(() {});
+                                appState.update(() {
+                                  appState.Wednesday = !appState.Wednesday;
+                                });
                               },
-                              text: ShteyLocalizations.of(context).getText(
-                                '0c7mmagq' /* Wed */,
-                              ),
-                              options: ShteyButtonOptions(
-                                height: 50.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                iconPadding:
-                                    const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                color: IoT_Theme.of(context).alternate,
-                                textStyle: IoT_Theme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Inter',
-                                      color: IoT_Theme.of(context).primaryText,
-                                      fontSize: 10.0,
-                                      letterSpacing: 0.0,
-                                    ),
-                                elevation: 3.0,
-                                borderSide: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(24.0),
-                              ),
                             ),
                           ),
                         ),
@@ -326,38 +263,16 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                           child: AspectRatio(
                             aspectRatio:
                                 1.0, // Proporcja 1:1 zapewniająca kształt koła
-                            child: ShteyButtonWidget(
+                            child: DaySelectionButton(
+                              context: context,
+                              text: ShteyLocalizations.of(context)
+                                  .getText('84ff23w4' /* Thu */),
+                              isSelected: appState.Thursday,
                               onPressed: () async {
-                                ShteyAppState().Thursday =
-                                    !ShteyAppState().Thursday;
-                                setState(() {});
+                                appState.update(() {
+                                  appState.Thursday = !appState.Thursday;
+                                });
                               },
-                              text: ShteyLocalizations.of(context).getText(
-                                '84ff23w4' /* Thu */,
-                              ),
-                              options: ShteyButtonOptions(
-                                height: 50.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                iconPadding:
-                                    const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                color: IoT_Theme.of(context).alternate,
-                                textStyle: IoT_Theme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Inter',
-                                      color: IoT_Theme.of(context).primaryText,
-                                      fontSize: 10.0,
-                                      letterSpacing: 0.0,
-                                    ),
-                                elevation: 3.0,
-                                borderSide: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(24.0),
-                              ),
                             ),
                           ),
                         ),
@@ -368,38 +283,16 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                           child: AspectRatio(
                             aspectRatio:
                                 1.0, // Proporcja 1:1 zapewniająca kształt koła
-                            child: ShteyButtonWidget(
+                            child: DaySelectionButton(
+                              context: context,
+                              text: ShteyLocalizations.of(context)
+                                  .getText('ky402mn0' /* Fri */),
+                              isSelected: appState.Friday,
                               onPressed: () async {
-                                ShteyAppState().Friday =
-                                    !ShteyAppState().Friday;
-                                setState(() {});
+                                appState.update(() {
+                                  appState.Friday = !appState.Friday;
+                                });
                               },
-                              text: ShteyLocalizations.of(context).getText(
-                                'ky402mn0' /* Fri */,
-                              ),
-                              options: ShteyButtonOptions(
-                                height: 50.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                iconPadding:
-                                    const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                color: IoT_Theme.of(context).alternate,
-                                textStyle: IoT_Theme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Inter',
-                                      color: IoT_Theme.of(context).primaryText,
-                                      fontSize: 10.0,
-                                      letterSpacing: 0.0,
-                                    ),
-                                elevation: 3.0,
-                                borderSide: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(24.0),
-                              ),
                             ),
                           ),
                         ),
@@ -410,38 +303,16 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                           child: AspectRatio(
                             aspectRatio:
                                 1.0, // Proporcja 1:1 zapewniająca kształt koła
-                            child: ShteyButtonWidget(
+                            child: DaySelectionButton(
+                              context: context,
+                              text: ShteyLocalizations.of(context)
+                                  .getText('9wuxhajc' /* Sat */),
+                              isSelected: appState.Saturday,
                               onPressed: () async {
-                                ShteyAppState().Saturday =
-                                    !ShteyAppState().Saturday;
-                                setState(() {});
+                                appState.update(() {
+                                  appState.Saturday = !appState.Saturday;
+                                });
                               },
-                              text: ShteyLocalizations.of(context).getText(
-                                '9wuxhajc' /* Sat */,
-                              ),
-                              options: ShteyButtonOptions(
-                                height: 50.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                iconPadding:
-                                    const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                color: IoT_Theme.of(context).alternate,
-                                textStyle: IoT_Theme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Inter',
-                                      color: IoT_Theme.of(context).primaryText,
-                                      fontSize: 10.0,
-                                      letterSpacing: 0.0,
-                                    ),
-                                elevation: 3.0,
-                                borderSide: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(24.0),
-                              ),
                             ),
                           ),
                         ),
@@ -452,38 +323,16 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                           child: AspectRatio(
                             aspectRatio:
                                 1.0, // Proporcja 1:1 zapewniająca kształt koła
-                            child: ShteyButtonWidget(
+                            child: DaySelectionButton(
+                              context: context,
+                              text: ShteyLocalizations.of(context)
+                                  .getText('ayddrvfp' /* Sun */),
+                              isSelected: appState.Sunday,
                               onPressed: () async {
-                                ShteyAppState().Sunday =
-                                    !ShteyAppState().Sunday;
-                                setState(() {});
+                                appState.update(() {
+                                  appState.Sunday = !appState.Sunday;
+                                });
                               },
-                              text: ShteyLocalizations.of(context).getText(
-                                'ayddrvfp' /* Sun */,
-                              ),
-                              options: ShteyButtonOptions(
-                                height: 50.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                iconPadding:
-                                    const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                color: IoT_Theme.of(context).alternate,
-                                textStyle: IoT_Theme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Inter',
-                                      color: IoT_Theme.of(context).primaryText,
-                                      fontSize: 10.0,
-                                      letterSpacing: 0.0,
-                                    ),
-                                elevation: 3.0,
-                                borderSide: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(24.0),
-                              ),
                             ),
                           ),
                         ),
@@ -816,7 +665,8 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                         16.0, 0.0, 16.0, 16.0),
                     child: ShteyButtonWidget(
                       onPressed: () {
-                        print('Button pressed ...');
+                        appState.resetDaysSelection();
+                        context.safePop();
                       },
                       text: ShteyLocalizations.of(context).getText(
                         'rq1mzqny' /* Save */,

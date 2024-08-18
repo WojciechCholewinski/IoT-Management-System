@@ -94,45 +94,64 @@ class ShteyAppState extends ChangeNotifier {
 
 ////////////////////////////////////////////////////////////////
 
+  // Metoda do resetowania wyboru dni
+  void resetDaysSelection() {
+    _Monday = false;
+    _Tuesday = false;
+    _Wednesday = false;
+    _Thursday = false;
+    _Friday = false;
+    _Saturday = false;
+    _Sunday = false;
+    notifyListeners();
+  }
+
   bool _Monday = false;
   bool get Monday => _Monday;
   set Monday(bool value) {
     _Monday = value;
+    notifyListeners();
   }
 
   bool _Tuesday = false;
   bool get Tuesday => _Tuesday;
   set Tuesday(bool value) {
     _Tuesday = value;
+    notifyListeners();
   }
 
   bool _Wednesday = false;
   bool get Wednesday => _Wednesday;
   set Wednesday(bool value) {
     _Wednesday = value;
+    notifyListeners();
   }
 
   bool _Thursday = false;
   bool get Thursday => _Thursday;
   set Thursday(bool value) {
     _Thursday = value;
+    notifyListeners();
   }
 
   bool _Friday = false;
   bool get Friday => _Friday;
   set Friday(bool value) {
     _Friday = value;
+    notifyListeners();
   }
 
   bool _Saturday = false;
   bool get Saturday => _Saturday;
   set Saturday(bool value) {
     _Saturday = value;
+    notifyListeners();
   }
 
   bool _Sunday = false;
   bool get Sunday => _Sunday;
   set Sunday(bool value) {
     _Sunday = value;
+    notifyListeners();
   }
 }

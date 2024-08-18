@@ -1,6 +1,7 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:mobile/app_ui/theme.dart';
 
 class ShteyButtonOptions {
   const ShteyButtonOptions({
@@ -241,6 +242,41 @@ class _ShteyButtonWidgetState extends State<ShteyButtonWidget> {
       ),
     );
   }
+}
+
+class DaySelectionButton extends ShteyButtonWidget {
+  DaySelectionButton({
+    Key? key,
+    required BuildContext context,
+    required String text,
+    required bool isSelected,
+    required VoidCallback onPressed,
+  }) : super(
+          key: key,
+          text: text,
+          onPressed: onPressed,
+          options: ShteyButtonOptions(
+            height: 50.0,
+            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+            iconPadding:
+                const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+            color: isSelected
+                ? IoT_Theme.of(context).primary
+                : IoT_Theme.of(context).alternate,
+            textStyle: IoT_Theme.of(context).titleSmall.override(
+                  fontFamily: 'Inter',
+                  color: IoT_Theme.of(context).primaryText,
+                  fontSize: 10.0,
+                  letterSpacing: 0.0,
+                ),
+            elevation: 3.0,
+            borderSide: const BorderSide(
+              color: Colors.transparent,
+              width: 1.0,
+            ),
+            borderRadius: BorderRadius.circular(24.0),
+          ),
+        );
 }
 
 extension _WithoutColorExtension on TextStyle {
