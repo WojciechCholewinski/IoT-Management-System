@@ -460,10 +460,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'Set Time:',
       'pl': 'Ustaw czas:',
     },
-    '2y212ecm': {
-      'en': '08:00',
-      'pl': '08:00',
-    },
     'ki34z6bq': {
       'en': 'Included Devices',
       'pl': 'Połączone urządzenia',
@@ -497,8 +493,8 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'pl': 'Klimatyzacja',
     },
     'rq1mzqny': {
-      'en': 'Add Device',
-      'pl': 'Dodaj urządzenie',
+      'en': 'Save',
+      'pl': 'Zapisz',
     },
   },
   // Miscellaneous

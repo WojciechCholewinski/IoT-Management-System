@@ -5,6 +5,7 @@ import '/app_ui/widgets.dart';
 import 'package:flutter/material.dart';
 import 'automation_details_model.dart';
 export 'automation_details_model.dart';
+import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 
 class AutomationDetailsWidget extends StatefulWidget {
   const AutomationDetailsWidget({super.key});
@@ -16,6 +17,8 @@ class AutomationDetailsWidget extends StatefulWidget {
 
 class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
   late AutomationDetailsModel _model;
+  // ignore: unused_field
+  DateTime _dateTime = DateTime.now();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -32,6 +35,29 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
     _model.dispose();
 
     super.dispose();
+  }
+
+  Widget timePickerSpinner() {
+    return TimePickerSpinner(
+      is24HourMode: true,
+      normalTextStyle: TextStyle(
+        fontSize: 24,
+        color: IoT_Theme.of(context).alternate,
+      ),
+      highlightedTextStyle: TextStyle(
+        fontSize: 24,
+        color: IoT_Theme.of(context).primaryText,
+      ),
+      spacing: 1,
+      itemHeight: 30,
+      isForce2Digits: true,
+      alignment: Alignment.center,
+      onTimeChange: (time) {
+        setState(() {
+          _dateTime = time;
+        });
+      },
+    );
   }
 
   @override
@@ -168,215 +194,298 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      ShteyButtonWidget(
-                        onPressed: () async {
-                          ShteyAppState().Monday = !ShteyAppState().Monday;
-                          setState(() {});
-                        },
-                        text: ShteyLocalizations.of(context).getText(
-                          'm9miabzw' /* Mon */,
-                        ),
-                        options: ShteyButtonOptions(
-                          width: 50.0,
-                          height: 50.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: IoT_Theme.of(context).alternate,
-                          textStyle: IoT_Theme.of(context).titleSmall.override(
-                                fontFamily: 'Inter',
-                                color: IoT_Theme.of(context).primaryText,
-                                fontSize: 10.0,
-                                letterSpacing: 0.0,
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                          child: AspectRatio(
+                            aspectRatio:
+                                1.0, // Proporcja 1:1 zapewniająca kształt koła
+                            child: ShteyButtonWidget(
+                              onPressed: () async {
+                                ShteyAppState().Monday =
+                                    !ShteyAppState().Monday;
+                                setState(() {});
+                              },
+                              text: ShteyLocalizations.of(context).getText(
+                                'm9miabzw' /* Mon */,
                               ),
-                          elevation: 3.0,
-                          borderSide: const BorderSide(
-                            color: Colors.transparent,
-                            width: 1.0,
+                              options: ShteyButtonOptions(
+                                height: 50.0,
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                iconPadding:
+                                    const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                color: IoT_Theme.of(context).alternate,
+                                textStyle: IoT_Theme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      color: IoT_Theme.of(context).primaryText,
+                                      fontSize: 10.0,
+                                      letterSpacing: 0.0,
+                                    ),
+                                elevation: 3.0,
+                                borderSide: const BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(24.0),
+                              ),
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(24.0),
                         ),
                       ),
-                      ShteyButtonWidget(
-                        onPressed: () async {
-                          ShteyAppState().Tuesday = !ShteyAppState().Tuesday;
-                          setState(() {});
-                        },
-                        text: ShteyLocalizations.of(context).getText(
-                          '0fmj2kgr' /* Tue */,
-                        ),
-                        options: ShteyButtonOptions(
-                          width: 50.0,
-                          height: 50.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: IoT_Theme.of(context).alternate,
-                          textStyle: IoT_Theme.of(context).titleSmall.override(
-                                fontFamily: 'Inter',
-                                color: IoT_Theme.of(context).primaryText,
-                                fontSize: 10.0,
-                                letterSpacing: 0.0,
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                          child: AspectRatio(
+                            aspectRatio:
+                                1.0, // Proporcja 1:1 zapewniająca kształt koła
+                            child: ShteyButtonWidget(
+                              onPressed: () async {
+                                ShteyAppState().Tuesday =
+                                    !ShteyAppState().Tuesday;
+                                setState(() {});
+                              },
+                              text: ShteyLocalizations.of(context).getText(
+                                '0fmj2kgr' /* Tue */,
                               ),
-                          elevation: 3.0,
-                          borderSide: const BorderSide(
-                            color: Colors.transparent,
-                            width: 1.0,
+                              options: ShteyButtonOptions(
+                                height: 50.0,
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                iconPadding:
+                                    const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                color: IoT_Theme.of(context).alternate,
+                                textStyle: IoT_Theme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      color: IoT_Theme.of(context).primaryText,
+                                      fontSize: 10.0,
+                                      letterSpacing: 0.0,
+                                    ),
+                                elevation: 3.0,
+                                borderSide: const BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(24.0),
+                              ),
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(24.0),
                         ),
                       ),
-                      ShteyButtonWidget(
-                        onPressed: () async {
-                          ShteyAppState().Wednesday =
-                              !ShteyAppState().Wednesday;
-                          setState(() {});
-                        },
-                        text: ShteyLocalizations.of(context).getText(
-                          '0c7mmagq' /* Wed */,
-                        ),
-                        options: ShteyButtonOptions(
-                          width: 50.0,
-                          height: 50.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: IoT_Theme.of(context).alternate,
-                          textStyle: IoT_Theme.of(context).titleSmall.override(
-                                fontFamily: 'Inter',
-                                color: IoT_Theme.of(context).primaryText,
-                                fontSize: 10.0,
-                                letterSpacing: 0.0,
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                          child: AspectRatio(
+                            aspectRatio:
+                                1.0, // Proporcja 1:1 zapewniająca kształt koła
+                            child: ShteyButtonWidget(
+                              onPressed: () async {
+                                ShteyAppState().Wednesday =
+                                    !ShteyAppState().Wednesday;
+                                setState(() {});
+                              },
+                              text: ShteyLocalizations.of(context).getText(
+                                '0c7mmagq' /* Wed */,
                               ),
-                          elevation: 3.0,
-                          borderSide: const BorderSide(
-                            color: Colors.transparent,
-                            width: 1.0,
+                              options: ShteyButtonOptions(
+                                height: 50.0,
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                iconPadding:
+                                    const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                color: IoT_Theme.of(context).alternate,
+                                textStyle: IoT_Theme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      color: IoT_Theme.of(context).primaryText,
+                                      fontSize: 10.0,
+                                      letterSpacing: 0.0,
+                                    ),
+                                elevation: 3.0,
+                                borderSide: const BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(24.0),
+                              ),
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(24.0),
                         ),
                       ),
-                      ShteyButtonWidget(
-                        onPressed: () async {
-                          ShteyAppState().Thursday = !ShteyAppState().Thursday;
-                          setState(() {});
-                        },
-                        text: ShteyLocalizations.of(context).getText(
-                          '84ff23w4' /* Thu */,
-                        ),
-                        options: ShteyButtonOptions(
-                          width: 50.0,
-                          height: 50.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: IoT_Theme.of(context).alternate,
-                          textStyle: IoT_Theme.of(context).titleSmall.override(
-                                fontFamily: 'Inter',
-                                color: IoT_Theme.of(context).primaryText,
-                                fontSize: 10.0,
-                                letterSpacing: 0.0,
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                          child: AspectRatio(
+                            aspectRatio:
+                                1.0, // Proporcja 1:1 zapewniająca kształt koła
+                            child: ShteyButtonWidget(
+                              onPressed: () async {
+                                ShteyAppState().Thursday =
+                                    !ShteyAppState().Thursday;
+                                setState(() {});
+                              },
+                              text: ShteyLocalizations.of(context).getText(
+                                '84ff23w4' /* Thu */,
                               ),
-                          elevation: 3.0,
-                          borderSide: const BorderSide(
-                            color: Colors.transparent,
-                            width: 1.0,
+                              options: ShteyButtonOptions(
+                                height: 50.0,
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                iconPadding:
+                                    const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                color: IoT_Theme.of(context).alternate,
+                                textStyle: IoT_Theme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      color: IoT_Theme.of(context).primaryText,
+                                      fontSize: 10.0,
+                                      letterSpacing: 0.0,
+                                    ),
+                                elevation: 3.0,
+                                borderSide: const BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(24.0),
+                              ),
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(24.0),
                         ),
                       ),
-                      ShteyButtonWidget(
-                        onPressed: () async {
-                          ShteyAppState().Friday = !ShteyAppState().Friday;
-                          setState(() {});
-                        },
-                        text: ShteyLocalizations.of(context).getText(
-                          'ky402mn0' /* Fri */,
-                        ),
-                        options: ShteyButtonOptions(
-                          width: 50.0,
-                          height: 50.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: IoT_Theme.of(context).alternate,
-                          textStyle: IoT_Theme.of(context).titleSmall.override(
-                                fontFamily: 'Inter',
-                                color: IoT_Theme.of(context).primaryText,
-                                fontSize: 10.0,
-                                letterSpacing: 0.0,
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                          child: AspectRatio(
+                            aspectRatio:
+                                1.0, // Proporcja 1:1 zapewniająca kształt koła
+                            child: ShteyButtonWidget(
+                              onPressed: () async {
+                                ShteyAppState().Friday =
+                                    !ShteyAppState().Friday;
+                                setState(() {});
+                              },
+                              text: ShteyLocalizations.of(context).getText(
+                                'ky402mn0' /* Fri */,
                               ),
-                          elevation: 3.0,
-                          borderSide: const BorderSide(
-                            color: Colors.transparent,
-                            width: 1.0,
+                              options: ShteyButtonOptions(
+                                height: 50.0,
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                iconPadding:
+                                    const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                color: IoT_Theme.of(context).alternate,
+                                textStyle: IoT_Theme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      color: IoT_Theme.of(context).primaryText,
+                                      fontSize: 10.0,
+                                      letterSpacing: 0.0,
+                                    ),
+                                elevation: 3.0,
+                                borderSide: const BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(24.0),
+                              ),
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(24.0),
                         ),
                       ),
-                      ShteyButtonWidget(
-                        onPressed: () async {
-                          ShteyAppState().Saturday = !ShteyAppState().Saturday;
-                          setState(() {});
-                        },
-                        text: ShteyLocalizations.of(context).getText(
-                          '9wuxhajc' /* Sat */,
-                        ),
-                        options: ShteyButtonOptions(
-                          width: 50.0,
-                          height: 50.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: IoT_Theme.of(context).alternate,
-                          textStyle: IoT_Theme.of(context).titleSmall.override(
-                                fontFamily: 'Inter',
-                                color: IoT_Theme.of(context).primaryText,
-                                fontSize: 10.0,
-                                letterSpacing: 0.0,
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                          child: AspectRatio(
+                            aspectRatio:
+                                1.0, // Proporcja 1:1 zapewniająca kształt koła
+                            child: ShteyButtonWidget(
+                              onPressed: () async {
+                                ShteyAppState().Saturday =
+                                    !ShteyAppState().Saturday;
+                                setState(() {});
+                              },
+                              text: ShteyLocalizations.of(context).getText(
+                                '9wuxhajc' /* Sat */,
                               ),
-                          elevation: 3.0,
-                          borderSide: const BorderSide(
-                            color: Colors.transparent,
-                            width: 1.0,
+                              options: ShteyButtonOptions(
+                                height: 50.0,
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                iconPadding:
+                                    const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                color: IoT_Theme.of(context).alternate,
+                                textStyle: IoT_Theme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      color: IoT_Theme.of(context).primaryText,
+                                      fontSize: 10.0,
+                                      letterSpacing: 0.0,
+                                    ),
+                                elevation: 3.0,
+                                borderSide: const BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(24.0),
+                              ),
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(24.0),
                         ),
                       ),
-                      ShteyButtonWidget(
-                        onPressed: () async {
-                          ShteyAppState().Sunday = !ShteyAppState().Sunday;
-                          setState(() {});
-                        },
-                        text: ShteyLocalizations.of(context).getText(
-                          'ayddrvfp' /* Sun */,
-                        ),
-                        options: ShteyButtonOptions(
-                          width: 50.0,
-                          height: 50.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: IoT_Theme.of(context).alternate,
-                          textStyle: IoT_Theme.of(context).titleSmall.override(
-                                fontFamily: 'Inter',
-                                color: IoT_Theme.of(context).primaryText,
-                                fontSize: 10.0,
-                                letterSpacing: 0.0,
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                          child: AspectRatio(
+                            aspectRatio:
+                                1.0, // Proporcja 1:1 zapewniająca kształt koła
+                            child: ShteyButtonWidget(
+                              onPressed: () async {
+                                ShteyAppState().Sunday =
+                                    !ShteyAppState().Sunday;
+                                setState(() {});
+                              },
+                              text: ShteyLocalizations.of(context).getText(
+                                'ayddrvfp' /* Sun */,
                               ),
-                          elevation: 3.0,
-                          borderSide: const BorderSide(
-                            color: Colors.transparent,
-                            width: 1.0,
+                              options: ShteyButtonOptions(
+                                height: 50.0,
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                iconPadding:
+                                    const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                color: IoT_Theme.of(context).alternate,
+                                textStyle: IoT_Theme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      color: IoT_Theme.of(context).primaryText,
+                                      fontSize: 10.0,
+                                      letterSpacing: 0.0,
+                                    ),
+                                elevation: 3.0,
+                                borderSide: const BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(24.0),
+                              ),
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(24.0),
                         ),
                       ),
                     ],
@@ -397,40 +506,7 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                           ),
                     ),
                   ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 100.0,
-                        height: 50.0,
-                        decoration: BoxDecoration(
-                          color: IoT_Theme.of(context).secondaryBackground,
-                          borderRadius: BorderRadius.circular(8.0),
-                          border: Border.all(
-                            color: IoT_Theme.of(context).primaryText,
-                            width: 1.0,
-                          ),
-                        ),
-                        child: Align(
-                          alignment: const AlignmentDirectional(0.0, 0.0),
-                          child: Text(
-                            ShteyLocalizations.of(context).getText(
-                              '2y212ecm' /* 08:00 */,
-                            ),
-                            textAlign: TextAlign.center,
-                            style: IoT_Theme.of(context).bodyMedium.override(
-                                  fontFamily: 'Inter',
-                                  color: IoT_Theme.of(context).primaryText,
-                                  fontSize: 24.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  timePickerSpinner(),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
                         0.0, 20.0, 0.0, 0.0),
@@ -637,6 +713,7 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                                           ),
                                     ),
                                     IotIconButton(
+                                      borderColor: Colors.transparent,
                                       borderRadius: 20.0,
                                       buttonSize: 40.0,
                                       icon: Icon(
@@ -736,13 +813,13 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
-                        16.0, 0.0, 0.0, 0.0),
+                        16.0, 0.0, 16.0, 16.0),
                     child: ShteyButtonWidget(
                       onPressed: () {
                         print('Button pressed ...');
                       },
                       text: ShteyLocalizations.of(context).getText(
-                        'rq1mzqny' /* Add Device */,
+                        'rq1mzqny' /* Save */,
                       ),
                       options: ShteyButtonOptions(
                         width: double.infinity,
