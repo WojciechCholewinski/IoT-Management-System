@@ -3,7 +3,6 @@ import '/app_ui/util.dart';
 import '/app_ui/widgets.dart';
 import 'package:flutter/material.dart';
 import 'login_page_model.dart';
-export 'login_page_model.dart';
 
 class LoginPageWidget extends StatefulWidget {
   const LoginPageWidget({super.key});
@@ -493,7 +492,11 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                             0.0, 16.0, 0.0, 0.0),
                                     child: ShteyButtonWidget(
                                       onPressed: () async {
-                                        context.pushNamed('Dashboard');
+                                        // Use this line in development environment
+                                        // context.pushNamed('Dashboard');
+
+                                        // Use this line in production environment
+                                        await _model.login(context);
                                       },
                                       text: ShteyLocalizations.of(context)
                                           .getText(

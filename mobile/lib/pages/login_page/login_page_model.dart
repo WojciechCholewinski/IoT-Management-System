@@ -1,6 +1,7 @@
 import '/app_ui/util.dart';
 import 'login_page_widget.dart' show LoginPageWidget;
 import 'package:flutter/material.dart';
+import '/models/auth_service.dart';
 
 class LoginPageModel extends IotModel<LoginPageWidget> {
   ///  State fields for stateful widgets in this page.
@@ -40,6 +41,30 @@ class LoginPageModel extends IotModel<LoginPageWidget> {
     }
 
     return null;
+  }
+
+  final AuthService _authService = AuthService();
+
+  Future<void> login(BuildContext context) async {
+    if (formKey.currentState?.validate() ?? false) {
+      final email = emailAddressFieldTextController?.text;
+      final password = passwordFieldTextController?.text;
+
+       try {
+        final token = await _authService.login(email!, password!);
+        if (token != null) {
+          print('Login successful: $token');
+          context.pushNamed('Dashboard');
+        } else {
+          print('Login failed: Token is null');
+        }
+      } catch (e) {
+        print('Exception during login: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to login: $e')),
+        );
+      }
+    }
   }
 
   @override
