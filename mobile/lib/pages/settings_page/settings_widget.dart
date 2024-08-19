@@ -942,7 +942,7 @@ class _SettingsWidgetState extends State<SettingsWidget>
                                     0.0, 1.0, 0.0, 10.0),
                                 child: ShteyButtonWidget(
                                   onPressed: () async {
-                                    context.pushNamed('RegisterPage');
+                                    context.pushNamed('LoginPage');
                                   },
                                   text: ShteyLocalizations.of(context).getText(
                                     'gr0jjko0' /* Log Out */,

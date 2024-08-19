@@ -54,12 +54,13 @@ class LoginPageModel extends IotModel<LoginPageWidget> {
         final token = await _authService.login(email!, password!);
         if (token != null) {
           print('Login successful: $token');
-          context.pushNamed('Dashboard');
+          context.goNamed('Dashboard');
         } else {
           print('Login failed: Token is null');
         }
       } catch (e) {
         print('Exception during login: $e');
+        // Obsługa błędów logowania
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Failed to login: $e')),
         );

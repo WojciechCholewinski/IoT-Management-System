@@ -1,6 +1,7 @@
 import '/app_ui/util.dart';
 import 'register_page_widget.dart' show RegisterPageWidget;
 import 'package:flutter/material.dart';
+import '/models/auth_service.dart';
 
 class RegisterPageModel extends IotModel<RegisterPageWidget> {
   ///  State fields for stateful widgets in this page.
@@ -48,6 +49,41 @@ class RegisterPageModel extends IotModel<RegisterPageWidget> {
   late bool confirmPasswordFieldVisibility;
   String? Function(BuildContext, String?)?
       confirmPasswordFieldTextControllerValidator;
+
+
+
+  final AuthService _authService = AuthService(); // Dodaję AuthService
+
+  Future<void> register(BuildContext context) async {
+    if (formKey.currentState?.validate() ?? false) {
+      final email = emailAddressFieldTextController?.text;
+      final password = passwordFieldTextController?.text;
+      final confirmPassword = confirmPasswordFieldTextController?.text;
+
+      if (password != confirmPassword) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Passwords do not match')),
+        );
+        return;
+      }
+
+      try {
+        final success =
+            await _authService.register(email!, password!, confirmPassword!);
+        if (success) {
+          context.goNamed('LoginPage');
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Registration failed')),
+          );
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: $e')),
+        );
+      }
+    }
+  }
 
   @override
   void initState(BuildContext context) {

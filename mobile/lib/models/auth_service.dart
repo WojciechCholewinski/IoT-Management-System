@@ -46,4 +46,34 @@ class AuthService {
   Future<String?> getToken() async {
     return await _secureStorage.read(key: 'jwt_token');
   }
+
+////////////////////////////////////////////////////////////////////////////////
+
+  Future<bool> register(
+    String email,
+    // String firstName,
+    String password,
+    String confirmPassword,
+    // int roleId
+  ) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/register'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'email': email,
+        // 'firstName': firstName,
+        'password': password,
+        'confirmPassword': confirmPassword,
+        // 'roleId': roleId,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

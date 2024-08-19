@@ -645,7 +645,7 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                                             0.0, 16.0, 0.0, 0.0),
                                     child: ShteyButtonWidget(
                                       onPressed: () async {
-                                        context.goNamed('LoginPage');
+                                        await _model.register(context);
                                       },
                                       text: ShteyLocalizations.of(context)
                                           .getText(
