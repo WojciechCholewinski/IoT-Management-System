@@ -8,7 +8,7 @@ namespace api.Entities
     public class IoT_DbContext : DbContext
     {
         private string _connectionString = 
-            "Server=(localdb)\\mssqllocaldb;Database=IoTManagementSystemDb; Trusted_Connection=True;";
+            "Server=(localdb)\\mssqllocaldb;Database=bin2Db; Trusted_Connection=True;";
 
         public DbSet<Device> Devices { get; set; }
         public DbSet<LocationType> LocationTypes { get; set; }

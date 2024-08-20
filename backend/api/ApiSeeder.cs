@@ -1,16 +1,19 @@
 ﻿using api.Entities;
 using System.Data;
 using System.Net;
+using System.Reflection;
 
 namespace api
 {
     public class ApiSeeder
     {
         IoT_DbContext _dbContext;
+        private readonly string _imagesPath;
 
-        public ApiSeeder(IoT_DbContext dbContext)
+        public ApiSeeder(IoT_DbContext dbContext, IConfiguration configuration)
         {
             _dbContext = dbContext;
+            _imagesPath = configuration["ImagesPath"];
         }
         public void Seed()
         {
@@ -73,20 +76,45 @@ namespace api
 
             var devices = new List<Device>()
             {
-                new Device() { Name = "Desk Lighting", Location = myRoom },
-                new Device() { Name = "Hallway Lighting", Location = hallway },
-                new Device() { Name = "Under Lighting", Location = myRoom },
-                new Device() { Name = "Kitchen Lighting", Location = kitchen },
-                new Device() { Name = "Drawer Lock", Location = myRoom },
-                new Device() { Name = "Roller Blinds - W", Location = myRoom },
-                new Device() { Name = "Roller Blinds - M", Location = smallRoom },
-                new Device() { Name = "Roller Blinds - D", Location = livingRoom },
-                new Device() { Name = "Air Conditioner", Location = myRoom },
-                new Device() { Name = "Air Purifier", Location = myRoom },
-                new Device() { Name = "Soil Moisture Sensor", Location = livingRoom },
-                new Device() { Name = "Temperature Sensor", Location = livingRoom }
+                CreateDevice("Desk Lighting", myRoom),
+                CreateDevice("Hallway Lighting", hallway),
+                CreateDevice("Under Lighting", myRoom),
+                CreateDevice("Kitchen Lighting", kitchen),
+                CreateDevice("Drawer Lock", myRoom),
+                CreateDevice("Roller Blinds - W", myRoom),
+                CreateDevice("Roller Blinds - M", smallRoom),
+                CreateDevice("Roller Blinds - D", livingRoom),
+                CreateDevice("Air Conditioner", myRoom),
+                CreateDevice("Air Purifier", myRoom),
+                CreateDevice("Soil Moisture Sensor", livingRoom),
+                CreateDevice("Temperature Sensor", livingRoom)
             };
             return devices;
+        }
+
+        private Device CreateDevice(string name, LocationType location)
+        {
+            return new Device
+            {
+                Name = name,
+                Location = location,
+                LightThemeImage = LoadImage($"{name.Replace(" ", "_")}_-_Light_mode.png"),
+                DarkThemeImage = LoadImage($"{name.Replace(" ", "_")}_-_Dark_mode.png")
+            };
+        }
+
+        private byte[] LoadImage(string fileName)
+        {
+            var filePath = Path.Combine(_imagesPath, fileName);
+
+            if (File.Exists(filePath))
+            {
+                return File.ReadAllBytes(filePath);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

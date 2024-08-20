@@ -67,6 +67,7 @@ var app = builder.Build();
 app.UseCors("FrontendClient");
 
 var scope = app.Services.CreateScope();
+var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
 var seeder = scope.ServiceProvider.GetRequiredService<ApiSeeder>();
 seeder.Seed();
 
