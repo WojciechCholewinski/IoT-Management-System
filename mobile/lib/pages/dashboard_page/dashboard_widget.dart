@@ -202,12 +202,14 @@ class _DashboardWidgetState extends State<DashboardWidget>
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               8),
-                                                      child: Image.asset(
+                                                      child: Image.memory(
                                                         Theme.of(context)
                                                                     .brightness ==
                                                                 Brightness.dark
-                                                            ? 'assets/images/${device.name.replaceAll(" ", "_")}_-_Dark_mode.png'
-                                                            : 'assets/images/${device.name.replaceAll(" ", "_")}_-_Light_mode.png',
+                                                            ? device
+                                                                .darkThemeImage
+                                                            : device
+                                                                .lightThemeImage,
                                                         width: 70,
                                                         height: 70,
                                                         fit: BoxFit.cover,
