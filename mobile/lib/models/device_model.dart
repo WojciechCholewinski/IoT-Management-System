@@ -4,6 +4,7 @@ import 'dart:convert';
 class Device {
   final int id;
   final String name;
+  final String namePL;
   final Uint8List lightThemeImage;
   final Uint8List darkThemeImage;
   bool isOn;
@@ -11,6 +12,7 @@ class Device {
   Device(
       {required this.id,
       required this.name,
+      required this.namePL,
       required this.isOn,
       required this.lightThemeImage,
       required this.darkThemeImage});
@@ -19,6 +21,7 @@ class Device {
     return Device(
       id: json['id'],
       name: json['name'],
+      namePL: json['namePL'],
       lightThemeImage: base64Decode(json['lightThemeImage']),
       darkThemeImage: base64Decode(json['darkThemeImage']),
       isOn: json['isOn'],

@@ -221,7 +221,12 @@ class _DashboardWidgetState extends State<DashboardWidget>
                                                               .fromSTEB(
                                                               16, 0, 0, 0),
                                                       child: Text(
-                                                        device.name,
+                                                        (ShteyLocalizations.of(
+                                                                        context)
+                                                                    .languageCode ==
+                                                                "en"
+                                                            ? device.name
+                                                            : device.namePL),
                                                         style: IoT_Theme.of(
                                                                 context)
                                                             .bodyLarge
