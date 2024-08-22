@@ -12,8 +12,8 @@ using api.Entities;
 namespace api.Migrations
 {
     [DbContext(typeof(IoT_DbContext))]
-    [Migration("20240811061753_new")]
-    partial class @new
+    [Migration("20240815070918_AddNamePLToDevice")]
+    partial class AddNamePLToDevice
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,6 +54,10 @@ namespace api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("NamePL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+                        
                     b.Property<TimeSpan>("RunTime")
                         .HasColumnType("time");
 

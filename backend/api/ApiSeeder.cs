@@ -76,27 +76,28 @@ namespace api
 
             var devices = new List<Device>()
             {
-                CreateDevice("Desk Lighting", myRoom),
-                CreateDevice("Hallway Lighting", hallway),
-                CreateDevice("Under Lighting", myRoom),
-                CreateDevice("Kitchen Lighting", kitchen),
-                CreateDevice("Drawer Lock", myRoom),
-                CreateDevice("Roller Blinds - W", myRoom),
-                CreateDevice("Roller Blinds - M", smallRoom),
-                CreateDevice("Roller Blinds - D", livingRoom),
-                CreateDevice("Air Conditioner", myRoom),
-                CreateDevice("Air Purifier", myRoom),
-                CreateDevice("Soil Moisture Sensor", livingRoom),
-                CreateDevice("Temperature Sensor", livingRoom)
+                CreateDevice("Desk Lighting", "Oświetlenie biurka", myRoom),
+                CreateDevice("Hallway Lighting", "Oświetlenie korytarza", hallway),
+                CreateDevice("Under Lighting", "Podświetlenie", myRoom),
+                CreateDevice("Kitchen Lighting", "Oświetlenie kuchni", kitchen),
+                CreateDevice("Drawer Lock", "Zamek szuflady", myRoom),
+                CreateDevice("Roller Blinds - W", "Rolety - W", myRoom),
+                CreateDevice("Roller Blinds - M", "Rolety - M", smallRoom),
+                CreateDevice("Roller Blinds - D", "Rolety - D", livingRoom),
+                CreateDevice("Air Conditioner", "Klimatyzator", myRoom),
+                CreateDevice("Air Purifier", "Oczyszczacz powietrza", myRoom),
+                CreateDevice("Soil Moisture Sensor", "Czujnik wilgotności gleby", livingRoom),
+                CreateDevice("Temperature Sensor", "Czujnik temperatury", livingRoom)
             };
             return devices;
         }
 
-        private Device CreateDevice(string name, LocationType location)
+        private Device CreateDevice(string name, string namePL, LocationType location)
         {
             return new Device
             {
                 Name = name,
+                NamePL = namePL,
                 Location = location,
                 LightThemeImage = LoadImage($"{name.Replace(" ", "_")}_-_Light_mode.png"),
                 DarkThemeImage = LoadImage($"{name.Replace(" ", "_")}_-_Dark_mode.png")

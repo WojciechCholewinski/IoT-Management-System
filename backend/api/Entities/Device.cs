@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public required string Name { get; set; }
+        public required string NamePL { get; set; }
         public required byte[] LightThemeImage { get; set; }
         public required byte[] DarkThemeImage { get; set; }
         public LocationType? Location { get; set; }
