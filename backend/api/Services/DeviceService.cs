@@ -26,5 +26,32 @@ namespace api.Services
             var devicesDtos = _mapper.Map<List<DeviceDto>>(devices);
             return devicesDtos;
         }
+
+        public bool? UpdateIsOn(int id, bool isOn)
+        {
+            var device = 
+                _dbContext
+                .Devices
+                .FirstOrDefault(d => d.Id == id);
+
+            if (device == null)
+            {
+                return null;
+            }
+            if (device.IsOn == isOn) 
+            {
+                return false;
+            }
+            if (device.LastUpdate.HasValue && !isOn)
+            {
+                var timeSpan = DateTime.Now - device.LastUpdate.Value;
+                device.RunTime += timeSpan;
+            }
+            device.IsOn = isOn;
+            device.LastUpdate = DateTime.Now;
+
+            _dbContext.SaveChanges();
+            return true;
+        }
     }
 }
