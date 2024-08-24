@@ -19,18 +19,22 @@ class DeviceService {
     }
   }
 
-  // Future<void> updateDevice(int id, bool isOn) async {
+  Future<void> updateDeviceIsOn(int id, bool isOn) async {
+    final url = Uri.parse('https://localhost:5000/api/device/$id/ison');
 
-  //   final response = await http.put(
-  //     Uri.parse('https://example.com/api/devices/$id'),
-  //     headers: <String, String>{
-  //       'Content-Type': 'application/json; charset=UTF-8',
-  //     },
-  //     body: jsonEncode(<String, bool>{'isOn': isOn}),
-  //   );
+    final response = await http.patch(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(isOn),
+    );
 
-  //   if (response.statusCode != 200) {
-  //     throw Exception('Failed to update device');
-  //   }
-  // }
+    if (response.statusCode == 200 || response.statusCode == 204) {
+    } else if (response.statusCode == 404) {
+      throw Exception('Device not found');
+    } else if (response.statusCode == 409) {
+      throw Exception('Device is already in the requested state');
+    } else {
+      throw Exception('Failed to update device');
+    }
+  }
 }

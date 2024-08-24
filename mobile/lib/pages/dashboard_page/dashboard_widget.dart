@@ -265,10 +265,15 @@ class _DashboardWidgetState extends State<DashboardWidget>
                                                                 1, 0),
                                                         child: ToggleIcon(
                                                           onPressed: () async {
-                                                            setState(() =>
-                                                                device.isOn =
-                                                                    !device
-                                                                        .isOn);
+                                                            final appState =
+                                                                Provider.of<
+                                                                        ShteyAppState>(
+                                                                    context,
+                                                                    listen:
+                                                                        false);
+                                                            appState
+                                                                .toggleDeviceState(
+                                                                    device);
                                                           },
                                                           value: device.isOn,
                                                           onIcon: Icon(

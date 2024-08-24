@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'models/device_model.dart';
+import 'models/device_service.dart';
 
 class ShteyAppState extends ChangeNotifier {
   static ShteyAppState _instance = ShteyAppState._internal();
@@ -20,76 +22,21 @@ class ShteyAppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool _DeskLighting = false;
-  bool get DeskLighting => _DeskLighting;
-  set DeskLighting(bool value) {
-    _DeskLighting = value;
-  }
+  List<Device> _devices = [];
 
-  bool _HallwayLighting = false;
-  bool get HallwayLighting => _HallwayLighting;
-  set HallwayLighting(bool value) {
-    _HallwayLighting = value;
-  }
+  List<Device> get devices => _devices;
 
-  bool _UnderLighting = false;
-  bool get UnderLighting => _UnderLighting;
-  set UnderLighting(bool value) {
-    _UnderLighting = value;
-  }
+  final DeviceService _deviceService = DeviceService();
 
-  bool _KitchenLighting = false;
-  bool get KitchenLighting => _KitchenLighting;
-  set KitchenLighting(bool value) {
-    _KitchenLighting = value;
-  }
-
-  bool _DrawerLock = false;
-  bool get DrawerLock => _DrawerLock;
-  set DrawerLock(bool value) {
-    _DrawerLock = value;
-  }
-
-  bool _RollerBlindsW = false;
-  bool get RollerBlindsW => _RollerBlindsW;
-  set RollerBlindsW(bool value) {
-    _RollerBlindsW = value;
-  }
-
-  bool _RollerBlindsM = false;
-  bool get RollerBlindsM => _RollerBlindsM;
-  set RollerBlindsM(bool value) {
-    _RollerBlindsM = value;
-  }
-
-  bool _RollerBlindsD = false;
-  bool get RollerBlindsD => _RollerBlindsD;
-  set RollerBlindsD(bool value) {
-    _RollerBlindsD = value;
-  }
-
-  bool _AirConditioner = false;
-  bool get AirConditioner => _AirConditioner;
-  set AirConditioner(bool value) {
-    _AirConditioner = value;
-  }
-
-  bool _AirPurifier = false;
-  bool get AirPurifier => _AirPurifier;
-  set AirPurifier(bool value) {
-    _AirPurifier = value;
-  }
-
-  bool _SoilMoisture = false;
-  bool get SoilMoisture => _SoilMoisture;
-  set SoilMoisture(bool value) {
-    _SoilMoisture = value;
-  }
-
-  bool _Temperature = false;
-  bool get Temperature => _Temperature;
-  set Temperature(bool value) {
-    _Temperature = value;
+  void toggleDeviceState(Device device) async {
+    final newState = !device.isOn;
+    try {
+      await _deviceService.updateDeviceIsOn(device.id, newState);
+      device.isOn = newState;
+      notifyListeners();
+    } catch (e) {
+      print('Error updating device: $e');
+    }
   }
 
 ////////////////////////////////////////////////////////////////
