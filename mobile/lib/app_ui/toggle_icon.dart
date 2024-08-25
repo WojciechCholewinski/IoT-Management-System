@@ -17,6 +17,8 @@ class ToggleIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) => IconButton(
         onPressed: onPressed,
+        padding: EdgeInsets.zero,
         icon: value ? onIcon : offIcon,
+        iconSize: 60,
       );
 }

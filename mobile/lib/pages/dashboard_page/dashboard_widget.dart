@@ -5,8 +5,6 @@ import '/app_ui/toggle_icon.dart';
 import '/app_ui/util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '/models/device_model.dart';
-import '/models/device_service.dart';
 import 'dashboard_model.dart';
 export 'dashboard_model.dart';
 
@@ -27,6 +25,9 @@ class _DashboardWidgetState extends State<DashboardWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => DashboardModel());
+
+    final appState = Provider.of<ShteyAppState>(context, listen: false);
+    appState.fetchDevices();
 
     _model.tabBarController = TabController(
       vsync: this,
@@ -81,7 +82,7 @@ class _DashboardWidgetState extends State<DashboardWidget>
             automaticallyImplyLeading: false,
             title: Text(
               ShteyLocalizations.of(context).getText(
-                'min55hm8' /* Devices */,
+                'knrdk3vc' /* Dashboard */,
               ),
               style: IoT_Theme.of(context).titleLarge.override(
                     fontFamily: 'Inter',
@@ -149,128 +150,132 @@ class _DashboardWidgetState extends State<DashboardWidget>
                     child: TabBarView(
                       controller: _model.tabBarController,
                       children: [
-                        FutureBuilder<List<Device>>(
-                          future: DeviceService().fetchDevices(),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
+                        Consumer<ShteyAppState>(
+                          builder: (context, appState, child) {
+                            if (appState.devices.isEmpty) {
                               return const Center(
                                   child: CircularProgressIndicator());
-                            } else if (snapshot.hasError) {
-                              return Center(
-                                  child: Text('Error: ${snapshot.error}'));
-                            } else if (!snapshot.hasData ||
-                                snapshot.data!.isEmpty) {
-                              return const Center(
-                                  child: Text('No devices found'));
-                            } else {
-                              return ListView.builder(
-                                itemCount: snapshot.data!.length,
-                                itemBuilder: (context, index) {
-                                  final device = snapshot.data![index];
-                                  return Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            16, 8, 16, 0),
-                                    child: Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: IoT_Theme.of(context)
-                                            .primaryBackground,
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Flexible(
-                                            child: Align(
-                                              alignment:
-                                                  AlignmentDirectional(0, 0),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(8, 8, 22, 8),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                      child: Image.memory(
-                                                        Theme.of(context)
-                                                                    .brightness ==
-                                                                Brightness.dark
-                                                            ? device
-                                                                .darkThemeImage
-                                                            : device
-                                                                .lightThemeImage,
-                                                        width: 70,
-                                                        height: 70,
-                                                        fit: BoxFit.cover,
-                                                      ),
+                            }
+
+                            return ListView.builder(
+                              padding: const EdgeInsets.only(bottom: 50.0),
+                              itemCount: appState.devices.length,
+                              itemBuilder: (context, index) {
+                                final device = appState.devices[index];
+                                return Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      16, 8, 16, 0),
+                                  child: Container(
+                                    key: ValueKey(device
+                                        .id),
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color: IoT_Theme.of(context)
+                                          .primaryBackground,
+                                      borderRadius: BorderRadius.circular(12),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Theme.of(context).brightness ==
+                                                  Brightness.dark
+                                              ? Colors.grey.withOpacity(
+                                                  0.7)
+                                              : Colors.black.withOpacity(
+                                                  0.5),
+                                          blurRadius: 5, // Rozmycie cienia
+                                          offset: const Offset(2,
+                                              2), // Przesunięcie cienia (poziomo, pionowo)
+                                        ),
+                                      ],
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Flexible(
+                                          child: Align(
+                                            alignment:
+                                                AlignmentDirectional(0, 0),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(8, 8, 22, 8),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    child: Image.memory(
+                                                      Theme.of(context)
+                                                                  .brightness ==
+                                                              Brightness.dark
+                                                          ? device
+                                                              .darkThemeImage
+                                                          : device
+                                                              .lightThemeImage,
+                                                      width: 70,
+                                                      height: 70,
+                                                      fit: BoxFit.cover,
                                                     ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              16, 0, 0, 0),
-                                                      child: Text(
-                                                        (ShteyLocalizations.of(
-                                                                        context)
-                                                                    .languageCode ==
-                                                                "en"
-                                                            ? device.name
-                                                            : device.namePL),
-                                                        style: IoT_Theme.of(
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                            16, 0, 0, 0),
+                                                    child: Text(
+                                                      ShteyLocalizations.of(
+                                                                      context)
+                                                                  .languageCode ==
+                                                              "en"
+                                                          ? device.name
+                                                          : device.namePL,
+                                                      style: IoT_Theme.of(
+                                                              context)
+                                                          .bodyLarge
+                                                          .override(
+                                                            fontFamily: 'Inter',
+                                                            letterSpacing: 0,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            0, 0),
+                                                    child: IotIconButton(
+                                                      borderRadius: 50,
+                                                      borderWidth: 0,
+                                                      buttonSize: 40,
+                                                      icon: Icon(
+                                                        Icons.info_outline,
+                                                        color: IoT_Theme.of(
                                                                 context)
-                                                            .bodyLarge
-                                                            .override(
-                                                              fontFamily:
-                                                                  'Inter',
-                                                              letterSpacing: 0,
-                                                            ),
+                                                            .primaryText,
+                                                        size: 22,
                                                       ),
+                                                      onPressed: () {
+                                                        print(
+                                                            'IconButton pressed ...');
+                                                      },
                                                     ),
-                                                    Align(
+                                                  ),
+                                                  Expanded(
+                                                    child: Align(
                                                       alignment:
-                                                          AlignmentDirectional(
-                                                              0, 0),
-                                                      child: IotIconButton(
-                                                        borderRadius: 0,
-                                                        borderWidth: 0,
-                                                        buttonSize: 40,
-                                                        icon: Icon(
-                                                          Icons.info_outline,
-                                                          color: IoT_Theme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                          size: 22,
-                                                        ),
-                                                        onPressed: () {
-                                                          print(
-                                                              'IconButton pressed ...');
-                                                        },
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      child: Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                1, 0),
+                                                          AlignmentDirectional
+                                                              .centerEnd,
+                                                      child: Container(
+                                                        height:
+                                                            70, // Tyle samo, co wysokość obrazka, po to by wyrównać przestrzeń
+                                                        alignment: Alignment
+                                                            .centerRight,
                                                         child: ToggleIcon(
                                                           onPressed: () async {
-                                                            final appState =
-                                                                Provider.of<
-                                                                        ShteyAppState>(
-                                                                    context,
-                                                                    listen:
-                                                                        false);
                                                             appState
                                                                 .toggleDeviceState(
                                                                     device);
@@ -282,7 +287,6 @@ class _DashboardWidgetState extends State<DashboardWidget>
                                                             color: IoT_Theme.of(
                                                                     context)
                                                                 .primary,
-                                                            size: 55,
                                                           ),
                                                           offIcon: Icon(
                                                             Icons
@@ -290,26 +294,24 @@ class _DashboardWidgetState extends State<DashboardWidget>
                                                             color: IoT_Theme.of(
                                                                     context)
                                                                 .secondaryText,
-                                                            size: 55,
                                                           ),
                                                         ),
                                                       ),
                                                     ),
-                                                  ],
-                                                ),
+                                                  )
+                                                ],
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                  );
-                                },
-                              );
-                            }
+                                  ),
+                                );
+                              },
+                            );
                           },
                         ),
-                        // Generated code for this Column Widget...
                         SingleChildScrollView(
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
@@ -783,7 +785,6 @@ class _DashboardWidgetState extends State<DashboardWidget>
                             ],
                           ),
                         ),
-
                         SingleChildScrollView(
                           child: Column(
                             mainAxisSize: MainAxisSize.max,

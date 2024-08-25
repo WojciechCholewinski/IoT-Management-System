@@ -28,6 +28,11 @@ class ShteyAppState extends ChangeNotifier {
 
   final DeviceService _deviceService = DeviceService();
 
+  Future<void> fetchDevices() async {
+    _devices = await _deviceService.fetchDevices();
+    notifyListeners();
+  }
+
   void toggleDeviceState(Device device) async {
     final newState = !device.isOn;
     try {

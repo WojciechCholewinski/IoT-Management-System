@@ -175,6 +175,10 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   },
   // Dashboard
   {
+    'knrdk3vc': {
+      'en': 'Dashboard',
+      'pl': 'Panel główny',
+    },
     'bu43kf6r': {
       'en': 'Devices',
       'pl': 'Urządzenia',
@@ -499,10 +503,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   },
   // Miscellaneous
   {
-    'knrdk3vc': {
-      'en': '',
-      'pl': '',
-    },
     'fdbdicqi': {
       'en': '',
       'pl': '',

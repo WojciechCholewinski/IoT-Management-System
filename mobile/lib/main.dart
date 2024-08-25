@@ -6,8 +6,10 @@ import 'app_ui/theme.dart';
 import 'app_ui/util.dart';
 import 'app_ui/internationalization.dart';
 import 'index.dart';
+import 'package:flutter/rendering.dart';
 
 void main() async {
+  debugPaintSizeEnabled = false;
   WidgetsFlutterBinding.ensureInitialized();
   GoRouter.optionURLReflectsImperativeAPIs = true;
   usePathUrlStrategy();
