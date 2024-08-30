@@ -14,6 +14,7 @@ namespace api.Entities
         public DbSet<LocationType> LocationTypes { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Automation> Automations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,6 +37,31 @@ namespace api.Entities
             modelBuilder.Entity<LocationType>()
                 .Property(l => l.Name)
                 .IsRequired();
+
+            modelBuilder.Entity<Automation>()
+                .Property(a => a.Name)
+                .IsRequired();
+
+            modelBuilder.Entity<Automation>()
+                .Property(a => a.NamePL)
+                .IsRequired();
+
+            modelBuilder.Entity<Automation>()
+                .Property(a => a.Image)
+                .IsRequired();
+
+            modelBuilder.Entity<Automation>()
+                .Property(a => a.TriggerDays)
+                .IsRequired();
+
+            modelBuilder.Entity<Automation>()
+                .Property(a => a.TriggerTime)
+                .IsRequired();
+
+            modelBuilder.Entity<Automation>().HasOne(a => a.CreatedBy);
+
+            modelBuilder.Entity<Automation>().HasMany(a => a.Devices);
+
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

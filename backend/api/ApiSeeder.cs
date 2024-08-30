@@ -1,4 +1,6 @@
 ﻿using api.Entities;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Net;
 using System.Reflection;
@@ -35,6 +37,14 @@ namespace api
                     _dbContext.Devices.AddRange(devices);
 
                     _dbContext.SaveChanges();
+
+                    if (!_dbContext.Automations.Any())
+                    {
+                        var automations = GetAutomations();
+                        _dbContext.Automations.AddRange(automations);
+
+                        _dbContext.SaveChanges();
+                    }
                 }
             }
         }
@@ -117,5 +127,100 @@ namespace api
                 return null;
             }
         }
+
+        private IEnumerable<Automation> GetAutomations()
+        {
+            var creator = _dbContext.Users.FirstOrDefault(u => u.Email == "t@test.com");
+
+            var allDevices = _dbContext.Devices.ToList();
+
+            var DeskLighting = allDevices.FirstOrDefault(d => d.Name == "Desk Lighting");
+            var HallwayLighting = allDevices.FirstOrDefault(d => d.Name == "Hallway Lighting");
+            var UnderLighting = allDevices.FirstOrDefault(d => d.Name == "Under Lighting");
+            var KitchenLighting = allDevices.FirstOrDefault(d => d.Name == "Kitchen Lighting");
+            var DrawerLock = allDevices.FirstOrDefault(d => d.Name == "Drawer Lock");
+            var RollerBlindsW = allDevices.FirstOrDefault(d => d.Name == "Roller Blinds - W");
+            var RollerBlindsM = allDevices.FirstOrDefault(d => d.Name == "Roller Blinds - M");
+            var RollerBlindsD = allDevices.FirstOrDefault(d => d.Name == "Roller Blinds - D");
+            var AirConditioner = allDevices.FirstOrDefault(d => d.Name == "Air Conditioner");
+            var AirPurifier = allDevices.FirstOrDefault(d => d.Name == "Air Purifier");
+            var SoilMoistureSensor = allDevices.FirstOrDefault(d => d.Name == "Soil Moisture Sensor");
+            var TemperatureSensor = allDevices.FirstOrDefault(d => d.Name == "Temperature Sensor");
+
+            var Morning = new List<Device>
+            {
+                AirConditioner,
+                RollerBlindsW,
+                AirPurifier,
+                KitchenLighting
+            };
+            var Night = new List<Device>
+            {
+                AirConditioner,
+                RollerBlindsW,
+                AirPurifier,
+                KitchenLighting
+            };
+            var Plants = new List<Device>
+            {
+                SoilMoistureSensor
+            };
+            var Welcome_Home = new List<Device>
+            {
+                HallwayLighting,
+                AirConditioner,
+                AirPurifier
+            };
+            var Wardrobe_Lighting = new List<Device>
+            {
+                UnderLighting
+            };
+            var Kitchen_Lighting = new List<Device>
+            {   
+                KitchenLighting
+            };
+            var automations = new List<Automation>
+            {
+                CreateAutomation("Morning", "Poranek", creator, Morning),
+                CreateAutomation("Night", "Noc", creator, Night),
+                CreateAutomation("Plants", "Rośliny", creator, Plants),
+                CreateAutomation("Welcome Home", "Witaj w domu", creator, Welcome_Home),
+                CreateAutomation("Wardrobe Lighting", "Szafa światło", creator, Wardrobe_Lighting),
+                CreateAutomation("Kitchen Lighting", "Światło w kuchni", creator, Kitchen_Lighting)
+            };
+            return automations;
+        }
+        private Automation CreateAutomation(string name, string namePL, User creator, IList<Device> Devices)
+        {
+            return new Automation
+            {
+                Name = name,
+                NamePL = namePL,
+                Image = LoadImage($"{name.Replace(" ", "_")}.png"),
+                TriggerDays = GetRandomDaysOfWeek(),
+                TriggerTime = GetRandomTime(),
+                CreatedBy = creator,
+                Devices = Devices,
+            };
+            
+        }
+        public List<DayOfWeek> GetRandomDaysOfWeek()
+        {
+            var random = new Random();
+            int numberOfDaysToSelect = random.Next(1, 8);
+            var allDays = Enum.GetValues<DayOfWeek>().ToList();
+            var selectedDays = allDays.OrderBy(x => random.Next()).Take(numberOfDaysToSelect).ToList();
+            return selectedDays;
+        }
+
+        public TimeOnly GetRandomTime()
+        {
+            var random = new Random();
+            int hour = random.Next(0, 24);
+            int minute = random.Next(0, 60);
+            return new TimeOnly(hour, minute);
+        }
+
+
     }
 }

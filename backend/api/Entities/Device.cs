@@ -11,6 +11,7 @@
         public bool IsOn { get; set; }
         public DateTime? LastUpdate { get; set; }
         public TimeSpan RunTime { get; set; }
+        public ICollection<Automation> Automations { get; } = new List<Automation>();
     }
 }
 

@@ -9,6 +9,10 @@ namespace api
         public IoT_MappingProfile()
         {
             CreateMap<Device, DeviceDto>();
+            CreateMap<Automation, AutomationDetailDto>()
+                .ForMember(m => m.CreatedByEmail, c => c.MapFrom(s => s.CreatedBy.Email));
+            CreateMap<Device, DeviceNameDto>();
+
         }
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,8 +56,15 @@ builder.Services.AddCors(options =>
         );
 });
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
+
 
 builder.Services.AddScoped<IDeviceService, DeviceService>();
+builder.Services.AddScoped<IAutomationService, AutomationService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 
 
