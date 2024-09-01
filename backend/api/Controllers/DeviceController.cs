@@ -24,15 +24,23 @@ namespace api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("name")]
+        public ActionResult<IEnumerable<DeviceNameDto>> GetAllNames()
+        {
+            var result = _deviceService.GetAllNames();
+
+            return Ok(result);
+        }
+
         [HttpPatch("{id}/ison")]
         public IActionResult UpdateIsOn(int id, [FromBody] bool isOn)
         {
             var result = _deviceService.UpdateIsOn(id, isOn);
 
             if (result == null) return NotFound(new { message = "Device not found" });
-
+            
             if (result == false) return Conflict(new { message = "Device is already in the requested state" });
-
+            
             return Ok(new { message = "Device state updated successfully", updatedState = isOn });
         }
     }

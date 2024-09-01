@@ -11,8 +11,9 @@ namespace api
             CreateMap<Device, DeviceDto>();
             CreateMap<Automation, AutomationDetailDto>()
                 .ForMember(m => m.CreatedByEmail, c => c.MapFrom(s => s.CreatedBy.Email));
+            CreateMap<Automation, AutomationUpdateDto>();
             CreateMap<Device, DeviceNameDto>();
-
+            CreateMap<DeviceNameDto, Device>();
         }
     }
 }

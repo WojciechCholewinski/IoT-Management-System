@@ -27,6 +27,17 @@ namespace api.Services
             return devicesDtos;
         }
 
+        public IEnumerable<DeviceNameDto> GetAllNames()
+        {
+            var devices =
+                _dbContext
+                .Devices
+                .ToList();
+
+            var devicesDtos = _mapper.Map<List<DeviceNameDto>>(devices);
+            return devicesDtos;
+        }
+
         public bool? UpdateIsOn(int id, bool isOn)
         {
             var device = 
