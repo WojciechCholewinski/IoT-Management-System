@@ -28,7 +28,7 @@ class _DashboardWidgetState extends State<DashboardWidget>
 
     final appState = Provider.of<ShteyAppState>(context, listen: false);
     appState.fetchDevices();
-
+    appState.fetchAutomations();
     _model.tabBarController = TabController(
       vsync: this,
       length: 3,
@@ -166,8 +166,7 @@ class _DashboardWidgetState extends State<DashboardWidget>
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       16, 8, 16, 0),
                                   child: Container(
-                                    key: ValueKey(device
-                                        .id),
+                                    key: ValueKey(device.id),
                                     width: double.infinity,
                                     decoration: BoxDecoration(
                                       color: IoT_Theme.of(context)
@@ -177,10 +176,8 @@ class _DashboardWidgetState extends State<DashboardWidget>
                                         BoxShadow(
                                           color: Theme.of(context).brightness ==
                                                   Brightness.dark
-                                              ? Colors.grey.withOpacity(
-                                                  0.7)
-                                              : Colors.black.withOpacity(
-                                                  0.5),
+                                              ? Colors.grey.withOpacity(0.7)
+                                              : Colors.black.withOpacity(0.5),
                                           blurRadius: 5, // Rozmycie cienia
                                           offset: const Offset(2,
                                               2), // Przesunięcie cienia (poziomo, pionowo)
@@ -312,478 +309,156 @@ class _DashboardWidgetState extends State<DashboardWidget>
                             );
                           },
                         ),
-                        SingleChildScrollView(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16, 16, 0, 0),
-                                child: Text(
-                                  ShteyLocalizations.of(context).getText(
-                                    '549pvf1t' /* Categories */,
-                                  ),
-                                  style: IoT_Theme.of(context)
-                                      .headlineSmall
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        letterSpacing: 0,
-                                      ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16, 12, 16, 0),
-                                child: Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color:
-                                        IoT_Theme.of(context).primaryBackground,
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 8, 12, 8),
+                        Consumer<ShteyAppState>(
+                          builder: (context, appState, child) {
+                            if (appState.automations.isEmpty) {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            }
+
+                            return ListView.builder(
+                              padding: const EdgeInsets.only(bottom: 50.0),
+                              itemCount: appState.automations.length,
+                              itemBuilder: (context, index) {
+                                final automation = appState.automations[index];
+                                return Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      16, 8, 16, 0),
+                                  child: Container(
+                                    key: ValueKey(automation.id),
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color: IoT_Theme.of(context)
+                                          .primaryBackground,
+                                      borderRadius: BorderRadius.circular(12),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Theme.of(context).brightness ==
+                                                  Brightness.dark
+                                              ? Colors.grey.withOpacity(0.7)
+                                              : Colors.black.withOpacity(0.5),
+                                          blurRadius: 5, // Rozmycie cienia
+                                          offset: const Offset(2,
+                                              2), // Przesunięcie cienia (poziomo, pionowo)
+                                        ),
+                                      ],
+                                    ),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
                                       children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          child: Image.asset(
-                                            'assets/images/Morning.png',
-                                            width: 70,
-                                            height: 70,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16, 0, 0, 0),
-                                          child: Text(
-                                            ShteyLocalizations.of(context)
-                                                .getText(
-                                              'wuotgig8' /* Morning */,
-                                            ),
-                                            style: IoT_Theme.of(context)
-                                                .bodyLarge
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  letterSpacing: 0,
-                                                ),
-                                          ),
-                                        ),
-                                        Expanded(
+                                        Flexible(
                                           child: Align(
                                             alignment:
-                                                AlignmentDirectional(1, 0),
-                                            child: IotIconButton(
-                                              borderColor: IoT_Theme.of(context)
-                                                  .alternate,
-                                              borderRadius: 40,
-                                              borderWidth: 1,
-                                              buttonSize: 50,
-                                              fillColor: IoT_Theme.of(context)
-                                                  .alternate,
-                                              icon: Icon(
-                                                Icons.settings_outlined,
-                                                color: IoT_Theme.of(context)
-                                                    .primaryText,
-                                                size: 30,
+                                                AlignmentDirectional(0, 0),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(8, 8, 22, 8),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    child: Image.memory(
+                                                      automation.image,
+                                                      width: 70,
+                                                      height: 70,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                            16, 0, 0, 0),
+                                                    child: Text(
+                                                      ShteyLocalizations.of(
+                                                                      context)
+                                                                  .languageCode ==
+                                                              "en"
+                                                          ? automation.name
+                                                          : automation.namePL,
+                                                      style: IoT_Theme.of(
+                                                              context)
+                                                          .bodyLarge
+                                                          .override(
+                                                            fontFamily: 'Inter',
+                                                            letterSpacing: 0,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                  // Expanded(
+                                                  //   child: Align(
+                                                  //     alignment:
+                                                  //         AlignmentDirectional(
+                                                  //             1, 0),
+                                                  //     child: IotIconButton(
+                                                  //       borderRadius: 50,
+                                                  //       borderWidth: 0,
+                                                  //       buttonSize: 40,
+                                                  //       icon: Icon(
+                                                  //         Icons.info_outline,
+                                                  //         color: IoT_Theme.of(
+                                                  //                 context)
+                                                  //             .primaryText,
+                                                  //         size: 22,
+                                                  //       ),
+                                                  //       onPressed: () {
+                                                  //         print(
+                                                  //             'IconButton pressed ...');
+                                                  //       },
+                                                  //     ),
+                                                  //   ),
+                                                  // ),
+                                                  Expanded(
+                                                    child: Align(
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                              1, 0),
+                                                      child: IotIconButton(
+                                                        borderColor:
+                                                            IoT_Theme.of(
+                                                                    context)
+                                                                .alternate,
+                                                        borderRadius: 40,
+                                                        borderWidth: 1,
+                                                        buttonSize: 50,
+                                                        fillColor: IoT_Theme.of(
+                                                                context)
+                                                            .alternate,
+                                                        icon: Icon(
+                                                          Icons
+                                                              .settings_outlined,
+                                                          color: IoT_Theme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                          size: 30,
+                                                        ),
+                                                        onPressed: () async {
+                                                          context.pushNamed(
+                                                              'AutomationDetails');
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                              onPressed: () async {
-                                                context.pushNamed(
-                                                    'AutomationDetails');
-                                              },
                                             ),
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16, 12, 16, 0),
-                                child: Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color:
-                                        IoT_Theme.of(context).primaryBackground,
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 8, 12, 8),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          child: Image.asset(
-                                            'assets/images/Night.png',
-                                            width: 70,
-                                            height: 70,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16, 0, 0, 0),
-                                          child: Text(
-                                            ShteyLocalizations.of(context)
-                                                .getText(
-                                              '4wlnwox5' /* Night */,
-                                            ),
-                                            style: IoT_Theme.of(context)
-                                                .bodyLarge
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  letterSpacing: 0,
-                                                ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Align(
-                                            alignment:
-                                                AlignmentDirectional(1, 0),
-                                            child: IotIconButton(
-                                              borderColor: IoT_Theme.of(context)
-                                                  .alternate,
-                                              borderRadius: 40,
-                                              borderWidth: 1,
-                                              buttonSize: 50,
-                                              fillColor: IoT_Theme.of(context)
-                                                  .alternate,
-                                              icon: Icon(
-                                                Icons.settings_outlined,
-                                                color: IoT_Theme.of(context)
-                                                    .primaryText,
-                                                size: 30,
-                                              ),
-                                              onPressed: () async {
-                                                context.pushNamed(
-                                                    'AutomationDetails');
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16, 8, 16, 0),
-                                child: Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color:
-                                        IoT_Theme.of(context).primaryBackground,
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 8, 12, 8),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          child: Image.asset(
-                                            'assets/images/Plants.png',
-                                            width: 70,
-                                            height: 70,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16, 0, 0, 0),
-                                          child: Text(
-                                            ShteyLocalizations.of(context)
-                                                .getText(
-                                              'maf2os6u' /* Plants */,
-                                            ),
-                                            style: IoT_Theme.of(context)
-                                                .bodyLarge
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  letterSpacing: 0,
-                                                ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Align(
-                                            alignment:
-                                                AlignmentDirectional(1, 0),
-                                            child: IotIconButton(
-                                              borderColor: IoT_Theme.of(context)
-                                                  .alternate,
-                                              borderRadius: 40,
-                                              borderWidth: 1,
-                                              buttonSize: 50,
-                                              fillColor: IoT_Theme.of(context)
-                                                  .alternate,
-                                              icon: Icon(
-                                                Icons.settings_outlined,
-                                                color: IoT_Theme.of(context)
-                                                    .primaryText,
-                                                size: 30,
-                                              ),
-                                              onPressed: () async {
-                                                context.pushNamed(
-                                                    'AutomationDetails');
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16, 8, 16, 0),
-                                child: Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color:
-                                        IoT_Theme.of(context).primaryBackground,
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 8, 12, 8),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          child: Image.asset(
-                                            'assets/images/Welcome_Home.png',
-                                            width: 70,
-                                            height: 70,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16, 0, 0, 0),
-                                          child: Text(
-                                            ShteyLocalizations.of(context)
-                                                .getText(
-                                              '8x0mj5ui' /* Welcome Home */,
-                                            ),
-                                            style: IoT_Theme.of(context)
-                                                .bodyLarge
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  letterSpacing: 0,
-                                                ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Align(
-                                            alignment:
-                                                AlignmentDirectional(1, 0),
-                                            child: IotIconButton(
-                                              borderColor: IoT_Theme.of(context)
-                                                  .alternate,
-                                              borderRadius: 40,
-                                              borderWidth: 1,
-                                              buttonSize: 50,
-                                              fillColor: IoT_Theme.of(context)
-                                                  .alternate,
-                                              icon: Icon(
-                                                Icons.settings_outlined,
-                                                color: IoT_Theme.of(context)
-                                                    .primaryText,
-                                                size: 30,
-                                              ),
-                                              onPressed: () async {
-                                                context.pushNamed(
-                                                    'AutomationDetails');
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16, 8, 16, 0),
-                                child: Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color:
-                                        IoT_Theme.of(context).primaryBackground,
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 8, 12, 8),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          child: Image.asset(
-                                            'assets/images/Wardrobe_Lighting.png',
-                                            width: 70,
-                                            height: 70,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16, 0, 0, 0),
-                                          child: Text(
-                                            ShteyLocalizations.of(context)
-                                                .getText(
-                                              'ehhwxzv4' /* Wardrobe Lighting */,
-                                            ),
-                                            style: IoT_Theme.of(context)
-                                                .bodyLarge
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  letterSpacing: 0,
-                                                ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Align(
-                                            alignment:
-                                                AlignmentDirectional(1, 0),
-                                            child: IotIconButton(
-                                              borderColor: IoT_Theme.of(context)
-                                                  .alternate,
-                                              borderRadius: 40,
-                                              borderWidth: 1,
-                                              buttonSize: 50,
-                                              fillColor: IoT_Theme.of(context)
-                                                  .alternate,
-                                              icon: Icon(
-                                                Icons.settings_outlined,
-                                                color: IoT_Theme.of(context)
-                                                    .primaryText,
-                                                size: 30,
-                                              ),
-                                              onPressed: () async {
-                                                context.pushNamed(
-                                                    'AutomationDetails');
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16, 8, 16, 44),
-                                child: Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color:
-                                        IoT_Theme.of(context).primaryBackground,
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 8, 12, 8),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          child: Image.asset(
-                                            'assets/images/Kitchen_Lighting.png',
-                                            width: 70,
-                                            height: 70,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16, 0, 0, 0),
-                                          child: Text(
-                                            ShteyLocalizations.of(context)
-                                                .getText(
-                                              'fsep9m08' /* Kitchen Lighting */,
-                                            ),
-                                            style: IoT_Theme.of(context)
-                                                .bodyLarge
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  letterSpacing: 0,
-                                                ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Align(
-                                            alignment:
-                                                AlignmentDirectional(1, 0),
-                                            child: IotIconButton(
-                                              borderColor: IoT_Theme.of(context)
-                                                  .alternate,
-                                              borderRadius: 40,
-                                              borderWidth: 1,
-                                              buttonSize: 50,
-                                              fillColor: IoT_Theme.of(context)
-                                                  .alternate,
-                                              icon: Icon(
-                                                Icons.settings_outlined,
-                                                color: IoT_Theme.of(context)
-                                                    .primaryText,
-                                                size: 30,
-                                              ),
-                                              onPressed: () async {
-                                                context.pushNamed(
-                                                    'AutomationDetails');
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                                );
+                              },
+                            );
+                          },
                         ),
                         SingleChildScrollView(
                           child: Column(

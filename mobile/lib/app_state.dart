@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'models/device_model.dart';
 import 'models/device_service.dart';
+import 'models/automation_model.dart';
+import 'models/automation_service.dart';
 
 class ShteyAppState extends ChangeNotifier {
   static ShteyAppState _instance = ShteyAppState._internal();
@@ -41,6 +43,21 @@ class ShteyAppState extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       print('Error updating device: $e');
+    }
+  }
+
+  List<Automation> _automations = [];
+  List<Automation> get automations => _automations;
+
+  final AutomationService _automationService = AutomationService();
+
+  Future<void> fetchAutomations() async {
+    try {
+      _automations = await _automationService.fetchAutomations();
+
+      notifyListeners();
+    } catch (e) {
+      print('Error fetching automations: $e');
     }
   }
 
