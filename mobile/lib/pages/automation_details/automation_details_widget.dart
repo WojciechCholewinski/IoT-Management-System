@@ -97,6 +97,28 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: IoT_Theme.of(context).primaryBackground,
+        floatingActionButton: Align(
+          alignment: const AlignmentDirectional(1.0, 1.0),
+          child: Padding(
+            padding:
+                const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 400.0),
+            child: FloatingActionButton(
+              onPressed: () {
+                print('FloatingActionButton pressed ...');
+              },
+              backgroundColor: IoT_Theme.of(context).primaryBackground,
+              elevation: 8.0,
+              child: Align(
+                alignment: const AlignmentDirectional(0.0, 0.0),
+                child: Icon(
+                  Icons.playlist_add,
+                  color: IoT_Theme.of(context).primaryText,
+                  size: 30.0,
+                ),
+              ),
+            ),
+          ),
+        ),
         body: SafeArea(
           top: true,
           child: Align(
@@ -232,10 +254,18 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                               context: context,
                               text: ShteyLocalizations.of(context)
                                   .getText('m9miabzw' /* Mon */),
-                              isSelected: appState.Monday,
+                              isSelected: automation.temporarySelectedDays
+                                  .contains('Monday'),
                               onPressed: () async {
-                                appState.update(() {
-                                  appState.Monday = !appState.Monday;
+                                setState(() {
+                                  if (automation.temporarySelectedDays
+                                      .contains('Monday')) {
+                                    automation.temporarySelectedDays
+                                        .remove('Monday');
+                                  } else {
+                                    automation.temporarySelectedDays
+                                        .add('Monday');
+                                  }
                                 });
                               },
                             ),
@@ -252,10 +282,18 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                               context: context,
                               text: ShteyLocalizations.of(context)
                                   .getText('0fmj2kgr' /* Tue */),
-                              isSelected: appState.Tuesday,
+                              isSelected: automation.temporarySelectedDays
+                                  .contains('Tuesday'),
                               onPressed: () async {
-                                appState.update(() {
-                                  appState.Tuesday = !appState.Tuesday;
+                                setState(() {
+                                  if (automation.temporarySelectedDays
+                                      .contains('Tuesday')) {
+                                    automation.temporarySelectedDays
+                                        .remove('Tuesday');
+                                  } else {
+                                    automation.temporarySelectedDays
+                                        .add('Tuesday');
+                                  }
                                 });
                               },
                             ),
@@ -272,10 +310,18 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                               context: context,
                               text: ShteyLocalizations.of(context)
                                   .getText('0c7mmagq' /* Wed */),
-                              isSelected: appState.Wednesday,
+                              isSelected: automation.temporarySelectedDays
+                                  .contains('Wednesday'),
                               onPressed: () async {
-                                appState.update(() {
-                                  appState.Wednesday = !appState.Wednesday;
+                                setState(() {
+                                  if (automation.temporarySelectedDays
+                                      .contains('Wednesday')) {
+                                    automation.temporarySelectedDays
+                                        .remove('Wednesday');
+                                  } else {
+                                    automation.temporarySelectedDays
+                                        .add('Wednesday');
+                                  }
                                 });
                               },
                             ),
@@ -292,10 +338,18 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                               context: context,
                               text: ShteyLocalizations.of(context)
                                   .getText('84ff23w4' /* Thu */),
-                              isSelected: appState.Thursday,
+                              isSelected: automation.temporarySelectedDays
+                                  .contains('Thursday'),
                               onPressed: () async {
-                                appState.update(() {
-                                  appState.Thursday = !appState.Thursday;
+                                setState(() {
+                                  if (automation.temporarySelectedDays
+                                      .contains('Thursday')) {
+                                    automation.temporarySelectedDays
+                                        .remove('Thursday');
+                                  } else {
+                                    automation.temporarySelectedDays
+                                        .add('Thursday');
+                                  }
                                 });
                               },
                             ),
@@ -312,10 +366,18 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                               context: context,
                               text: ShteyLocalizations.of(context)
                                   .getText('ky402mn0' /* Fri */),
-                              isSelected: appState.Friday,
+                              isSelected: automation.temporarySelectedDays
+                                  .contains('Friday'),
                               onPressed: () async {
-                                appState.update(() {
-                                  appState.Friday = !appState.Friday;
+                                setState(() {
+                                  if (automation.temporarySelectedDays
+                                      .contains('Friday')) {
+                                    automation.temporarySelectedDays
+                                        .remove('Friday');
+                                  } else {
+                                    automation.temporarySelectedDays
+                                        .add('Friday');
+                                  }
                                 });
                               },
                             ),
@@ -332,10 +394,18 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                               context: context,
                               text: ShteyLocalizations.of(context)
                                   .getText('9wuxhajc' /* Sat */),
-                              isSelected: appState.Saturday,
+                              isSelected: automation.temporarySelectedDays
+                                  .contains('Saturday'),
                               onPressed: () async {
-                                appState.update(() {
-                                  appState.Saturday = !appState.Saturday;
+                                setState(() {
+                                  if (automation.temporarySelectedDays
+                                      .contains('Saturday')) {
+                                    automation.temporarySelectedDays
+                                        .remove('Saturday');
+                                  } else {
+                                    automation.temporarySelectedDays
+                                        .add('Saturday');
+                                  }
                                 });
                               },
                             ),
@@ -352,10 +422,18 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                               context: context,
                               text: ShteyLocalizations.of(context)
                                   .getText('ayddrvfp' /* Sun */),
-                              isSelected: appState.Sunday,
+                              isSelected: automation.temporarySelectedDays
+                                  .contains('Sunday'),
                               onPressed: () async {
-                                appState.update(() {
-                                  appState.Sunday = !appState.Sunday;
+                                setState(() {
+                                  if (automation.temporarySelectedDays
+                                      .contains('Sunday')) {
+                                    automation.temporarySelectedDays
+                                        .remove('Sunday');
+                                  } else {
+                                    automation.temporarySelectedDays
+                                        .add('Sunday');
+                                  }
                                 });
                               },
                             ),
@@ -381,6 +459,19 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                     ),
                   ),
                   timePickerSpinner(),
+                  // IotIconButton(
+                  //   borderColor: Colors.transparent,
+                  //   borderRadius: 20.0,
+                  //   buttonSize: 40.0,
+                  //   icon: Icon(
+                  //     Icons.remove_circle_outline,
+                  //     color: IoT_Theme.of(context).error,
+                  //     size: 24.0,
+                  //   ),
+                  //   onPressed: () {
+                  //     print('IconButton pressed ...');
+                  //   },
+                  // ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
                         0.0, 20.0, 0.0, 0.0),

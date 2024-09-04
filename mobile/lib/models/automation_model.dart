@@ -11,6 +11,7 @@ class Automation {
   final bool isOn;
   final String createdByEmail;
   late final DateTime parsedTriggerTime;
+  List<String> temporarySelectedDays;
 
   Automation({
     required this.id,
@@ -21,8 +22,7 @@ class Automation {
     required this.triggerTime,
     required this.isOn,
     required this.createdByEmail,
-  }) {
-    // Konwertowanie triggerTime na DateTime
+  }) : temporarySelectedDays = List.from(triggerDays) {
     parsedTriggerTime = _parseTime(triggerTime);
   }
 
