@@ -1,3 +1,5 @@
+import 'package:mobile/pages/automation_details/automation_details_widget.dart';
+
 import '/app_ui/button_tabbar.dart';
 import '/app_ui/icon_button.dart';
 import '/app_ui/theme.dart';
@@ -441,8 +443,16 @@ class _DashboardWidgetState extends State<DashboardWidget>
                                                           size: 30,
                                                         ),
                                                         onPressed: () async {
-                                                          context.pushNamed(
-                                                              'AutomationDetails');
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  AutomationDetailsWidget(
+                                                                      automationId:
+                                                                          automation
+                                                                              .id),
+                                                            ),
+                                                          );
                                                         },
                                                       ),
                                                     ),

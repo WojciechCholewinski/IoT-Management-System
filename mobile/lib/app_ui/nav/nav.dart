@@ -64,7 +64,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         ShteyRoute(
           name: 'AutomationDetails',
           path: '/automationDetails',
-          builder: (context, params) => const AutomationDetailsWidget(),
+          builder: (context, params) => AutomationDetailsWidget(
+            automationId:
+                params.getParam<int>('automationId', ParamType.int) ?? 0,
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

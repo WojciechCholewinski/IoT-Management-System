@@ -420,10 +420,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'Automation Details',
       'pl': 'Szczegóły automatyzacji',
     },
-    '98r4z6ug': {
-      'en': 'Automation Name',
-      'pl': 'Nazwa automatyzacji',
-    },
     'g9h4mc3r': {
       'en': 'Active',
       'pl': 'Aktywna',

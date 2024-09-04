@@ -8,6 +8,8 @@ class AutomationDetailsModel extends IotModel<AutomationDetailsWidget> {
   final unfocusNode = FocusNode();
   // State field(s) for Switch widget.
   bool? switchValue;
+  String? automationName;
+  String? automationNamePL;
 
   @override
   void initState(BuildContext context) {}

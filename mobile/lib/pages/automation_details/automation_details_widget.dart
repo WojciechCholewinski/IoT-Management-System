@@ -1,4 +1,6 @@
+import 'package:mobile/models/automation_model.dart';
 import 'package:provider/provider.dart';
+
 import '/app_ui/icon_button.dart';
 import '/app_ui/theme.dart';
 import '/app_ui/util.dart';
@@ -9,7 +11,9 @@ export 'automation_details_model.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 
 class AutomationDetailsWidget extends StatefulWidget {
-  const AutomationDetailsWidget({super.key});
+  final int automationId;
+  const AutomationDetailsWidget({Key? key, required this.automationId})
+      : super(key: key);
 
   @override
   State<AutomationDetailsWidget> createState() =>
@@ -17,6 +21,7 @@ class AutomationDetailsWidget extends StatefulWidget {
 }
 
 class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
+  late Automation automation;
   late AutomationDetailsModel _model;
   // ignore: unused_field
   DateTime _dateTime = DateTime.now();
@@ -27,8 +32,18 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => AutomationDetailsModel());
+    final appState = Provider.of<ShteyAppState>(context, listen: false);
+    automation =
+        appState.automations.firstWhere((a) => a.id == widget.automationId);
+    // final automationId =
+    //     int.parse(context.queryParameters['automationId'] ?? '0');
+    // final automation = Provider.of<ShteyAppState>(context, listen: false)
+    //     .automations
+    //     .firstWhere((a) => a.id == automationId);
 
     _model.switchValue = false;
+    _model.automationName = automation.name;
+    _model.automationNamePL = automation.namePL;
   }
 
   @override
@@ -131,9 +146,9 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                     padding: const EdgeInsetsDirectional.fromSTEB(
                         16.0, 0.0, 0.0, 0.0),
                     child: Text(
-                      ShteyLocalizations.of(context).getText(
-                        '98r4z6ug' /* Automation Name */,
-                      ),
+                      ShteyLocalizations.of(context).languageCode == "en"
+                          ? automation.name
+                          : automation.namePL,
                       style: IoT_Theme.of(context).titleLarge.override(
                             fontFamily: 'Inter',
                             color: IoT_Theme.of(context).primaryText,
