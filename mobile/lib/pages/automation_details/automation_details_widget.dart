@@ -6,7 +6,6 @@ import '/app_ui/theme.dart';
 import '/app_ui/util.dart';
 import '/app_ui/widgets.dart';
 import 'package:flutter/material.dart';
-import 'automation_details_model.dart';
 export 'automation_details_model.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 
@@ -22,7 +21,7 @@ class AutomationDetailsWidget extends StatefulWidget {
 
 class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
   late Automation automation;
-  late AutomationDetailsModel _model;
+  // late AutomationDetailsModel _model;
   // ignore: unused_field
   DateTime _dateTime = DateTime.now();
 
@@ -31,30 +30,38 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => AutomationDetailsModel());
-    final appState = Provider.of<ShteyAppState>(context, listen: false);
-    automation =
-        appState.automations.firstWhere((a) => a.id == widget.automationId);
+    // _model = createModel(context, () => AutomationDetailsModel());
+    // final appState = Provider.of<ShteyAppState>(context, listen: false);
+    // automation =
+    //     appState.automations.firstWhere((a) => a.id == widget.automationId);
+
     // final automationId =
     //     int.parse(context.queryParameters['automationId'] ?? '0');
     // final automation = Provider.of<ShteyAppState>(context, listen: false)
     //     .automations
     //     .firstWhere((a) => a.id == automationId);
 
-    _model.switchValue = false;
-    _model.automationName = automation.name;
-    _model.automationNamePL = automation.namePL;
+    final appState = Provider.of<ShteyAppState>(context, listen: false);
+    automation =
+        appState.automations.firstWhere((a) => a.id == widget.automationId);
+
+    // _model.switchValue = automation.isOn;
+    // _model.automationName = automation.name;
+    // _model.automationNamePL = automation.namePL;
   }
 
   @override
   void dispose() {
-    _model.dispose();
+    // _model.dispose();
 
     super.dispose();
   }
 
   Widget timePickerSpinner() {
+    DateTime initialTime = automation.parsedTriggerTime;
+
     return TimePickerSpinner(
+      time: initialTime,
       is24HourMode: true,
       normalTextStyle: TextStyle(
         fontSize: 24,
@@ -79,11 +86,14 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<ShteyAppState>(context);
+    final automation =
+        appState.automations.firstWhere((a) => a.id == widget.automationId);
 
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      // onTap: () => _model.unfocusNode.canRequestFocus
+      //     ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+      //     : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: IoT_Theme.of(context).primaryBackground,
@@ -178,9 +188,9 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                               ),
                         ),
                         Switch(
-                          value: _model.switchValue!,
+                          value: automation.isOn,
                           onChanged: (newValue) async {
-                            setState(() => _model.switchValue = newValue);
+                            // Dodaj logikę zmiany stanu automatyzacji
                           },
                           activeColor: IoT_Theme.of(context).primaryText,
                           activeTrackColor: IoT_Theme.of(context).secondaryText,
