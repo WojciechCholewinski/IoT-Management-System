@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:mobile/models/device_name_model.dart';
 import 'device_model.dart';
 
 class DeviceService {
@@ -16,6 +17,18 @@ class DeviceService {
       return body.map((dynamic item) => Device.fromJson(item)).toList();
     } else {
       throw Exception('Failed to load devices');
+    }
+  }
+
+  Future<List<DeviceName>> fetchDevicesNames() async {
+    final response =
+        await http.get(Uri.parse('https://localhost:5000/api/device/name'));
+
+    if (response.statusCode == 200) {
+      List<dynamic> body = jsonDecode(response.body);
+      return body.map((dynamic item) => DeviceName.fromJson(item)).toList();
+    } else {
+      throw Exception('Failed to load devices Names');
     }
   }
 

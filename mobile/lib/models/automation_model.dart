@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'dart:convert';
+import 'package:mobile/models/device_name_model.dart';
 
 class Automation {
   final int id;
@@ -12,6 +13,7 @@ class Automation {
   final String createdByEmail;
   late final DateTime parsedTriggerTime;
   List<String> temporarySelectedDays;
+  List<DeviceName> devices;
 
   Automation({
     required this.id,
@@ -22,6 +24,7 @@ class Automation {
     required this.triggerTime,
     required this.isOn,
     required this.createdByEmail,
+    required this.devices,
   }) : temporarySelectedDays = List.from(triggerDays) {
     parsedTriggerTime = _parseTime(triggerTime);
   }
@@ -52,6 +55,9 @@ class Automation {
       triggerTime: json['triggerTime'],
       isOn: json['isOn'],
       createdByEmail: json['createdByEmail'],
+      devices: (json['devices'] as List)
+          .map((deviceJson) => DeviceName.fromJson(deviceJson))
+          .toList(),
     );
   }
 }

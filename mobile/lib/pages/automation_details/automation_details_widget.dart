@@ -1,4 +1,5 @@
 import 'package:mobile/models/automation_model.dart';
+import 'package:mobile/models/device_model.dart';
 import 'package:provider/provider.dart';
 
 import '/app_ui/icon_button.dart';
@@ -21,7 +22,7 @@ class AutomationDetailsWidget extends StatefulWidget {
 
 class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
   late Automation automation;
-  // late AutomationDetailsModel _model;
+  // late Device devices;
   // ignore: unused_field
   DateTime _dateTime = DateTime.now();
 
@@ -44,6 +45,7 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
     final appState = Provider.of<ShteyAppState>(context, listen: false);
     automation =
         appState.automations.firstWhere((a) => a.id == widget.automationId);
+    appState.fetchDevicesNames();
 
     // _model.switchValue = automation.isOn;
     // _model.automationName = automation.name;
@@ -83,6 +85,84 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
     );
   }
 
+  void _showDevicesDialog(BuildContext context) {
+    final appState = Provider.of<ShteyAppState>(context, listen: false);
+
+    var availableDevices = appState.devicesNames.where((device) {
+      return !automation.devices.any((d) => d.name == device.name);
+    }).toList(); // Filter devices not yet in the automation
+    // final devices = appState.devices; // Get the list of all available devices
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              // final availableDevices = appState.devicesNames
+              //     .where((device) => !automation.devices.contains(device))
+              //     .toList(); // Filter devices not yet in the automation
+
+              return AlertDialog(
+                title: Text('deviceListTitle'),
+                content: SizedBox(
+                  width: double.maxFinite,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: availableDevices.length,
+                    itemBuilder: (context, index) {
+                      final device = availableDevices[index];
+
+                      return ListTile(
+                        title: Text(
+                          ShteyLocalizations.of(context).languageCode == "en"
+                              ? device.name
+                              : device.namePL,
+                          style: IoT_Theme.of(context).bodyMedium.override(
+                                fontFamily: 'Inter',
+                                color: IoT_Theme.of(context).primaryText,
+                                fontSize: 16.0,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.w500,
+                              ),
+                        ),
+                        trailing: IotIconButton(
+                          borderRadius: 20.0,
+                          buttonSize: 40.0,
+                          icon: Icon(
+                            Icons.add_circle_outline,
+                            color: IoT_Theme.of(context).success,
+                            size: 24.0,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              automation.devices.add(device);
+                              availableDevices = appState.devicesNames
+                                  .where((d) => !automation.devices
+                                      .any((ad) => ad.name == d.name))
+                                  .toList(); // Aktualizuj listę dostępnych urządzeń
+                            });
+                            this.setState(() {});
+                            // Navigator.of(context)
+                            //     .pop(); // Close the dialog after removal
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Zamknij okienko dialogowe
+                    },
+                    child: Text('close'),
+                  ),
+                ],
+              );
+            },
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<ShteyAppState>(context);
@@ -104,7 +184,7 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                 const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 400.0),
             child: FloatingActionButton(
               onPressed: () {
-                print('FloatingActionButton pressed ...');
+                _showDevicesDialog(context);
               },
               backgroundColor: IoT_Theme.of(context).primaryBackground,
               elevation: 8.0,
@@ -489,291 +569,51 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                     ),
                   ),
                   Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          ListView(
-                            padding: EdgeInsets.zero,
-                            primary: false,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemCount: automation.devices.length,
+                      itemBuilder: (context, index) {
+                        final device = automation.devices[index];
+                        return Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              8.0, 0.0, 8.0, 0.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    8.0, 0.0, 8.0, 0.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      ShteyLocalizations.of(context).getText(
-                                        'lzgzah3i' /* Desk Lighting */,
-                                      ),
-                                      style: IoT_Theme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Inter',
-                                            color: IoT_Theme.of(context)
-                                                .primaryText,
-                                            fontSize: 16.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                              Text(
+                                ShteyLocalizations.of(context).languageCode ==
+                                        "en"
+                                    ? device.name
+                                    : device.namePL,
+                                style: IoT_Theme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      color: IoT_Theme.of(context).primaryText,
+                                      fontSize: 16.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w500,
                                     ),
-                                    IotIconButton(
-                                      borderRadius: 20.0,
-                                      buttonSize: 40.0,
-                                      icon: Icon(
-                                        Icons.remove_circle_outline,
-                                        color: IoT_Theme.of(context).error,
-                                        size: 24.0,
-                                      ),
-                                      onPressed: () {
-                                        print('IconButton pressed ...');
-                                      },
-                                    ),
-                                  ],
-                                ),
                               ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    8.0, 0.0, 8.0, 0.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      ShteyLocalizations.of(context).getText(
-                                        '4neufju5' /* Hallway Lighting */,
-                                      ),
-                                      style: IoT_Theme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Inter',
-                                            color: IoT_Theme.of(context)
-                                                .primaryText,
-                                            fontSize: 16.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                    ),
-                                    IotIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 20.0,
-                                      buttonSize: 40.0,
-                                      icon: Icon(
-                                        Icons.remove_circle_outline,
-                                        color: IoT_Theme.of(context).error,
-                                        size: 24.0,
-                                      ),
-                                      onPressed: () {
-                                        print('IconButton pressed ...');
-                                      },
-                                    ),
-                                  ],
+                              IotIconButton(
+                                borderRadius: 20.0,
+                                buttonSize: 40.0,
+                                icon: Icon(
+                                  Icons.remove_circle_outline,
+                                  color: IoT_Theme.of(context).error,
+                                  size: 24.0,
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    8.0, 0.0, 8.0, 0.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      ShteyLocalizations.of(context).getText(
-                                        '0jp8ufnw' /* Under Lighting */,
-                                      ),
-                                      style: IoT_Theme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Inter',
-                                            color: IoT_Theme.of(context)
-                                                .primaryText,
-                                            fontSize: 16.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                    ),
-                                    IotIconButton(
-                                      borderRadius: 20.0,
-                                      buttonSize: 40.0,
-                                      icon: Icon(
-                                        Icons.remove_circle_outline,
-                                        color: IoT_Theme.of(context).error,
-                                        size: 24.0,
-                                      ),
-                                      onPressed: () {
-                                        print('IconButton pressed ...');
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    8.0, 0.0, 8.0, 0.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      ShteyLocalizations.of(context).getText(
-                                        'hj7cn8k3' /* Kitchen Lighting */,
-                                      ),
-                                      style: IoT_Theme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Inter',
-                                            color: IoT_Theme.of(context)
-                                                .primaryText,
-                                            fontSize: 16.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                    ),
-                                    IotIconButton(
-                                      borderRadius: 20.0,
-                                      buttonSize: 40.0,
-                                      icon: Icon(
-                                        Icons.remove_circle_outline,
-                                        color: IoT_Theme.of(context).error,
-                                        size: 24.0,
-                                      ),
-                                      onPressed: () {
-                                        print('IconButton pressed ...');
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    8.0, 0.0, 8.0, 0.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      ShteyLocalizations.of(context).getText(
-                                        'vreqovho' /* Drawer Lock */,
-                                      ),
-                                      style: IoT_Theme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Inter',
-                                            color: IoT_Theme.of(context)
-                                                .primaryText,
-                                            fontSize: 16.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                    ),
-                                    IotIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 20.0,
-                                      buttonSize: 40.0,
-                                      icon: Icon(
-                                        Icons.remove_circle_outline,
-                                        color: IoT_Theme.of(context).error,
-                                        size: 24.0,
-                                      ),
-                                      onPressed: () {
-                                        print('IconButton pressed ...');
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    8.0, 0.0, 8.0, 0.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      ShteyLocalizations.of(context).getText(
-                                        'o12qfnsn' /* Roller Blinds W */,
-                                      ),
-                                      style: IoT_Theme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Inter',
-                                            color: IoT_Theme.of(context)
-                                                .primaryText,
-                                            fontSize: 16.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                    ),
-                                    IotIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 20.0,
-                                      buttonSize: 40.0,
-                                      icon: Icon(
-                                        Icons.remove_circle_outline,
-                                        color: IoT_Theme.of(context).error,
-                                        size: 24.0,
-                                      ),
-                                      onPressed: () {
-                                        print('IconButton pressed ...');
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    8.0, 0.0, 8.0, 0.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      ShteyLocalizations.of(context).getText(
-                                        'bhgq8iyc' /* Air Conditioner */,
-                                      ),
-                                      style: IoT_Theme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Inter',
-                                            color: IoT_Theme.of(context)
-                                                .primaryText,
-                                            fontSize: 16.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                    ),
-                                    IotIconButton(
-                                      borderRadius: 20.0,
-                                      buttonSize: 40.0,
-                                      icon: Icon(
-                                        Icons.remove_circle_outline,
-                                        color: IoT_Theme.of(context).error,
-                                        size: 24.0,
-                                      ),
-                                      onPressed: () {
-                                        print('IconButton pressed ...');
-                                      },
-                                    ),
-                                  ],
-                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    automation.devices.removeAt(index);
+                                  });
+                                },
                               ),
                             ],
                           ),
-                        ],
-                      ),
+                        );
+                      },
                     ),
                   ),
                   Padding(

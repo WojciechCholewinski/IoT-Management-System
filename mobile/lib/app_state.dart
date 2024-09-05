@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/models/device_name_model.dart';
 import 'models/device_model.dart';
 import 'models/device_service.dart';
 import 'models/automation_model.dart';
@@ -32,6 +33,15 @@ class ShteyAppState extends ChangeNotifier {
 
   Future<void> fetchDevices() async {
     _devices = await _deviceService.fetchDevices();
+    notifyListeners();
+  }
+
+List<DeviceName> _devicesNames = [];
+
+  List<DeviceName> get devicesNames => _devicesNames;
+
+  Future<void> fetchDevicesNames() async {
+    _devicesNames = await _deviceService.fetchDevicesNames();
     notifyListeners();
   }
 
