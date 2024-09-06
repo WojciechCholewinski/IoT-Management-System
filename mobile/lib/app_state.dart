@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/models/device_name_model.dart';
-import 'models/device_model.dart';
+import 'package:mobile/models/device/device_name_model.dart';
+import 'models/automation/automation_add_devices_model.dart';
+import 'models/automation/automation_remove_devices_model.dart';
+import 'models/automation/automation_update_model.dart';
+import 'models/device/device_model.dart';
 import 'models/device_service.dart';
-import 'models/automation_model.dart';
+import 'models/automation/automation_model.dart';
 import 'models/automation_service.dart';
 
 class ShteyAppState extends ChangeNotifier {
@@ -36,7 +39,7 @@ class ShteyAppState extends ChangeNotifier {
     notifyListeners();
   }
 
-List<DeviceName> _devicesNames = [];
+  List<DeviceName> _devicesNames = [];
 
   List<DeviceName> get devicesNames => _devicesNames;
 
@@ -56,6 +59,8 @@ List<DeviceName> _devicesNames = [];
     }
   }
 
+////////////////////////////////////////////////////////////////
+
   List<Automation> _automations = [];
   List<Automation> get automations => _automations;
 
@@ -69,6 +74,85 @@ List<DeviceName> _devicesNames = [];
     } catch (e) {
       print('Error fetching automations: $e');
     }
+  }
+
+  Future<void> updateAutomation(
+      Automation automation, AutomationUpdateModel updateModel) async {
+    try {
+      await _automationService.updateAutomation(automation.id, updateModel);
+      // Aktualizacja lokalnego stanu po pomyślnej aktualizacji na serwerze
+      final index = _automations.indexWhere((a) => a.id == automation.id);
+      if (index != -1) {
+        _automations[index] = automation.copyWith(
+          name: updateModel.name,
+          namePL: updateModel.namePL,
+          triggerDays: updateModel.triggerDays,
+          triggerTime: updateModel.triggerTime,
+          isOn: updateModel.isOn,
+        );
+        notifyListeners();
+      }
+    } catch (e) {
+      print('Error updating automation: $e');
+    }
+  }
+
+  List<DeviceName> _devicesToAdd = [];
+  List<DeviceName> _devicesToRemove = [];
+
+  Future<void> addDevicesToAutomation(
+      int automationId, List<DeviceName> devices) async {
+    try {
+      await _automationService.addDevicesToAutomation(
+        automationId,
+        AutomationAddDevicesModel(deviceIds: devices.map((d) => d.id).toList()),
+      );
+      notifyListeners();
+    } catch (e) {
+      print('Error adding devices: $e');
+    }
+  }
+
+  Future<void> removeDevicesFromAutomation(
+      int automationId, List<DeviceName> devices) async {
+    try {
+      await _automationService.removeDevicesFromAutomation(
+        automationId,
+        AutomationRemoveDevicesModel(
+            deviceIds: devices.map((d) => d.id).toList()),
+      );
+      notifyListeners();
+    } catch (e) {
+      print('Error removing devices: $e');
+    }
+  }
+
+  void addDeviceToTemporaryList(DeviceName device) {
+    _devicesToAdd.add(device);
+    _devicesToRemove.removeWhere((d) => d.id == device.id);
+    notifyListeners();
+  }
+
+  void removeDeviceFromTemporaryList(DeviceName device) {
+    _devicesToRemove.add(device);
+    _devicesToAdd.removeWhere((d) => d.id == device.id);
+    notifyListeners();
+  }
+
+  void clearTemporaryLists() {
+    _devicesToAdd.clear();
+    _devicesToRemove.clear();
+    notifyListeners();
+  }
+
+  Future<void> saveDeviceChanges(int automationId) async {
+    if (_devicesToAdd.isNotEmpty) {
+      await addDevicesToAutomation(automationId, _devicesToAdd);
+    }
+    if (_devicesToRemove.isNotEmpty) {
+      await removeDevicesFromAutomation(automationId, _devicesToRemove);
+    }
+    clearTemporaryLists();
   }
 
 ////////////////////////////////////////////////////////////////

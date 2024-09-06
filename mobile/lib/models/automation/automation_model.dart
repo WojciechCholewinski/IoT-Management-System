@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'dart:convert';
-import 'package:mobile/models/device_name_model.dart';
+import 'package:mobile/models/device/device_name_model.dart';
 
 class Automation {
   final int id;
@@ -58,6 +58,29 @@ class Automation {
       devices: (json['devices'] as List)
           .map((deviceJson) => DeviceName.fromJson(deviceJson))
           .toList(),
+    );
+  }
+
+  Automation copyWith({
+    String? name,
+    String? namePL,
+    Uint8List? image,
+    List<String>? triggerDays,
+    String? triggerTime,
+    bool? isOn,
+    String? createdByEmail,
+    List<DeviceName>? devices,
+  }) {
+    return Automation(
+      id: this.id,
+      name: name ?? this.name,
+      namePL: namePL ?? this.namePL,
+      image: image ?? this.image,
+      triggerDays: triggerDays ?? this.triggerDays,
+      triggerTime: triggerTime ?? this.triggerTime,
+      isOn: isOn ?? this.isOn,
+      createdByEmail: createdByEmail ?? this.createdByEmail,
+      devices: devices ?? this.devices,
     );
   }
 }

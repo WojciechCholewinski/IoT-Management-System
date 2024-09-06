@@ -395,29 +395,6 @@ class _DashboardWidgetState extends State<DashboardWidget>
                                                           ),
                                                     ),
                                                   ),
-                                                  // Expanded(
-                                                  //   child: Align(
-                                                  //     alignment:
-                                                  //         AlignmentDirectional(
-                                                  //             1, 0),
-                                                  //     child: IotIconButton(
-                                                  //       borderRadius: 50,
-                                                  //       borderWidth: 0,
-                                                  //       buttonSize: 40,
-                                                  //       icon: Icon(
-                                                  //         Icons.info_outline,
-                                                  //         color: IoT_Theme.of(
-                                                  //                 context)
-                                                  //             .primaryText,
-                                                  //         size: 22,
-                                                  //       ),
-                                                  //       onPressed: () {
-                                                  //         print(
-                                                  //             'IconButton pressed ...');
-                                                  //       },
-                                                  //     ),
-                                                  //   ),
-                                                  // ),
                                                   Expanded(
                                                     child: Align(
                                                       alignment:
@@ -425,21 +402,34 @@ class _DashboardWidgetState extends State<DashboardWidget>
                                                               1, 0),
                                                       child: IotIconButton(
                                                         borderColor:
-                                                            IoT_Theme.of(
-                                                                    context)
-                                                                .alternate,
+                                                            automation.isOn
+                                                                ? IoT_Theme.of(
+                                                                        context)
+                                                                    .alternate
+                                                                : IoT_Theme.of(
+                                                                        context)
+                                                                    .alternate,
                                                         borderRadius: 40,
                                                         borderWidth: 1,
                                                         buttonSize: 50,
-                                                        fillColor: IoT_Theme.of(
-                                                                context)
-                                                            .alternate,
+                                                        fillColor:
+                                                            automation.isOn
+                                                                ? IoT_Theme.of(
+                                                                        context)
+                                                                    .alternate
+                                                                : IoT_Theme.of(
+                                                                        context)
+                                                                    .alternate,
                                                         icon: Icon(
                                                           Icons
                                                               .settings_outlined,
-                                                          color: IoT_Theme.of(
-                                                                  context)
-                                                              .primaryText,
+                                                          color: automation.isOn
+                                                              ? IoT_Theme.of(
+                                                                      context)
+                                                                  .secondary
+                                                              : IoT_Theme.of(
+                                                                      context)
+                                                                  .primaryText,
                                                           size: 30,
                                                         ),
                                                         onPressed: () async {

@@ -1,7 +1,9 @@
-import 'package:mobile/models/automation_model.dart';
-import 'package:mobile/models/device_model.dart';
+import 'package:mobile/models/automation/automation_model.dart';
 import 'package:provider/provider.dart';
 
+import '../../app_ui/toggle_icon.dart';
+import '../../models/automation/automation_update_model.dart';
+import '../../models/device/device_name_model.dart';
 import '/app_ui/icon_button.dart';
 import '/app_ui/theme.dart';
 import '/app_ui/util.dart';
@@ -22,7 +24,8 @@ class AutomationDetailsWidget extends StatefulWidget {
 
 class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
   late Automation automation;
-  // late Device devices;
+  late TextEditingController _nameController;
+  late bool _isOnState;
   // ignore: unused_field
   DateTime _dateTime = DateTime.now();
 
@@ -31,32 +34,68 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
   @override
   void initState() {
     super.initState();
-    // _model = createModel(context, () => AutomationDetailsModel());
-    // final appState = Provider.of<ShteyAppState>(context, listen: false);
-    // automation =
-    //     appState.automations.firstWhere((a) => a.id == widget.automationId);
-
-    // final automationId =
-    //     int.parse(context.queryParameters['automationId'] ?? '0');
-    // final automation = Provider.of<ShteyAppState>(context, listen: false)
-    //     .automations
-    //     .firstWhere((a) => a.id == automationId);
 
     final appState = Provider.of<ShteyAppState>(context, listen: false);
     automation =
         appState.automations.firstWhere((a) => a.id == widget.automationId);
+    _isOnState = automation.isOn;
     appState.fetchDevicesNames();
+  }
 
-    // _model.switchValue = automation.isOn;
-    // _model.automationName = automation.name;
-    // _model.automationNamePL = automation.namePL;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final languageCode = ShteyLocalizations.of(context).languageCode;
+    _nameController = TextEditingController(
+      text: languageCode == "en" ? automation.name : automation.namePL,
+    );
   }
 
   @override
   void dispose() {
-    // _model.dispose();
-
+    _nameController.dispose();
     super.dispose();
+  }
+
+  void _onDeviceAdded(DeviceName device) {
+    final appState = Provider.of<ShteyAppState>(context, listen: false);
+    appState.addDeviceToTemporaryList(device);
+    setState(() {
+      automation.devices.add(device);
+    });
+  }
+
+  void _onDeviceRemoved(DeviceName device) {
+    final appState = Provider.of<ShteyAppState>(context, listen: false);
+    appState.removeDeviceFromTemporaryList(device);
+    setState(() {
+      automation.devices.remove(device);
+    });
+  }
+
+  void _onSave() async {
+    final appState = Provider.of<ShteyAppState>(context, listen: false);
+    final triggerTimeFormatted =
+        _dateTime.toIso8601String().split('T').last.split('.').first;
+
+    final languageCode = ShteyLocalizations.of(context).languageCode;
+
+    final updateModel = AutomationUpdateModel(
+      name: languageCode == "en" ? _nameController.text : automation.name,
+      namePL: languageCode == "pl" ? _nameController.text : automation.namePL,
+      triggerDays: automation.temporarySelectedDays,
+      triggerTime: triggerTimeFormatted,
+      isOn: _isOnState,
+    );
+
+    await appState.updateAutomation(
+      automation,
+      updateModel,
+    );
+    await appState.saveDeviceChanges(automation.id);
+
+    Navigator.of(context).pop();
   }
 
   Widget timePickerSpinner() {
@@ -90,19 +129,15 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
 
     var availableDevices = appState.devicesNames.where((device) {
       return !automation.devices.any((d) => d.name == device.name);
-    }).toList(); // Filter devices not yet in the automation
-    // final devices = appState.devices; // Get the list of all available devices
+    }).toList();
+
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
-              // final availableDevices = appState.devicesNames
-              //     .where((device) => !automation.devices.contains(device))
-              //     .toList(); // Filter devices not yet in the automation
-
               return AlertDialog(
-                title: Text('deviceListTitle'),
+                title: Text('Device List'),
                 content: SizedBox(
                   width: double.maxFinite,
                   child: ListView.builder(
@@ -133,16 +168,10 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                             size: 24.0,
                           ),
                           onPressed: () {
+                            _onDeviceAdded(device);
                             setState(() {
-                              automation.devices.add(device);
-                              availableDevices = appState.devicesNames
-                                  .where((d) => !automation.devices
-                                      .any((ad) => ad.name == d.name))
-                                  .toList(); // Aktualizuj listę dostępnych urządzeń
+                              availableDevices.remove(device);
                             });
-                            this.setState(() {});
-                            // Navigator.of(context)
-                            //     .pop(); // Close the dialog after removal
                           },
                         ),
                       );
@@ -152,7 +181,7 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                 actions: <Widget>[
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).pop(); // Zamknij okienko dialogowe
+                      Navigator.of(context).pop();
                     },
                     child: Text('close'),
                   ),
@@ -170,9 +199,6 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
         appState.automations.firstWhere((a) => a.id == widget.automationId);
 
     return GestureDetector(
-      // onTap: () => _model.unfocusNode.canRequestFocus
-      //     ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-      //     : FocusScope.of(context).unfocus(),
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
@@ -257,17 +283,21 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
                         16.0, 0.0, 0.0, 0.0),
-                    child: Text(
-                      ShteyLocalizations.of(context).languageCode == "en"
-                          ? automation.name
-                          : automation.namePL,
-                      style: IoT_Theme.of(context).titleLarge.override(
-                            fontFamily: 'Inter',
-                            color: IoT_Theme.of(context).primaryText,
-                            fontSize: 30.0,
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.w500,
-                          ),
+                    child: Center(
+                      child: TextField(
+                        controller: _nameController,
+                        textAlign: TextAlign.center,
+                        style: IoT_Theme.of(context).titleLarge.override(
+                              fontFamily: 'Inter',
+                              color: IoT_Theme.of(context).primaryText,
+                              fontSize: 30.0,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.w500,
+                            ),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                        ),
+                      ),
                     ),
                   ),
                   Padding(
@@ -289,17 +319,21 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                                 fontWeight: FontWeight.w500,
                               ),
                         ),
-                        Switch(
-                          value: automation.isOn,
-                          onChanged: (newValue) async {
-                            // Dodaj logikę zmiany stanu automatyzacji
+                        ToggleIcon(
+                          onPressed: () {
+                            setState(() {
+                              _isOnState = !_isOnState;
+                            });
                           },
-                          activeColor: IoT_Theme.of(context).primaryText,
-                          activeTrackColor: IoT_Theme.of(context).secondaryText,
-                          inactiveTrackColor:
-                              IoT_Theme.of(context).primaryBackground,
-                          inactiveThumbColor:
-                              IoT_Theme.of(context).secondaryText,
+                          value: _isOnState,
+                          onIcon: Icon(
+                            Icons.toggle_on_outlined,
+                            color: IoT_Theme.of(context).primary,
+                          ),
+                          offIcon: Icon(
+                            Icons.toggle_off_outlined,
+                            color: IoT_Theme.of(context).secondaryText,
+                          ),
                         ),
                       ],
                     ),
@@ -539,19 +573,9 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                     ),
                   ),
                   timePickerSpinner(),
-                  // IotIconButton(
-                  //   borderColor: Colors.transparent,
-                  //   borderRadius: 20.0,
-                  //   buttonSize: 40.0,
-                  //   icon: Icon(
-                  //     Icons.remove_circle_outline,
-                  //     color: IoT_Theme.of(context).error,
-                  //     size: 24.0,
-                  //   ),
-                  //   onPressed: () {
-                  //     print('IconButton pressed ...');
-                  //   },
-                  // ),
+                  //
+                  //
+                  //
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
                         0.0, 20.0, 0.0, 0.0),
@@ -605,9 +629,7 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                                   size: 24.0,
                                 ),
                                 onPressed: () {
-                                  setState(() {
-                                    automation.devices.removeAt(index);
-                                  });
+                                  _onDeviceRemoved(device);
                                 },
                               ),
                             ],
@@ -620,10 +642,7 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                     padding: const EdgeInsetsDirectional.fromSTEB(
                         16.0, 0.0, 16.0, 16.0),
                     child: ShteyButtonWidget(
-                      onPressed: () {
-                        appState.resetDaysSelection();
-                        context.safePop();
-                      },
+                      onPressed: _onSave,
                       text: ShteyLocalizations.of(context).getText(
                         'rq1mzqny' /* Save */,
                       ),

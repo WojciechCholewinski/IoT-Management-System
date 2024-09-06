@@ -16,4 +16,12 @@ class DeviceName {
       namePL: json['namePL'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+   return {
+      'id': id,
+      'name': name,
+      'namePL': namePL,
+   };
+}
 }

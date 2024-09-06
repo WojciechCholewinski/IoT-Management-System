@@ -1,11 +1,15 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'automation_model.dart';
+import 'automation/automation_model.dart';
+import 'automation/automation_update_model.dart';
+import 'automation/automation_add_devices_model.dart';
+import 'automation/automation_remove_devices_model.dart';
 
 class AutomationService {
+  final String baseUrl = 'https://localhost:5000/api/automation';
+
   Future<List<Automation>> fetchAutomations() async {
-    final response =
-        await http.get(Uri.parse('https://localhost:5000/api/automation'));
+    final response = await http.get(Uri.parse(baseUrl));
 
     if (response.statusCode == 200) {
       List<dynamic> body = jsonDecode(response.body);
@@ -16,22 +20,41 @@ class AutomationService {
     }
   }
 
-//   Future<void> updateAutomationIsOn(int id, bool isOn) async {
-//     final url = Uri.parse('https://localhost:5000/api/automation/$id/ison');
+  Future<void> updateAutomation(
+      int id, AutomationUpdateModel updateModel) async {
+    final response = await http.put(
+      Uri.parse('$baseUrl/$id'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(updateModel.toJson()),
+    );
+    if (response.statusCode != 200) {
+      throw Exception('Failed to update automation');
+    }
+  }
 
-//     final response = await http.patch(
-//       url,
-//       headers: {'Content-Type': 'application/json'},
-//       body: json.encode(isOn),
-//     );
+  Future<void> addDevicesToAutomation(
+      int automationId, AutomationAddDevicesModel addDevicesModel) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/$automationId/devices'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(addDevicesModel.toJson()),
+    );
 
-//     if (response.statusCode == 200 || response.statusCode == 204) {
-//     } else if (response.statusCode == 404) {
-//       throw Exception('Automation not found');
-//     } else if (response.statusCode == 409) {
-//       throw Exception('Automation is already in the requested state');
-//     } else {
-//       throw Exception('Failed to update automation');
-//     }
-//   }
+    if (response.statusCode != 200) {
+      throw Exception('Failed to add devices to automation');
+    }
+  }
+
+  Future<void> removeDevicesFromAutomation(
+      int automationId, AutomationRemoveDevicesModel removeDevicesModel) async {
+    final response = await http.delete(
+      Uri.parse('$baseUrl/$automationId/devices'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(removeDevicesModel.toJson()),
+    );
+
+    if (response.statusCode != 204) {
+      throw Exception('Failed to remove devices from automation');
+    }
+  }
 }
