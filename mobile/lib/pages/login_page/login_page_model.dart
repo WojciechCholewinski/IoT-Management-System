@@ -5,6 +5,17 @@ import '/models/auth_service.dart';
 
 class LoginPageModel extends IotModel<LoginPageWidget> {
   ///  State fields for stateful widgets in this page.
+  String? _errorMessage;
+  String? get errorMessage => _errorMessage;
+
+  @override
+  void initState(BuildContext context) {
+    emailAddressFieldTextControllerValidator =
+        _emailAddressFieldTextControllerValidator;
+    passwordFieldVisibility = false;
+    passwordFieldTextControllerValidator =
+        _passwordFieldTextControllerValidator;
+  }
 
   final unfocusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
@@ -22,7 +33,9 @@ class LoginPageModel extends IotModel<LoginPageWidget> {
     }
 
     if (!RegExp(kTextValidatorEmailRegex).hasMatch(val)) {
-      return 'Has to be a valid email address.';
+      return ShteyLocalizations.of(context).getText(
+        'z5newg0r' /* Has to be a valid email address. */,
+      );
     }
     return null;
   }
@@ -39,6 +52,11 @@ class LoginPageModel extends IotModel<LoginPageWidget> {
         '70kzte5o' /* Password is required. */,
       );
     }
+    if (val.length < 4) {
+      return ShteyLocalizations.of(context).getText(
+        '9b35mbe0' /* Password must be at least 4 characters long. */,
+      );
+    }
 
     return null;
   }
@@ -50,31 +68,28 @@ class LoginPageModel extends IotModel<LoginPageWidget> {
       final email = emailAddressFieldTextController?.text;
       final password = passwordFieldTextController?.text;
 
-       try {
+      try {
         final token = await _authService.login(email!, password!);
         if (token != null) {
-          print('Login successful: $token');
           context.goNamed('Dashboard');
         } else {
-          print('Login failed: Token is null');
+          _errorMessage = ShteyLocalizations.of(context)
+              .getText('z1igambh' /* Invalid username or password. */);
+          // onUpdate(); // Wywołuje aktualizację strony
+          (context as Element).markNeedsBuild();
         }
       } catch (e) {
-        print('Exception during login: $e');
-        // Obsługa błędów logowania
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to login: $e')),
-        );
+        if (e.toString().contains('')) {
+          _errorMessage = ShteyLocalizations.of(context)
+              .getText('z1igambh' /* Invalid username or password. */);
+        } else {
+          _errorMessage = ShteyLocalizations.of(context).getText(
+              '9f20knwx' /* An error occurred while logging in. Please try again later. */);
+        }
+        // onUpdate(); // Wywołuje aktualizację strony
+        (context as Element).markNeedsBuild();
       }
     }
-  }
-
-  @override
-  void initState(BuildContext context) {
-    emailAddressFieldTextControllerValidator =
-        _emailAddressFieldTextControllerValidator;
-    passwordFieldVisibility = false;
-    passwordFieldTextControllerValidator =
-        _passwordFieldTextControllerValidator;
   }
 
   @override

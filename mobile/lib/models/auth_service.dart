@@ -49,7 +49,7 @@ class AuthService {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-  Future<bool> register(
+  Future<http.Response> register(
     String email,
     // String firstName,
     String password,
@@ -70,10 +70,6 @@ class AuthService {
       }),
     );
 
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      return false;
-    }
+    return response;
   }
 }

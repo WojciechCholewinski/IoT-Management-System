@@ -137,16 +137,20 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'pl': 'Podaj adres email.',
     },
     'z5newg0r': {
-      'en': 'Please choose an option from the dropdown',
-      'pl': 'Wybierz opcję z listy.',
+      'en': 'Has to be a valid email address.',
+      'pl': 'Wprowadź poprawny adres e-mail.',
     },
     '70kzte5o': {
       'en': 'Password is required.',
       'pl': 'Podaj hasło.',
     },
     'z1igambh': {
-      'en': 'Please choose an option from the dropdown',
-      'pl': 'Wybierz opcję z listy.',
+      'en': 'Invalid username or password.',
+      'pl': 'Błędny login lub hasło.',
+    },
+    '9f20knwx': {
+      'en': 'An error occurred while logging in. Please try again later.',
+      'pl': 'Wystąpił błąd podczas logowania. Spróbuj ponownie później.',
     },
     'ivvfx7ad': {
       'en': 'Forgot password?',
@@ -335,16 +339,24 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'pl': 'Podaj adres email.',
     },
     'h9wfxp6z': {
-      'en': 'Please choose an option from the dropdown',
-      'pl': 'Wybierz opcję z listy.',
+      'en': 'Has to be a valid email address.',
+      'pl': 'Wprowadź poprawny adres e-mail.',
     },
     'fmero5q1': {
       'en': 'Password is required.',
       'pl': 'Podaj hasło.',
     },
     '9b35mbe0': {
-      'en': 'Please choose an option from the dropdown',
-      'pl': 'Wybierz opcję z listy.',
+      'en': 'Password must be at least 4 characters long.',
+      'pl': 'Hasło musi mieć co najmniej 4 znaki.',
+    },
+    'fdbdicqi': {
+      'en': 'Passwords do not match.',
+      'pl': 'Hasła muszą być takie same.',
+    },
+    '5xfzcoqm': {
+      'en': 'Email is already taken.',
+      'pl': 'Adres e-mail jest już zajęty.',
     },
     '9gw170iv': {
       'en': 'Sign up',
@@ -499,18 +511,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   },
   // Miscellaneous
   {
-    'fdbdicqi': {
-      'en': '',
-      'pl': '',
-    },
-    '5xfzcoqm': {
-      'en': '',
-      'pl': '',
-    },
-    '9f20knwx': {
-      'en': '',
-      'pl': '',
-    },
     'fs395hwm': {
       'en': '',
       'pl': '',

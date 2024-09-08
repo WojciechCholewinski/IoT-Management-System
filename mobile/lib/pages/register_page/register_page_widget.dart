@@ -645,7 +645,11 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                                             0.0, 16.0, 0.0, 0.0),
                                     child: ShteyButtonWidget(
                                       onPressed: () async {
-                                        await _model.register(context);
+                                        final success =
+                                            await _model.register(context);
+                                        if (!success) {
+                                          setState(() {});
+                                        }
                                       },
                                       text: ShteyLocalizations.of(context)
                                           .getText(

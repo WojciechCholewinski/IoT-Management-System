@@ -1,3 +1,4 @@
+import 'dart:convert';
 import '/app_ui/util.dart';
 import 'register_page_widget.dart' show RegisterPageWidget;
 import 'package:flutter/material.dart';
@@ -22,7 +23,9 @@ class RegisterPageModel extends IotModel<RegisterPageWidget> {
     }
 
     if (!RegExp(kTextValidatorEmailRegex).hasMatch(val)) {
-      return 'Has to be a valid email address.';
+      return ShteyLocalizations.of(context).getText(
+        'h9wfxp6z' /* Has to be a valid email address.  */,
+      );
     }
     return null;
   }
@@ -39,6 +42,11 @@ class RegisterPageModel extends IotModel<RegisterPageWidget> {
         'fmero5q1' /* Password is required. */,
       );
     }
+    if (val.length < 4) {
+      return ShteyLocalizations.of(context).getText(
+        '9b35mbe0' /* Password must be at least 4 characters long. */,
+      );
+    }
 
     return null;
   }
@@ -49,40 +57,66 @@ class RegisterPageModel extends IotModel<RegisterPageWidget> {
   late bool confirmPasswordFieldVisibility;
   String? Function(BuildContext, String?)?
       confirmPasswordFieldTextControllerValidator;
+  String? _confirmPasswordFieldTextControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return ShteyLocalizations.of(context).getText(
+        'fmero5q1' /* Password is required. */,
+      );
+    }
+    if (val != passwordFieldTextController?.text) {
+      return ShteyLocalizations.of(context).getText(
+        'fdbdicqi' /* Passwords do not match. */,
+      );
+    }
+    return null;
+  }
 
+  void handleErrors(Map<String, dynamic> errors) {
+    errors.forEach((field, messages) {
+      if (field == 'Email') {
+        emailAddressFieldTextControllerValidator = (context, value) {
+          return ShteyLocalizations.of(context).getText(
+            '5xfzcoqm' /* Email is already taken. */,
+          );
+        };
+      } else if (field == 'Password') {
+        passwordFieldTextControllerValidator = (context, value) {
+          return messages.join(', ');
+        };
+      } else if (field == 'ConfirmPassword') {
+        confirmPasswordFieldTextControllerValidator = (context, value) {
+          return messages.join(', ');
+        };
+      }
+    });
+    formKey.currentState?.validate();
+  }
 
+  final AuthService _authService = AuthService();
 
-  final AuthService _authService = AuthService(); // Dodaję AuthService
-
-  Future<void> register(BuildContext context) async {
+  Future<bool> register(BuildContext context) async {
     if (formKey.currentState?.validate() ?? false) {
       final email = emailAddressFieldTextController?.text;
       final password = passwordFieldTextController?.text;
       final confirmPassword = confirmPasswordFieldTextController?.text;
 
-      if (password != confirmPassword) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Passwords do not match')),
-        );
-        return;
-      }
+      final response =
+          await _authService.register(email!, password!, confirmPassword!);
 
-      try {
-        final success =
-            await _authService.register(email!, password!, confirmPassword!);
-        if (success) {
-          context.goNamed('LoginPage');
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Registration failed')),
-          );
-        }
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
-        );
+      if (response.statusCode == 200) {
+        context.goNamed('LoginPage');
+        return true;
+      } else {
+        final errors =
+            json.decode(response.body)['errors'] as Map<String, dynamic>;
+
+        handleErrors(errors);
+        (context as Element).markNeedsBuild();
+        return false;
       }
     }
+    return false;
   }
 
   @override
@@ -93,6 +127,8 @@ class RegisterPageModel extends IotModel<RegisterPageWidget> {
     passwordFieldTextControllerValidator =
         _passwordFieldTextControllerValidator;
     confirmPasswordFieldVisibility = false;
+    confirmPasswordFieldTextControllerValidator =
+        _confirmPasswordFieldTextControllerValidator;
   }
 
   @override
