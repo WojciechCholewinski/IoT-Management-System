@@ -1,4 +1,5 @@
-﻿using api.Models;
+﻿using api.Exceptions;
+using api.Models;
 using api.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,8 +24,15 @@ namespace api.Controllers
         [HttpPost("login")]
         public ActionResult Login([FromBody]LoginDto dto)
         {
-            string token = _accountService.GenerateJwt(dto);
-            return Ok(token);
+            try
+            {
+                string token = _accountService.GenerateJwt(dto);
+                return Ok(token);
+            }
+            catch (BadRequestException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }

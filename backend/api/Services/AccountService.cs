@@ -1,4 +1,5 @@
 ﻿using api.Entities;
+using api.Exceptions;
 using api.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -29,8 +30,8 @@ namespace api.Services
                 ? dto.Email.Split('@')[0]
                 : dto.FirstName;
 
-            var newUser = new User() 
-            { 
+            var newUser = new User()
+            {
                 Email = dto.Email,
                 FirstName = firstName,
                 RoleId = dto.RoleId,
@@ -48,17 +49,13 @@ namespace api.Services
                 .FirstOrDefault(u => u.Email == dto.Email);
             if (user == null)
             {
-                // TODO: add BadRequestException
-                //throw new BadRequestException("Invalid username or password");
-                throw Exception();
+                throw new BadRequestException("Invalid username or password");
             }
 
             var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
             if (result == PasswordVerificationResult.Failed)
             {
-                // TODO: add BadRequestException
-                //throw new BadRequestException("Invalid username or password");
-                throw Exception();
+                throw new BadRequestException("Invalid username or password");
             }
 
             var claims = new List<Claim>()
@@ -74,19 +71,13 @@ namespace api.Services
 
             var token = new JwtSecurityToken(
                 _authenticationSettings.JwtIssuer,
-                _authenticationSettings.JwtIssuer, 
-                claims, 
-                expires: expires, 
+                _authenticationSettings.JwtIssuer,
+                claims,
+                expires: expires,
                 signingCredentials: cred);
 
             var tokenHandler = new JwtSecurityTokenHandler();
             return tokenHandler.WriteToken(token);
-        }
-
-        // TODO: to delete
-        private Exception Exception()
-        {
-            throw new NotImplementedException("Invalid username or password");
         }
     }
 }
