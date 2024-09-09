@@ -50,6 +50,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : const DashboardWidget(),
         ),
         ShteyRoute(
+          name: 'Logo_page',
+          path: '/logo_page',
+          builder: (context, params) => LoadingScreenWidget(),
+        ),
+        ShteyRoute(
           name: 'Settings',
           path: '/settings',
           builder: (context, params) => params.isEmpty

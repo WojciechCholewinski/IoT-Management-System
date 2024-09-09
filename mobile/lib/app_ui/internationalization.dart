@@ -109,8 +109,8 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   // LoginPage
   {
     '47qkwvd2': {
-      'en': 'WoIT',
-      'pl': 'WoIT',
+      'en': 'Aiomee',
+      'pl': 'Aiomee',
     },
     '54zbvivd': {
       'en': 'Byte into Comfort!',
@@ -303,8 +303,8 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   // RegisterPage
   {
     'v104at02': {
-      'en': 'WoIT',
-      'pl': 'WoIT',
+      'en': 'Aiomee',
+      'pl': 'Aiomee',
     },
     'o5c5ko9i': {
       'en': 'Byte into Comfort!',

@@ -71,7 +71,7 @@ class LoginPageModel extends IotModel<LoginPageWidget> {
       try {
         final token = await _authService.login(email!, password!);
         if (token != null) {
-          context.goNamed('Dashboard');
+          context.goNamed('Logo_page');
         } else {
           _errorMessage = ShteyLocalizations.of(context)
               .getText('z1igambh' /* Invalid username or password. */);

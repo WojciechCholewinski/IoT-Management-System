@@ -103,7 +103,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             SelectionArea(
                                 child: Text(
                               ShteyLocalizations.of(context).getText(
-                                '47qkwvd2' /* WoIT */,
+                                '47qkwvd2' /* Aiomee */,
                               ),
                               style:
                                   IoT_Theme.of(context).headlineSmall.override(

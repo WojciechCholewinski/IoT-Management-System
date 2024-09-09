@@ -102,7 +102,7 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
                         SelectionArea(
                             child: Text(
                           ShteyLocalizations.of(context).getText(
-                            'v104at02' /* WoIT */,
+                            'v104at02' /* Aiomee */,
                           ),
                           style: IoT_Theme.of(context).headlineSmall.override(
                                 fontFamily: 'Readex Pro',
