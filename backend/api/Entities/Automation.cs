@@ -9,6 +9,7 @@
         public required IList<DayOfWeek> TriggerDays { get; set; }
         public required TimeOnly TriggerTime { get; set; }
         public bool IsOn { get; set; }
+        public bool IsTriggeredToday { get; set; }
         public required User CreatedBy { get; set; }
         public required IList<Device> Devices { get; set; }
     }

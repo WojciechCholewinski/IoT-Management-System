@@ -11,5 +11,7 @@ namespace api.Services
         bool? Update(int id, AutomationUpdateDto dto);
         void AddDevices(int automationId, AddDevicesToAutomationDto dto);
         void RemoveDevices(int automationId, RemoveDevicesFromAutomationDto dto);
+
+        void ResetIsTriggeredTodayForAllAutomations();
     }
 }

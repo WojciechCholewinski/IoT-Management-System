@@ -47,6 +47,8 @@ builder.Services.AddScoped<ApiSeeder>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+builder.Services.AddHostedService<AutomationSchedulerService>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("FrontendClient", builder =>

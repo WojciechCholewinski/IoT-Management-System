@@ -11,14 +11,14 @@ namespace api.Services
         private readonly IoT_DbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public AutomationService(IoT_DbContext dbContext, IMapper mapper) 
+        public AutomationService(IoT_DbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
         }
         public IEnumerable<AutomationDetailDto> GetAll()
         {
-            var automations = 
+            var automations =
                 _dbContext
                 .Automations
                 .Include(a => a.CreatedBy)
@@ -47,6 +47,8 @@ namespace api.Services
         // bez listy devices bo to dodajemy lub usuwamy w osobnych endpointach
         public bool? Update(int id, AutomationUpdateDto dto)
         {
+            var currentTime = TimeOnly.FromDateTime(DateTime.Now);
+
             var automation = 
                 _dbContext
                 .Automations
@@ -57,7 +59,9 @@ namespace api.Services
             if (dto.Name != null) automation.Name = dto.Name;
             if (dto.NamePL != null) automation.NamePL = dto.NamePL;
             if (dto.TriggerDays != null) automation.TriggerDays = dto.TriggerDays;
-            if (dto.TriggerTime.HasValue)automation.TriggerTime = dto.TriggerTime.Value;
+            // obsługuję tu sytuację gdy danego dnia automatyzacja się już wykonała, a user zmienia jej czas na nadchodzącą jeszcze dziś godzinę, a więc IsTriggeredToday ustawiamy na false tak aby w drodze wyjątku mogła się wykonać ponownie:
+            if ((dto.TriggerTime != automation.TriggerTime)&&currentTime < dto.TriggerTime) automation.IsTriggeredToday = false;
+            if (dto.TriggerTime.HasValue) automation.TriggerTime = dto.TriggerTime.Value;
             if (dto.IsOn.HasValue)automation.IsOn = dto.IsOn.Value;
 
             _dbContext.SaveChanges();
@@ -111,6 +115,19 @@ namespace api.Services
             foreach (var device in devicesToRemove)
             {
                 automation.Devices.Remove(device);
+            }
+
+            _dbContext.SaveChanges();
+        }
+
+        // Nowa metoda do resetowania stanu IsTriggeredToday
+        public void ResetIsTriggeredTodayForAllAutomations()
+        {
+            var automations = _dbContext.Automations.ToList();
+
+            foreach (var automation in automations)
+            {
+                automation.IsTriggeredToday = false;
             }
 
             _dbContext.SaveChanges();
