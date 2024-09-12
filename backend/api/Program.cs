@@ -46,6 +46,8 @@ builder.Services.AddDbContext<IoT_DbContext>();
 builder.Services.AddScoped<ApiSeeder>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
+builder.Services.AddScoped<IValidator<UpdateEmailDto>, UpdateEmailDtoValidator>();
+builder.Services.AddScoped<IValidator<UpdatePasswordDto>, UpdatePasswordDtoValidator>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddHostedService<AutomationSchedulerService>();
 

@@ -61,7 +61,6 @@ namespace api.Services
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
                 new Claim(ClaimTypes.Role, $"{user.Role.Name}")
             };
 
@@ -78,6 +77,57 @@ namespace api.Services
 
             var tokenHandler = new JwtSecurityTokenHandler();
             return tokenHandler.WriteToken(token);
+        }
+
+
+        private User GetUserById(int id)
+        {
+            var user = _context
+                .Users
+                .Include(u => u.Role)
+                .FirstOrDefault(u => u.Id == id);
+
+            if (user == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+            return user;
+        }
+
+
+        public void UpdateNameAndSurname(UpdateNameDto dto)
+        {
+            var user = GetUserById(dto.Id);
+
+            user.FirstName = dto.FirstName ?? user.FirstName;
+            user.LastName = dto.LastName ?? user.LastName;
+
+            _context.SaveChanges();
+        }
+
+        public void UpdateEmail(UpdateEmailDto dto)
+        {
+            var user = GetUserById(dto.Id);
+
+            user.Email = dto.Email;
+
+            _context.SaveChanges();
+        }
+
+        public void UpdatePassword(UpdatePasswordDto dto)
+        {
+            var user = GetUserById(dto.Id);
+
+            var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.PreviousPassword);
+            if (result == PasswordVerificationResult.Failed)
+            {
+                throw new BadRequestException("Old password is incorrect");
+            }
+
+            var hashedPassword = _passwordHasher.HashPassword(user, dto.Password);
+            user.PasswordHash = hashedPassword;
+
+            _context.SaveChanges();
         }
     }
 }
