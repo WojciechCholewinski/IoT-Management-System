@@ -7,9 +7,10 @@ namespace api.Services
     {
         string GenerateJwt(LoginDto dto);
         void RegisterUser(RegisterUserDto dto);
-        //User GetUserById(int id);
+        GetUserDto GetById(int id);
         void UpdateEmail(UpdateEmailDto dto);
         void UpdateNameAndSurname(UpdateNameDto dto);
         void UpdatePassword(UpdatePasswordDto dto);
+        void UpdatePhoto(UpdatePhotoDto dto);
     }
 }

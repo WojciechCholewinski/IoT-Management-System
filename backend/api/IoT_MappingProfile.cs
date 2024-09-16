@@ -14,6 +14,7 @@ namespace api
             CreateMap<Automation, AutomationUpdateDto>();
             CreateMap<Device, DeviceNameDto>();
             CreateMap<DeviceNameDto, Device>();
+            CreateMap<User, GetUserDto>();
         }
     }
 }

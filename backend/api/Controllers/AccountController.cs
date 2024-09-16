@@ -17,17 +17,19 @@ namespace api.Controllers
         {
             _accountService = accountService;
         }
-        //[HttpGet("{id}")]
-        //public ActionResult<UserDto> GetUser(int id)
-        //{
-        //    var user = _accountService.GetUserById(id);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
 
-        //    return Ok(user);
-        //}
+        [Authorize]
+        [HttpGet("me")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<GetUserDto> GetMyProfileData()
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var user = _accountService.GetById(userId);
+
+            return Ok(user);
+        }
         //[HttpPost("register")]
         //public ActionResult RegisterUser([FromBody] RegisterUserDto dto)
         //{
@@ -108,6 +110,18 @@ namespace api.Controllers
             {
                 return NotFound(new { message = ex.Message });
             }
+        }
+
+        [Authorize]
+        [HttpPatch("photo")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult ChangePhoto([FromBody] UpdatePhotoDto dto)
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            dto.Id = userId;
+            _accountService.UpdatePhoto(dto);
+            return NoContent();
         }
     }
 }
