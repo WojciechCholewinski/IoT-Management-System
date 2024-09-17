@@ -473,8 +473,12 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'pl': 'Ustaw czas:',
     },
     'ki34z6bq': {
-      'en': 'Included Devices',
-      'pl': 'Połączone urządzenia',
+      'en': 'Devices to Turn On:',
+      'pl': 'Urządzenia włączane:',
+    },
+    'fs395hwm': {
+      'en': 'Devices to Turn Off:',
+      'pl': 'Urządzenia wyłączane:',
     },
     'lzgzah3i': {
       'en': 'Desk Lighting',
@@ -511,10 +515,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   },
   // Miscellaneous
   {
-    'fs395hwm': {
-      'en': '',
-      'pl': '',
-    },
     'xyay4gib': {
       'en': '',
       'pl': '',

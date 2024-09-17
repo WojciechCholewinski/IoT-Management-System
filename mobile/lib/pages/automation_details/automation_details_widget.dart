@@ -203,28 +203,28 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: IoT_Theme.of(context).primaryBackground,
-        floatingActionButton: Align(
-          alignment: const AlignmentDirectional(1.0, 1.0),
-          child: Padding(
-            padding:
-                const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 400.0),
-            child: FloatingActionButton(
-              onPressed: () {
-                _showDevicesDialog(context);
-              },
-              backgroundColor: IoT_Theme.of(context).primaryBackground,
-              elevation: 8.0,
-              child: Align(
-                alignment: const AlignmentDirectional(0.0, 0.0),
-                child: Icon(
-                  Icons.playlist_add,
-                  color: IoT_Theme.of(context).primaryText,
-                  size: 30.0,
-                ),
-              ),
-            ),
-          ),
-        ),
+        // floatingActionButton: Align(
+        //   alignment: const AlignmentDirectional(1.0, 1.0),
+        //   child: Padding(
+        //     padding:
+        //         const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 400.0),
+        //     child: FloatingActionButton(
+        //       onPressed: () {
+        //         _showDevicesDialog(context);
+        //       },
+        //       backgroundColor: IoT_Theme.of(context).primaryBackground,
+        //       elevation: 8.0,
+        //       child: Align(
+        //         alignment: const AlignmentDirectional(0.0, 0.0),
+        //         child: Icon(
+        //           Icons.playlist_add,
+        //           color: IoT_Theme.of(context).primaryText,
+        //           size: 30.0,
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
         body: SafeArea(
           top: true,
           child: Align(
@@ -280,64 +280,54 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                       ],
                     ),
                   ),
+
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
-                        16.0, 0.0, 0.0, 0.0),
-                    child: Center(
-                      child: TextField(
-                        controller: _nameController,
-                        textAlign: TextAlign.center,
-                        style: IoT_Theme.of(context).titleLarge.override(
-                              fontFamily: 'Inter',
-                              color: IoT_Theme.of(context).primaryText,
-                              fontSize: 30.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w500,
-                            ),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        16.0, 0.0, 0.0, 0.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        5.0, 0.0, 0.0, 0.0),
+                    child: Stack(
                       children: [
-                        Text(
-                          ShteyLocalizations.of(context).getText(
-                            'g9h4mc3r' /* Active */,
+                        Align(
+                          // Wyśrodkowanie TextField względem Column
+                          alignment: Alignment.center,
+                          child: TextField(
+                            controller: _nameController,
+                            textAlign: TextAlign.center,
+                            style: IoT_Theme.of(context).titleLarge.override(
+                                  fontFamily: 'Inter',
+                                  color: IoT_Theme.of(context).primaryText,
+                                  fontSize: 30.0,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                            ),
                           ),
-                          style: IoT_Theme.of(context).bodyMedium.override(
-                                fontFamily: 'Inter',
-                                color: IoT_Theme.of(context).primaryText,
-                                fontSize: 18.0,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.w500,
-                              ),
                         ),
-                        ToggleIcon(
-                          onPressed: () {
-                            setState(() {
-                              _isOnState = !_isOnState;
-                            });
-                          },
-                          value: _isOnState,
-                          onIcon: Icon(
-                            Icons.toggle_on_outlined,
-                            color: IoT_Theme.of(context).primary,
-                          ),
-                          offIcon: Icon(
-                            Icons.toggle_off_outlined,
-                            color: IoT_Theme.of(context).secondaryText,
+                        Align(
+                          // Ustawienie ToggleIcon w prawym rogu
+                          alignment: Alignment.centerRight,
+                          child: ToggleIcon(
+                            onPressed: () {
+                              setState(() {
+                                _isOnState = !_isOnState;
+                              });
+                            },
+                            value: _isOnState,
+                            onIcon: Icon(
+                              Icons.toggle_on_outlined,
+                              color: IoT_Theme.of(context).primary,
+                            ),
+                            offIcon: Icon(
+                              Icons.toggle_off_outlined,
+                              color: IoT_Theme.of(context).secondaryText,
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
+
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
                         0.0, 30.0, 0.0, 10.0),
@@ -576,23 +566,105 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                   //
                   //
                   //
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 20.0, 0.0, 0.0),
-                    child: Text(
-                      ShteyLocalizations.of(context).getText(
-                        'ki34z6bq' /* Included Devices */,
-                      ),
-                      style: IoT_Theme.of(context).titleLarge.override(
-                            fontFamily: 'Inter',
-                            color: IoT_Theme.of(context).primaryText,
-                            fontSize: 20.0,
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.w500,
+                  SizedBox(
+                    height:
+                        56.0, // Wymuszenie wysokości dla całego Stacka, aby dopasować do przycisku
+                    child: Stack(
+                      children: [
+                        Align(
+                          // Wyśrodkowanie TextField względem Column
+                          alignment: Alignment.center,
+                          child: Text(
+                            ShteyLocalizations.of(context).getText(
+                              'ki34z6bq' /* Turn On  */,
+                            ),
+                            style: IoT_Theme.of(context).titleLarge.override(
+                                  fontFamily: 'Inter',
+                                  color: IoT_Theme.of(context).primaryText,
+                                  fontSize: 20.0,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w500,
+                                ),
                           ),
+                        ),
+                        Align(
+                          // Ustawienie ToggleIcon w prawym rogu
+                          alignment: Alignment.centerRight,
+                          child: IotIconButton(
+                            borderRadius: 26.0,
+                            buttonSize: 56.0,
+                            borderWidth: 0, // Brak obramowania
+                            // borderColor: IoT_Theme.of(context).primaryText,
+                            fillColor: IoT_Theme.of(context)
+                                .primaryBackground, // Kolor tła
+                            icon: Icon(
+                              Icons.format_list_bulleted_add,
+                              color: IoT_Theme.of(context).success,
+                              size: 30.0, // Rozmiar ikony
+                            ),
+                            onPressed: () {
+                              _showDevicesDialog(context);
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+                  // Row(
+                  //   mainAxisSize: MainAxisSize.max,
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Text(
+                  //       ShteyLocalizations.of(context).getText(
+                  //         'ki34z6bq' /* Turn On  */,
+                  //       ),
+                  //       style: IoT_Theme.of(context).titleLarge.override(
+                  //             fontFamily: 'Inter',
+                  //             color: IoT_Theme.of(context).primaryText,
+                  //             fontSize: 20.0,
+                  //             letterSpacing: 0.0,
+                  //             fontWeight: FontWeight.w500,
+                  //           ),
+                  //     ),
+                  //     IotIconButton(
+                  //       borderRadius: 16.0,
+                  //       buttonSize: 56.0,
+                  //       borderWidth: 0, // Brak obramowania
+
+                  //       // borderColor: IoT_Theme.of(context).primaryBackground,
+                  //       fillColor: IoT_Theme.of(context)
+                  //           .primaryBackground, // Kolor tła
+                  //       icon: Icon(
+                  //         Icons.format_list_bulleted_add,
+                  //         color: IoT_Theme.of(context).primaryText,
+                  //         size: 30.0, // Rozmiar ikony
+                  //       ),
+                  //       onPressed: () {
+                  //         _showDevicesDialog(context);
+                  //       },
+                  //     ),
+                  //   ],
+                  // ),
+
+                  // Padding(
+                  //   padding: const EdgeInsetsDirectional.fromSTEB(
+                  //       0.0, 20.0, 0.0, 0.0),
+                  //   child: Text(
+                  //     ShteyLocalizations.of(context).getText(
+                  //       'ki34z6bq' /* Turn On  */,
+                  //     ),
+                  //     style: IoT_Theme.of(context).titleLarge.override(
+                  //           fontFamily: 'Inter',
+                  //           color: IoT_Theme.of(context).primaryText,
+                  //           fontSize: 20.0,
+                  //           letterSpacing: 0.0,
+                  //           fontWeight: FontWeight.w500,
+                  //         ),
+                  //   ),
+                  // ),
                   Expanded(
+                    flex: automation.devices
+                        .length, // Ustawienie flex w zależności od liczby urządzeń
                     child: ListView.builder(
                       padding: EdgeInsets.zero,
                       itemCount: automation.devices.length,
@@ -638,6 +710,101 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                       },
                     ),
                   ),
+
+                  SizedBox(
+                    height:
+                        56.0, // Wymuszenie wysokości dla całego Stacka, aby dopasować do przycisku
+                    child: Stack(
+                      children: [
+                        Align(
+                          // Wyśrodkowanie TextField względem Column
+                          alignment: Alignment.center,
+                          child: Text(
+                            ShteyLocalizations.of(context).getText(
+                              'fs395hwm' /* Turn Off  */,
+                            ),
+                            style: IoT_Theme.of(context).titleLarge.override(
+                                  fontFamily: 'Inter',
+                                  color: IoT_Theme.of(context).primaryText,
+                                  fontSize: 20.0,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                          ),
+                        ),
+                        Align(
+                          // Ustawienie ToggleIcon w prawym rogu
+                          alignment: Alignment.centerRight,
+                          child: IotIconButton(
+                            borderRadius: 26.0,
+                            buttonSize: 56.0,
+                            borderWidth: 0, // Brak obramowania
+                            // borderColor: IoT_Theme.of(context).primaryText,
+                            fillColor: IoT_Theme.of(context)
+                                .primaryBackground, // Kolor tła
+                            icon: Icon(
+                              Icons.format_list_bulleted_add,
+                              color: IoT_Theme.of(context).success,
+                              size: 30.0, // Rozmiar ikony
+                            ),
+                            onPressed: () {
+                              _showDevicesDialog(context);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  Expanded(
+                    flex: automation.devices
+                        .length, // Flex zależny od liczby urządzeń w drugiej liście
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemCount: automation.devices.length,
+                      itemBuilder: (context, index) {
+                        final device = automation.devices[index];
+                        return Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              8.0, 0.0, 8.0, 0.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                ShteyLocalizations.of(context).languageCode ==
+                                        "en"
+                                    ? device.name
+                                    : device.namePL,
+                                style: IoT_Theme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      color: IoT_Theme.of(context).primaryText,
+                                      fontSize: 16.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                              ),
+                              IotIconButton(
+                                borderRadius: 20.0,
+                                buttonSize: 40.0,
+                                icon: Icon(
+                                  Icons.remove_circle_outline,
+                                  color: IoT_Theme.of(context).error,
+                                  size: 24.0,
+                                ),
+                                onPressed: () {
+                                  // _onDeviceRemoved(device);
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
                         16.0, 0.0, 16.0, 16.0),
