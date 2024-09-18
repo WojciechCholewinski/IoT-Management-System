@@ -29,6 +29,8 @@ namespace api
                     _dbContext.SaveChanges();
                 }
 
+                SeedUser();
+
                 if (!_dbContext.Devices.Any())
                 {
                     SeedLocations();
@@ -46,6 +48,25 @@ namespace api
                         _dbContext.SaveChanges();
                     }
                 }
+            }
+        }
+        private void SeedUser()
+        {
+            if (!_dbContext.Users.Any(u => u.Email == "t@test.com"))
+            {
+                var userRole = _dbContext.Roles.FirstOrDefault(r => r.Name == "User") ?? throw new InvalidOperationException("Role 'User' does not exist. Please seed roles before seeding users.");
+                var user = new User
+                { // TODO: usunąć stąd PasswordHash?
+                    Email = "t@test.com",
+                    FirstName = "Test",
+                    LastName = "User",
+                    PasswordHash = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNzI3NTczNzA1LCJpc3MiOiJodHRwOi8vaW90YXBpLnNodGV5ZW4ucGwiLCJhdWQiOiJodHRwOi8vaW90YXBpLnNodGV5ZW4ucGwifQ.Sphl6KRZ7KJRpOZOhpXAQoB75Z45BHH0Y-ATChE0SF8",
+                    Photo = LoadImage($"ProfilePhoto.png"),
+                    Role = userRole
+                };
+
+                _dbContext.Users.Add(user);
+                _dbContext.SaveChanges();
             }
         }
 
@@ -181,16 +202,16 @@ namespace api
             };
             var automations = new List<Automation>
             {
-                CreateAutomation("Morning", "Poranek", creator, Morning),
-                CreateAutomation("Night", "Noc", creator, Night),
-                CreateAutomation("Plants", "Rośliny", creator, Plants),
-                CreateAutomation("Welcome Home", "Witaj w domu", creator, Welcome_Home),
-                CreateAutomation("Wardrobe Lighting", "Szafa światło", creator, Wardrobe_Lighting),
-                CreateAutomation("Kitchen Lighting", "Światło w kuchni", creator, Kitchen_Lighting)
+                CreateAutomation("Morning", "Poranek", creator, Morning, null),
+                CreateAutomation("Night", "Noc", creator, null, Night),
+                CreateAutomation("Plants", "Rośliny", creator, Plants, Plants),
+                CreateAutomation("Welcome Home", "Witaj w domu", creator, Welcome_Home, null),
+                CreateAutomation("Wardrobe Lighting", "Szafa światło", creator, Wardrobe_Lighting, null),
+                CreateAutomation("Kitchen Lighting", "Światło w kuchni", creator, Kitchen_Lighting, null)
             };
             return automations;
         }
-        private Automation CreateAutomation(string name, string namePL, User creator, IList<Device> Devices)
+        private Automation CreateAutomation(string name, string namePL, User creator, IList<Device>? DevicesToTurnOn, IList<Device>? DevicesToTurnOff)
         {
             return new Automation
             {
@@ -200,7 +221,8 @@ namespace api
                 TriggerDays = GetRandomDaysOfWeek(),
                 TriggerTime = GetRandomTime(),
                 CreatedBy = creator,
-                Devices = Devices,
+                DevicesToTurnOn = DevicesToTurnOn,
+                DevicesToTurnOff = DevicesToTurnOff,
             };
             
         }

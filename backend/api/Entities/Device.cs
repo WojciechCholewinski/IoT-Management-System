@@ -11,7 +11,12 @@
         public bool IsOn { get; set; }
         public DateTime? LastUpdate { get; set; }
         public TimeSpan RunTime { get; set; }
-        public ICollection<Automation> Automations { get; } = new List<Automation>();
+
+        // Automatyzacje, w których urządzenie jest włączane
+        public ICollection<Automation>? AutomationsToTurnOn { get; set; }
+
+        // Automatyzacje, w których urządzenie jest wyłączane
+        public ICollection<Automation>? AutomationsToTurnOff { get; set; }
     }
 }
 

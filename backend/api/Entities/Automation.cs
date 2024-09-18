@@ -11,6 +11,7 @@
         public bool IsOn { get; set; }
         public bool IsTriggeredToday { get; set; }
         public required User CreatedBy { get; set; }
-        public required IList<Device> Devices { get; set; }
+        public ICollection<Device>? DevicesToTurnOn { get; set; }
+        public ICollection<Device>? DevicesToTurnOff { get; set; }
     }
 }

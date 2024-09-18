@@ -2,6 +2,7 @@
 {
     public class RemoveDevicesFromAutomationDto
     {
-        public List<int> DeviceIds { get; set; }
+        public List<int>? DeviceToTurnOnIds { get; set; }
+        public List<int>? DeviceToTurnOffIds { get; set; }
     }
 }

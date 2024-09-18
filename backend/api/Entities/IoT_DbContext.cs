@@ -60,7 +60,25 @@ namespace api.Entities
 
             modelBuilder.Entity<Automation>().HasOne(a => a.CreatedBy);
 
-            modelBuilder.Entity<Automation>().HasMany(a => a.Devices);
+            modelBuilder.Entity<Automation>()
+                .HasMany(a => a.DevicesToTurnOn)
+                .WithMany(d => d.AutomationsToTurnOn)
+                .UsingEntity(j => j.ToTable("AutomationDevicesToTurnOn"));
+
+            modelBuilder.Entity<Automation>()
+                .HasMany(a => a.DevicesToTurnOff)
+                .WithMany(d => d.AutomationsToTurnOff)
+                .UsingEntity(j => j.ToTable("AutomationDevicesToTurnOff"));
+
+            modelBuilder.Entity<Device>()
+                .HasMany(d => d.AutomationsToTurnOn)
+                .WithMany(a => a.DevicesToTurnOn)
+                .UsingEntity(j => j.ToTable("AutomationDevicesToTurnOn"));
+
+            modelBuilder.Entity<Device>()
+                .HasMany(d => d.AutomationsToTurnOff)
+                .WithMany(a => a.DevicesToTurnOff)
+                .UsingEntity(j => j.ToTable("AutomationDevicesToTurnOff"));
 
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -24,7 +24,7 @@ namespace api.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<IEnumerable<AutomationDetailDto>> GetById(int id) 
+        public ActionResult<AutomationDetailDto>GetById(int id) 
         { 
             var automationDto = _automationService.GetById(id);
             return Ok(automationDto);

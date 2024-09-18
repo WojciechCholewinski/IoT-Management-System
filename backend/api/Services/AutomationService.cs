@@ -22,7 +22,8 @@ namespace api.Services
                 _dbContext
                 .Automations
                 .Include(a => a.CreatedBy)
-                .Include(a => a.Devices)
+                .Include(a => a.DevicesToTurnOn)
+                .Include(a => a.DevicesToTurnOff)
                 .ToList();
 
             var automationsDtos = _mapper.Map<List<AutomationDetailDto>>(automations);
@@ -35,7 +36,8 @@ namespace api.Services
                 _dbContext
                 .Automations
                 .Include(a => a.CreatedBy)
-                .Include(a => a.Devices)
+                .Include(a => a.DevicesToTurnOn)
+                .Include(a => a.DevicesToTurnOff)
                 .FirstOrDefault(a => a.Id == id);
             if (automation == null) return null;
 
@@ -52,7 +54,8 @@ namespace api.Services
             var automation = 
                 _dbContext
                 .Automations
-                .Include (a => a.Devices)
+                .Include (a => a.DevicesToTurnOn)
+                .Include (a => a.DevicesToTurnOff)
                 .FirstOrDefault(a => a.Id == id);
             if (automation == null) return null;
 
@@ -73,7 +76,8 @@ namespace api.Services
             var automation = 
                 _dbContext
                 .Automations
-                .Include(a => a.Devices)
+                .Include(a => a.DevicesToTurnOn)
+                .Include(a => a.DevicesToTurnOff)
                 .FirstOrDefault(a => a.Id == automationId);
 
             if (automation == null)
@@ -81,26 +85,38 @@ namespace api.Services
                 return; //TODO:
             }
 
-            var devices = _dbContext.Devices
-                .Where(d => dto.DeviceIds.Contains(d.Id))
+            var devicesToTurnOn = _dbContext.Devices
+                .Where(d => dto.DeviceToTurnOnIds.Contains(d.Id))
                 .ToList();
-
-            foreach (var device in devices)
+            foreach (var device in devicesToTurnOn)
             {
-                if (!automation.Devices.Any(d => d.Id == device.Id))
+                if (!automation.DevicesToTurnOn.Any(d => d.Id == device.Id))
                 {
-                    automation.Devices.Add(device);
+                    automation.DevicesToTurnOn.Add(device);
+                }
+            }
+
+            var devicesToTurnOff = _dbContext.Devices
+                .Where(d => dto.DeviceToTurnOffIds.Contains(d.Id))
+                .ToList();
+            foreach (var device in devicesToTurnOff)
+            {
+                if (!automation.DevicesToTurnOff.Any(d => d.Id == device.Id))
+                {
+                    automation.DevicesToTurnOff.Add(device);
                 }
             }
 
             _dbContext.SaveChanges();
         }
+        
         public void RemoveDevices(int automationId, RemoveDevicesFromAutomationDto dto)
         {
             var automation = 
                 _dbContext
                 .Automations
-                .Include(a => a.Devices)
+                .Include(a => a.DevicesToTurnOn)
+                .Include(a => a.DevicesToTurnOff)
                 .FirstOrDefault(a => a.Id == automationId);
 
             if (automation == null)
@@ -108,13 +124,20 @@ namespace api.Services
                 return; //TODO:
             }
 
-            var devicesToRemove = automation.Devices
-                .Where(d => dto.DeviceIds.Contains(d.Id))
+            var devicesToTurnOn = _dbContext.Devices
+                .Where(d => dto.DeviceToTurnOnIds.Contains(d.Id))
                 .ToList();
-
-            foreach (var device in devicesToRemove)
+            foreach (var device in devicesToTurnOn)
             {
-                automation.Devices.Remove(device);
+                automation.DevicesToTurnOn.Remove(device);
+            }
+
+            var devicesToTurnOff = _dbContext.Devices
+                .Where(d => dto.DeviceToTurnOffIds.Contains(d.Id))
+                .ToList();
+            foreach (var device in devicesToTurnOff)
+            {
+                automation.DevicesToTurnOff.Remove(device);
             }
 
             _dbContext.SaveChanges();

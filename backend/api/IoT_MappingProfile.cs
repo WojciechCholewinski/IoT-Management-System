@@ -10,7 +10,9 @@ namespace api
         {
             CreateMap<Device, DeviceDto>();
             CreateMap<Automation, AutomationDetailDto>()
-                .ForMember(m => m.CreatedByEmail, c => c.MapFrom(s => s.CreatedBy.Email));
+                .ForMember(m => m.CreatedByEmail, c => c.MapFrom(s => s.CreatedBy.Email))
+                .ForMember(m => m.DevicesToTurnOn, c => c.MapFrom(s => s.DevicesToTurnOn))
+                .ForMember(m => m.DevicesToTurnOff, c => c.MapFrom(s => s.DevicesToTurnOff));
             CreateMap<Automation, AutomationUpdateDto>();
             CreateMap<Device, DeviceNameDto>();
             CreateMap<DeviceNameDto, Device>();

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Entities;
 
@@ -11,9 +12,11 @@ using api.Entities;
 namespace api.Migrations
 {
     [DbContext(typeof(IoT_DbContext))]
-    partial class IoT_DbContextModelSnapshot : ModelSnapshot
+    [Migration("20240913015604_AddDevicesToTurnOnAndTurnOffColumns")]
+    partial class AddDevicesToTurnOnAndTurnOffColumns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,7 +95,7 @@ namespace api.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("Automations", (string)null);
+                    b.ToTable("Automations");
                 });
 
             modelBuilder.Entity("api.Entities.Device", b =>
@@ -135,7 +138,7 @@ namespace api.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("Devices", (string)null);
+                    b.ToTable("Devices");
                 });
 
             modelBuilder.Entity("api.Entities.LocationType", b =>
@@ -152,7 +155,7 @@ namespace api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LocationTypes", (string)null);
+                    b.ToTable("LocationTypes");
                 });
 
             modelBuilder.Entity("api.Entities.Role", b =>
@@ -169,7 +172,7 @@ namespace api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("api.Entities.User", b =>
@@ -205,7 +208,7 @@ namespace api.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("AutomationDevice", b =>

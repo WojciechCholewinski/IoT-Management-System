@@ -43,7 +43,8 @@ namespace api.Services
                 var now = DateTime.Now;
 
                 var automations = dbContext.Automations
-                    .Include(a => a.Devices)
+                    .Include(a => a.DevicesToTurnOn)
+                    .Include(a => a.DevicesToTurnOff)
                     .Where(a => a.IsOn &&
                                 a.TriggerDays.Contains(now.DayOfWeek) &&
                                 a.TriggerTime <= TimeOnly.FromTimeSpan(now.TimeOfDay) &&
@@ -52,10 +53,21 @@ namespace api.Services
 
                 foreach (var automation in automations)
                 {
-                    foreach (var device in automation.Devices)
+                    foreach (var device in automation.DevicesToTurnOn)
                     {
-                        device.IsOn = !device.IsOn;
-                        device.LastUpdate = now;
+                        if (!device.IsOn)
+                        {
+                            device.IsOn = true;
+                            device.LastUpdate = now;
+                        }
+                    }
+                    foreach (var device in automation.DevicesToTurnOff)
+                    {
+                        if (device.IsOn)
+                        {
+                            device.IsOn = false;
+                            device.LastUpdate = now;
+                        }
                     }
                     automation.IsTriggeredToday = true;
                 }

@@ -13,6 +13,8 @@ namespace api.Models
         public required TimeOnly TriggerTime { get; set; }
         public bool IsOn { get; set; }
         public string CreatedByEmail { get; set; }
-        public List<DeviceNameDto> Devices { get; set; }
+        public List<DeviceNameDto> DevicesToTurnOn { get; set; }
+        public List<DeviceNameDto> DevicesToTurnOff { get; set; }
+
     }
 }
