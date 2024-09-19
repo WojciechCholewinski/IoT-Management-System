@@ -1,13 +1,16 @@
 class AutomationRemoveDevicesModel {
-  final List<int> deviceIds;
+  final List<int> deviceToTurnOnIds;
+  final List<int> deviceToTurnOffIds;
 
   AutomationRemoveDevicesModel({
-    required this.deviceIds,
+    required this.deviceToTurnOnIds,
+    required this.deviceToTurnOffIds,
   });
 
   Map<String, dynamic> toJson() {
     return {
-      'deviceIds': deviceIds,
+      'deviceToTurnOnIds': deviceToTurnOnIds,
+      'deviceToTurnOffIds': deviceToTurnOffIds,
     };
   }
 }

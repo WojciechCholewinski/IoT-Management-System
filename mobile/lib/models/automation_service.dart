@@ -34,6 +34,9 @@ class AutomationService {
 
   Future<void> addDevicesToAutomation(
       int automationId, AutomationAddDevicesModel addDevicesModel) async {
+    final jsonBody = jsonEncode(addDevicesModel.toJson());
+    print("Sending POST request with body: $jsonBody");
+
     final response = await http.post(
       Uri.parse('$baseUrl/$automationId/devices'),
       headers: {'Content-Type': 'application/json'},
@@ -47,14 +50,22 @@ class AutomationService {
 
   Future<void> removeDevicesFromAutomation(
       int automationId, AutomationRemoveDevicesModel removeDevicesModel) async {
-    final response = await http.delete(
-      Uri.parse('$baseUrl/$automationId/devices'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(removeDevicesModel.toJson()),
-    );
+    try {
+      final jsonBody = jsonEncode(removeDevicesModel.toJson());
+      print("Sending DELETE request with body: $jsonBody");
 
-    if (response.statusCode != 204) {
-      throw Exception('Failed to remove devices from automation');
+      final response = await http.delete(
+        Uri.parse('$baseUrl/$automationId/devices'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(removeDevicesModel.toJson()),
+      );
+
+      if (response.statusCode != 204) {
+        print('Failed to remove devices. Status code: ${response.statusCode}');
+        throw Exception('Failed to remove devices from automation');
+      }
+    } catch (e) {
+      print('HTTP DELETE error: $e');
     }
   }
 }

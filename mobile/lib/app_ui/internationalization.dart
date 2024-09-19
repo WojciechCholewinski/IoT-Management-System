@@ -481,16 +481,16 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'pl': 'Urządzenia wyłączane:',
     },
     'lzgzah3i': {
-      'en': 'Desk Lighting',
-      'pl': 'Oświetlenie biurka',
+      'en': 'No devices to turn on.',
+      'pl': 'Brak urządzeń.',
     },
     '4neufju5': {
-      'en': 'Hallway Lighting',
-      'pl': 'Oświetlenie korytarza',
+      'en': 'No devices to turn off.',
+      'pl': 'Brak urządzeń.',
     },
     '0jp8ufnw': {
-      'en': 'Under Lighting',
-      'pl': 'Podświetlenie',
+      'en': 'Device List',
+      'pl': 'Lista urządzeń',
     },
     'hj7cn8k3': {
       'en': 'Kitchen Lighting',

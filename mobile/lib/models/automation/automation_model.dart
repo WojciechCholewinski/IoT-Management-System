@@ -13,7 +13,8 @@ class Automation {
   final String createdByEmail;
   late final DateTime parsedTriggerTime;
   List<String> temporarySelectedDays;
-  List<DeviceName> devices;
+  List<DeviceName> devicesToTurnOn;
+  List<DeviceName> devicesToTurnOff;
 
   Automation({
     required this.id,
@@ -24,7 +25,8 @@ class Automation {
     required this.triggerTime,
     required this.isOn,
     required this.createdByEmail,
-    required this.devices,
+    required this.devicesToTurnOn,
+    required this.devicesToTurnOff,
   }) : temporarySelectedDays = List.from(triggerDays) {
     parsedTriggerTime = _parseTime(triggerTime);
   }
@@ -55,8 +57,11 @@ class Automation {
       triggerTime: json['triggerTime'],
       isOn: json['isOn'],
       createdByEmail: json['createdByEmail'],
-      devices: (json['devices'] as List)
+      devicesToTurnOn: (json['devicesToTurnOn'] as List)
           .map((deviceJson) => DeviceName.fromJson(deviceJson))
+          .toList(),
+      devicesToTurnOff: (json['devicesToTurnOff'] as List)
+          .map((deviceJson2) => DeviceName.fromJson(deviceJson2))
           .toList(),
     );
   }
@@ -69,7 +74,8 @@ class Automation {
     String? triggerTime,
     bool? isOn,
     String? createdByEmail,
-    List<DeviceName>? devices,
+    List<DeviceName>? devicesToTurnOn,
+    List<DeviceName>? devicesToTurnOff,
   }) {
     return Automation(
       id: this.id,
@@ -80,7 +86,8 @@ class Automation {
       triggerTime: triggerTime ?? this.triggerTime,
       isOn: isOn ?? this.isOn,
       createdByEmail: createdByEmail ?? this.createdByEmail,
-      devices: devices ?? this.devices,
+      devicesToTurnOn: devicesToTurnOn ?? this.devicesToTurnOn,
+      devicesToTurnOff: devicesToTurnOff ?? this.devicesToTurnOff,
     );
   }
 }

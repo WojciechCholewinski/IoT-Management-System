@@ -97,15 +97,75 @@ class ShteyAppState extends ChangeNotifier {
     }
   }
 
-  List<DeviceName> _devicesToAdd = [];
-  List<DeviceName> _devicesToRemove = [];
+  List<DeviceName> _devicesToTurnOnToAdd = [];
+  List<DeviceName> _devicesToTurnOffToAdd = [];
+  List<DeviceName> _devicesToTurnOnToRemove = [];
+  List<DeviceName> _devicesToTurnOffToRemove = [];
 
-  Future<void> addDevicesToAutomation(
-      int automationId, List<DeviceName> devices) async {
+  // TODO: Known issue - read git commit message
+
+  // Dodanie urządzenia do listy `DevicesToTurnOn` (i usunięcie z `DevicesToTurnOff`)
+  void addDeviceToTurnOnList(DeviceName device) {
+    _devicesToTurnOnToAdd.add(device);
+    _devicesToTurnOffToRemove.add(device);
+    notifyListeners();
+  }
+
+  // Dodanie urządzenia do listy `DevicesToTurnOff` (i usunięcie z `DevicesToTurnOn`)
+  void addDeviceToTurnOffList(DeviceName device) {
+    _devicesToTurnOffToAdd.add(device);
+    _devicesToTurnOnToRemove.add(device);
+    notifyListeners();
+  }
+
+  // Usunięcie urządzenia z listy `DevicesToTurnOn`
+  void removeDeviceFromTurnOnList(DeviceName device) {
+    print('Removing device from turn on list: ${device.id}');
+    _devicesToTurnOnToRemove.add(device);
+    _devicesToTurnOnToAdd.removeWhere((d) => d.id == device.id);
+    notifyListeners();
+  }
+
+  // Usunięcie urządzenia z listy `DevicesToTurnOff`
+  void removeDeviceFromTurnOffList(DeviceName device) {
+    print('Removing device from turn off list: ${device.id}');
+    _devicesToTurnOffToRemove.add(device);
+    _devicesToTurnOffToAdd.removeWhere((d) => d.id == device.id);
+    notifyListeners();
+  }
+
+  // Metoda, która zwraca listę urządzeń dostępnych do dodania (nie dodanych do żadnej z list)
+  List<DeviceName> getAvailableDevices(Automation automation) {
+    return _devicesNames.where((device) {
+      // Sprawdź, czy urządzenie jest już na którejś z list
+      return !automation.devicesToTurnOn.any((d) => d.id == device.id) &&
+          !automation.devicesToTurnOff.any((d) => d.id == device.id) &&
+          !_devicesToTurnOnToAdd.any((d) => d.id == device.id) &&
+          !_devicesToTurnOffToAdd.any((d) => d.id == device.id);
+    }).toList();
+  }
+
+// Wyczyść tymczasowe listy po zapisaniu
+  void clearTemporaryLists() {
+    _devicesToTurnOnToAdd.clear();
+    _devicesToTurnOffToAdd.clear();
+    _devicesToTurnOnToRemove.clear();
+    _devicesToTurnOffToRemove.clear();
+    notifyListeners();
+  }
+
+  // Dodaj urządzenia do automatyzacji (turnOn lub turnOff)
+  Future<void> addDevicesToAutomation(int automationId,
+      List<int> devicesToTurnOnIds, List<int> devicesToTurnOffIds) async {
     try {
+      AutomationAddDevicesModel addDevicesModel = AutomationAddDevicesModel(
+        deviceToTurnOnIds: devicesToTurnOnIds,
+        deviceToTurnOffIds: devicesToTurnOffIds,
+      );
+
       await _automationService.addDevicesToAutomation(
         automationId,
-        AutomationAddDevicesModel(deviceIds: devices.map((d) => d.id).toList()),
+        addDevicesModel,
       );
       notifyListeners();
     } catch (e) {
@@ -113,13 +173,19 @@ class ShteyAppState extends ChangeNotifier {
     }
   }
 
-  Future<void> removeDevicesFromAutomation(
-      int automationId, List<DeviceName> devices) async {
+  // Usuń urządzenia z automatyzacji (turnOn lub turnOff)
+  Future<void> removeDevicesFromAutomation(int automationId,
+      List<int> devicesToTurnOnIds, List<int> devicesToTurnOffIds) async {
     try {
+      AutomationRemoveDevicesModel removeDevicesModel =
+          AutomationRemoveDevicesModel(
+        deviceToTurnOnIds: devicesToTurnOnIds,
+        deviceToTurnOffIds: devicesToTurnOffIds,
+      );
+      // Wywołujemy serwis odpowiedzialny za usunięcie
       await _automationService.removeDevicesFromAutomation(
         automationId,
-        AutomationRemoveDevicesModel(
-            deviceIds: devices.map((d) => d.id).toList()),
+        removeDevicesModel,
       );
       notifyListeners();
     } catch (e) {
@@ -127,34 +193,43 @@ class ShteyAppState extends ChangeNotifier {
     }
   }
 
-  void addDeviceToTemporaryList(DeviceName device) {
-    _devicesToAdd.add(device);
-    _devicesToRemove.removeWhere((d) => d.id == device.id);
-    notifyListeners();
-  }
-
-  void removeDeviceFromTemporaryList(DeviceName device) {
-    _devicesToRemove.add(device);
-    _devicesToAdd.removeWhere((d) => d.id == device.id);
-    notifyListeners();
-  }
-
-  void clearTemporaryLists() {
-    _devicesToAdd.clear();
-    _devicesToRemove.clear();
-    notifyListeners();
-  }
-
+  // Zapisz zmiany urządzeń
   Future<void> saveDeviceChanges(int automationId) async {
-    if (_devicesToAdd.isNotEmpty) {
-      await addDevicesToAutomation(automationId, _devicesToAdd);
+    // Tworzenie list do dodania
+    final devicesToTurnOnIdsToAdd =
+        _devicesToTurnOnToAdd.map((d) => d.id).toList();
+    final devicesToTurnOffIdsToAdd =
+        _devicesToTurnOffToAdd.map((d) => d.id).toList();
+
+    // Sprawdzenie, czy są jakieś urządzenia do dodania
+    if (devicesToTurnOnIdsToAdd.isNotEmpty ||
+        devicesToTurnOffIdsToAdd.isNotEmpty) {
+      print(
+          'Adding devices: turn on: $devicesToTurnOnIdsToAdd, turn off: $devicesToTurnOffIdsToAdd');
+
+      // Wywołanie serwisu w celu dodania urządzeń
+      await addDevicesToAutomation(
+          automationId, devicesToTurnOnIdsToAdd, devicesToTurnOffIdsToAdd);
     }
-    if (_devicesToRemove.isNotEmpty) {
-      await removeDevicesFromAutomation(automationId, _devicesToRemove);
+
+    // Tworzenie list do usunięcia
+    final devicesToTurnOnIdsToRemove =
+        _devicesToTurnOnToRemove.map((d) => d.id).toList();
+    final devicesToTurnOffIdsToRemove =
+        _devicesToTurnOffToRemove.map((d) => d.id).toList();
+
+    // Sprawdzenie czy jest cokolwiek do usunięcia
+    if (devicesToTurnOnIdsToRemove.isNotEmpty ||
+        devicesToTurnOffIdsToRemove.isNotEmpty) {
+      print(
+          'Removing devices: turn on: $devicesToTurnOnIdsToRemove, turn off: $devicesToTurnOffIdsToRemove');
+
+      // Wywołanie serwisu w celu usunięcia urządzeń
+      await removeDevicesFromAutomation(automationId,
+          devicesToTurnOnIdsToRemove, devicesToTurnOffIdsToRemove);
     }
     clearTemporaryLists();
   }
-
 ////////////////////////////////////////////////////////////////
 
   // Metoda do resetowania wyboru dni

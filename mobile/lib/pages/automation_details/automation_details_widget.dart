@@ -58,19 +58,41 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
     super.dispose();
   }
 
-  void _onDeviceAdded(DeviceName device) {
+  // Dodanie urządzenia do listy `DevicesToTurnOn`
+  void _onDeviceAddedToTurnOn(DeviceName device) {
     final appState = Provider.of<ShteyAppState>(context, listen: false);
-    appState.addDeviceToTemporaryList(device);
+    appState.addDeviceToTurnOnList(
+        device); // Dodanie do `DevicesToTurnOn` i usunięcie z `DevicesToTurnOff`
     setState(() {
-      automation.devices.add(device);
+      automation.devicesToTurnOn.add(device);
     });
   }
 
-  void _onDeviceRemoved(DeviceName device) {
+  // Dodanie urządzenia do listy `DevicesToTurnOff`
+  void _onDeviceAddedToTurnOff(DeviceName device) {
     final appState = Provider.of<ShteyAppState>(context, listen: false);
-    appState.removeDeviceFromTemporaryList(device);
+    appState.addDeviceToTurnOffList(
+        device); // Dodanie do `DevicesToTurnOff` i usunięcie z `DevicesToTurnOn`
     setState(() {
-      automation.devices.remove(device);
+      automation.devicesToTurnOff.add(device);
+    });
+  }
+
+  // Usunięcie urządzenia z listy `DevicesToTurnOn`
+  void _onDeviceRemovedFromTurnOn(DeviceName device) {
+    final appState = Provider.of<ShteyAppState>(context, listen: false);
+    appState.removeDeviceFromTurnOnList(device);
+    setState(() {
+      automation.devicesToTurnOn.remove(device);
+    });
+  }
+
+  // Usunięcie urządzenia z listy `DevicesToTurnOff`
+  void _onDeviceRemovedFromTurnOff(DeviceName device) {
+    final appState = Provider.of<ShteyAppState>(context, listen: false);
+    appState.removeDeviceFromTurnOffList(device);
+    setState(() {
+      automation.devicesToTurnOff.remove(device);
     });
   }
 
@@ -124,12 +146,12 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
     );
   }
 
-  void _showDevicesDialog(BuildContext context) {
+  // Wyświetlanie dialogu wyboru urządzeń do dodania
+  void _showDevicesDialog(
+      BuildContext context, Function(DeviceName) onDeviceAdded) {
     final appState = Provider.of<ShteyAppState>(context, listen: false);
-
-    var availableDevices = appState.devicesNames.where((device) {
-      return !automation.devices.any((d) => d.name == device.name);
-    }).toList();
+    var availableDevices = appState
+        .getAvailableDevices(automation); // Przekaż aktualną automatyzację
 
     showDialog(
         context: context,
@@ -137,7 +159,11 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
           return StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
               return AlertDialog(
-                title: Text('Device List'),
+                title: Text(
+                  ShteyLocalizations.of(context).getText(
+                    '0jp8ufnw' /* Device List */,
+                  ),
+                ),
                 content: SizedBox(
                   width: double.maxFinite,
                   child: ListView.builder(
@@ -168,9 +194,10 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                             size: 24.0,
                           ),
                           onPressed: () {
-                            _onDeviceAdded(device);
+                            onDeviceAdded(device);
                             setState(() {
-                              availableDevices.remove(device);
+                              availableDevices.remove(
+                                  device); // Usunięcie urządzenia z listy po dodaniu
                             });
                           },
                         ),
@@ -253,6 +280,7 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                             size: 22.0,
                           ),
                           onPressed: () async {
+                            appState.clearTemporaryLists();
                             context.safePop();
                           },
                         ),
@@ -578,13 +606,22 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                             ShteyLocalizations.of(context).getText(
                               'ki34z6bq' /* Turn On  */,
                             ),
-                            style: IoT_Theme.of(context).titleLarge.override(
-                                  fontFamily: 'Inter',
-                                  color: IoT_Theme.of(context).primaryText,
-                                  fontSize: 20.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                            style: automation.devicesToTurnOn.isNotEmpty
+                                ? IoT_Theme.of(context).titleLarge.override(
+                                      fontFamily: 'Inter',
+                                      color: IoT_Theme.of(context).primaryText,
+                                      fontSize: 20.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w500,
+                                    )
+                                : IoT_Theme.of(context).titleLarge.override(
+                                      fontFamily: 'Inter',
+                                      color:
+                                          IoT_Theme.of(context).secondaryText,
+                                      fontSize: 20.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                           ),
                         ),
                         Align(
@@ -603,112 +640,75 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                               size: 30.0, // Rozmiar ikony
                             ),
                             onPressed: () {
-                              _showDevicesDialog(context);
+                              _showDevicesDialog(
+                                  context, _onDeviceAddedToTurnOn);
                             },
                           ),
                         ),
                       ],
                     ),
                   ),
-                  // Row(
-                  //   mainAxisSize: MainAxisSize.max,
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     Text(
-                  //       ShteyLocalizations.of(context).getText(
-                  //         'ki34z6bq' /* Turn On  */,
-                  //       ),
-                  //       style: IoT_Theme.of(context).titleLarge.override(
-                  //             fontFamily: 'Inter',
-                  //             color: IoT_Theme.of(context).primaryText,
-                  //             fontSize: 20.0,
-                  //             letterSpacing: 0.0,
-                  //             fontWeight: FontWeight.w500,
-                  //           ),
-                  //     ),
-                  //     IotIconButton(
-                  //       borderRadius: 16.0,
-                  //       buttonSize: 56.0,
-                  //       borderWidth: 0, // Brak obramowania
-
-                  //       // borderColor: IoT_Theme.of(context).primaryBackground,
-                  //       fillColor: IoT_Theme.of(context)
-                  //           .primaryBackground, // Kolor tła
-                  //       icon: Icon(
-                  //         Icons.format_list_bulleted_add,
-                  //         color: IoT_Theme.of(context).primaryText,
-                  //         size: 30.0, // Rozmiar ikony
-                  //       ),
-                  //       onPressed: () {
-                  //         _showDevicesDialog(context);
-                  //       },
-                  //     ),
-                  //   ],
-                  // ),
-
-                  // Padding(
-                  //   padding: const EdgeInsetsDirectional.fromSTEB(
-                  //       0.0, 20.0, 0.0, 0.0),
-                  //   child: Text(
-                  //     ShteyLocalizations.of(context).getText(
-                  //       'ki34z6bq' /* Turn On  */,
-                  //     ),
-                  //     style: IoT_Theme.of(context).titleLarge.override(
-                  //           fontFamily: 'Inter',
-                  //           color: IoT_Theme.of(context).primaryText,
-                  //           fontSize: 20.0,
-                  //           letterSpacing: 0.0,
-                  //           fontWeight: FontWeight.w500,
-                  //         ),
-                  //   ),
-                  // ),
                   Expanded(
-                    flex: automation.devices
+                    flex: automation.devicesToTurnOn
                         .length, // Ustawienie flex w zależności od liczby urządzeń
-                    child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      itemCount: automation.devices.length,
-                      itemBuilder: (context, index) {
-                        final device = automation.devices[index];
-                        return Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              8.0, 0.0, 8.0, 0.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                ShteyLocalizations.of(context).languageCode ==
-                                        "en"
-                                    ? device.name
-                                    : device.namePL,
-                                style: IoT_Theme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Inter',
-                                      color: IoT_Theme.of(context).primaryText,
-                                      fontSize: 16.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w500,
+                    child: automation.devicesToTurnOn.isNotEmpty
+                        ? ListView.builder(
+                            padding: EdgeInsets.zero,
+                            itemCount: automation.devicesToTurnOn.length,
+                            itemBuilder: (context, index) {
+                              final device = automation.devicesToTurnOn[index];
+                              return Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    8.0, 0.0, 8.0, 0.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      ShteyLocalizations.of(context)
+                                                  .languageCode ==
+                                              "en"
+                                          ? device.name
+                                          : device.namePL,
+                                      style: IoT_Theme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            color: IoT_Theme.of(context)
+                                                .primaryText,
+                                            fontSize: 16.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                     ),
-                              ),
-                              IotIconButton(
-                                borderRadius: 20.0,
-                                buttonSize: 40.0,
-                                icon: Icon(
-                                  Icons.remove_circle_outline,
-                                  color: IoT_Theme.of(context).error,
-                                  size: 24.0,
+                                    IotIconButton(
+                                      borderRadius: 20.0,
+                                      buttonSize: 40.0,
+                                      icon: Icon(
+                                        Icons.remove_circle_outline,
+                                        color: IoT_Theme.of(context).error,
+                                        size: 24.0,
+                                      ),
+                                      onPressed: () {
+                                        _onDeviceRemovedFromTurnOn(device);
+                                      },
+                                    ),
+                                  ],
                                 ),
-                                onPressed: () {
-                                  _onDeviceRemoved(device);
-                                },
-                              ),
-                            ],
+                              );
+                            },
+                          )
+                        : Text(
+                            ShteyLocalizations.of(context).getText(
+                              'lzgzah3i' /* No devices to turn on  */,
+                            ),
+                            style: IoT_Theme.of(context).bodyMedium.override(
+                                  fontFamily: 'Inter',
+                                  color: IoT_Theme.of(context).secondaryText,
+                                  fontSize: 16.0,
+                                ),
                           ),
-                        );
-                      },
-                    ),
                   ),
 
                   SizedBox(
@@ -723,13 +723,22 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                             ShteyLocalizations.of(context).getText(
                               'fs395hwm' /* Turn Off  */,
                             ),
-                            style: IoT_Theme.of(context).titleLarge.override(
-                                  fontFamily: 'Inter',
-                                  color: IoT_Theme.of(context).primaryText,
-                                  fontSize: 20.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                            style: automation.devicesToTurnOff.isNotEmpty
+                                ? IoT_Theme.of(context).titleLarge.override(
+                                      fontFamily: 'Inter',
+                                      color: IoT_Theme.of(context).primaryText,
+                                      fontSize: 20.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w500,
+                                    )
+                                : IoT_Theme.of(context).titleLarge.override(
+                                      fontFamily: 'Inter',
+                                      color:
+                                          IoT_Theme.of(context).secondaryText,
+                                      fontSize: 20.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                           ),
                         ),
                         Align(
@@ -748,7 +757,8 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                               size: 30.0, // Rozmiar ikony
                             ),
                             onPressed: () {
-                              _showDevicesDialog(context);
+                              _showDevicesDialog(
+                                  context, _onDeviceAddedToTurnOff);
                             },
                           ),
                         ),
@@ -757,52 +767,66 @@ class _AutomationDetailsWidgetState extends State<AutomationDetailsWidget> {
                   ),
 
                   Expanded(
-                    flex: automation.devices
+                    flex: automation.devicesToTurnOff
                         .length, // Flex zależny od liczby urządzeń w drugiej liście
-                    child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      itemCount: automation.devices.length,
-                      itemBuilder: (context, index) {
-                        final device = automation.devices[index];
-                        return Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              8.0, 0.0, 8.0, 0.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                ShteyLocalizations.of(context).languageCode ==
-                                        "en"
-                                    ? device.name
-                                    : device.namePL,
-                                style: IoT_Theme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Inter',
-                                      color: IoT_Theme.of(context).primaryText,
-                                      fontSize: 16.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w500,
+                    child: automation.devicesToTurnOff.isNotEmpty
+                        ? ListView.builder(
+                            padding: EdgeInsets.zero,
+                            itemCount: automation.devicesToTurnOff.length,
+                            itemBuilder: (context, index) {
+                              final device = automation.devicesToTurnOff[index];
+                              return Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    8.0, 0.0, 8.0, 0.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      ShteyLocalizations.of(context)
+                                                  .languageCode ==
+                                              "en"
+                                          ? device.name
+                                          : device.namePL,
+                                      style: IoT_Theme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            color: IoT_Theme.of(context)
+                                                .primaryText,
+                                            fontSize: 16.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                     ),
-                              ),
-                              IotIconButton(
-                                borderRadius: 20.0,
-                                buttonSize: 40.0,
-                                icon: Icon(
-                                  Icons.remove_circle_outline,
-                                  color: IoT_Theme.of(context).error,
-                                  size: 24.0,
+                                    IotIconButton(
+                                      borderRadius: 20.0,
+                                      buttonSize: 40.0,
+                                      icon: Icon(
+                                        Icons.remove_circle_outline,
+                                        color: IoT_Theme.of(context).error,
+                                        size: 24.0,
+                                      ),
+                                      onPressed: () {
+                                        _onDeviceRemovedFromTurnOff(device);
+                                      },
+                                    ),
+                                  ],
                                 ),
-                                onPressed: () {
-                                  // _onDeviceRemoved(device);
-                                },
-                              ),
-                            ],
+                              );
+                            },
+                          )
+                        : Text(
+                            ShteyLocalizations.of(context).getText(
+                              '4neufju5' /* No devices to turn off  */,
+                            ),
+                            style: IoT_Theme.of(context).bodyMedium.override(
+                                  fontFamily: 'Inter',
+                                  color: IoT_Theme.of(context).secondaryText,
+                                  fontSize: 16.0,
+                                ),
                           ),
-                        );
-                      },
-                    ),
                   ),
 
                   Padding(
