@@ -6,6 +6,7 @@ using api.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
 using System.Text;
@@ -42,7 +43,7 @@ builder.Services.AddFluentValidationAutoValidation();
 // Registers FluentValidation client-side adapters for integration with client-side validation:
 builder.Services.AddFluentValidationClientsideAdapters();
 
-builder.Services.AddDbContext<IoT_DbContext>();
+builder.Services.AddDbContext<IoT_DbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("IoTDbConnection")));
 builder.Services.AddScoped<ApiSeeder>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();

@@ -19,8 +19,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
-<ItemGroup>
-    <Folder Include="Images\" />
+  <ItemGroup>
+	 <Content Include="Images\**\*.*" CopyToOutputDirectory="PreserveNewest"/>
   </ItemGroup>
-  
+
 </Project>

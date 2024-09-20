@@ -1,4 +1,5 @@
 ﻿using api.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -21,6 +22,12 @@ namespace api
         {
             if (_dbContext.Database.CanConnect())
             {
+                var pendingMigrations = _dbContext.Database.GetPendingMigrations();
+                if (pendingMigrations != null && pendingMigrations.Any())
+                {
+                    _dbContext.Database.Migrate();
+                }
+
                 if (!_dbContext.Roles.Any())
                 {
                     var roles = GetRoles();
@@ -56,12 +63,12 @@ namespace api
             {
                 var userRole = _dbContext.Roles.FirstOrDefault(r => r.Name == "User") ?? throw new InvalidOperationException("Role 'User' does not exist. Please seed roles before seeding users.");
                 var user = new User
-                { // TODO: usunąć stąd PasswordHash?
+                {
                     Email = "t@test.com",
                     FirstName = "Test",
                     LastName = "User",
                     PasswordHash = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNzI3NTczNzA1LCJpc3MiOiJodHRwOi8vaW90YXBpLnNodGV5ZW4ucGwiLCJhdWQiOiJodHRwOi8vaW90YXBpLnNodGV5ZW4ucGwifQ.Sphl6KRZ7KJRpOZOhpXAQoB75Z45BHH0Y-ATChE0SF8",
-                    Photo = LoadImage($"ProfilePhoto.png"),
+                    Photo = LoadImage("ProfilePhoto.png") ?? new byte[0],
                     Role = userRole
                 };
 

@@ -7,9 +7,10 @@ namespace api.Entities
 {
     public class IoT_DbContext : DbContext
     {
-        private string _connectionString = 
-            "Server=(localdb)\\mssqllocaldb;Database=bin2Db; Trusted_Connection=True;";
-
+        public IoT_DbContext(DbContextOptions<IoT_DbContext> options) : base(options)
+        {
+            
+        }
         public DbSet<Device> Devices { get; set; }
         public DbSet<LocationType> LocationTypes { get; set; }
         public DbSet<User> Users { get; set; }
@@ -80,10 +81,6 @@ namespace api.Entities
                 .WithMany(a => a.DevicesToTurnOff)
                 .UsingEntity(j => j.ToTable("AutomationDevicesToTurnOff"));
 
-        }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(_connectionString);
         }
     }
 }

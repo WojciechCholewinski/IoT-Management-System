@@ -424,3 +424,5 @@ migrate_working_dir/
 
 mobile/**/*Generated*
 mobile/**/*generated*
+
+/backend/api/appsettings.Development.json
