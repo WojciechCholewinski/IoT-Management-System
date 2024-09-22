@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:mobile/models/user/user_model.dart';
+import 'package:mobile/models/user_service.dart';
 import '/app_ui/animations.dart';
 import '/app_ui/icon_button.dart';
 import '/app_ui/language_selector.dart';
@@ -25,10 +28,14 @@ class _SettingsWidgetState extends State<SettingsWidget>
 
   final animationsMap = <String, AnimationInfo>{};
 
+  UserProfile? _userProfile;
+
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => SettingsModel());
+
+    _fetchUserProfile();
 
     animationsMap.addAll({
       'cardOnPageLoadAnimation': AnimationInfo(
@@ -312,6 +319,24 @@ class _SettingsWidgetState extends State<SettingsWidget>
     });
   }
 
+  Future<void> _fetchUserProfile() async {
+    try {
+      final profileService = UserService();
+      final token = await profileService.getToken();
+
+      if (token == null) {
+        throw Exception('Token JWT nie został znaleziony. Sprawdź logowanie.');
+      }
+
+      final profile = await profileService.fetchUserProfile();
+      setState(() {
+        _userProfile = profile;
+      });
+    } catch (e) {
+      print('Error fetching user profile: $e');
+    }
+  }
+
   @override
   void dispose() {
     _model.dispose();
@@ -372,12 +397,19 @@ class _SettingsWidgetState extends State<SettingsWidget>
                     padding: const EdgeInsets.all(2.0),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(60.0),
-                      child: Image.asset(
-                        'assets/images/ProfilePhoto.png',
-                        width: 100.0,
-                        height: 100.0,
-                        fit: BoxFit.cover,
-                      ),
+                      child: _userProfile != null && _userProfile!.photo != null
+                          ? Image.memory(
+                              base64Decode(_userProfile!.photo!),
+                              width: 100.0,
+                              height: 100.0,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.asset(
+                              'assets/images/ProfilePhoto.png',
+                              width: 100.0,
+                              height: 100.0,
+                              fit: BoxFit.cover,
+                            ),
                     ),
                   ),
                 ).animateOnPageLoad(animationsMap['cardOnPageLoadAnimation']!),
@@ -385,9 +417,9 @@ class _SettingsWidgetState extends State<SettingsWidget>
                   padding:
                       const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
                   child: Text(
-                    ShteyLocalizations.of(context).getText(
-                      's8y4qas9' /* Michał Kowalski */,
-                    ),
+                    _userProfile != null
+                        ? '${_userProfile!.firstName} ${_userProfile!.lastName ?? ''}'
+                        : 'Loading...',
                     style: IoT_Theme.of(context).headlineSmall.override(
                           fontFamily: 'Readex Pro',
                           letterSpacing: 0.0,
@@ -399,9 +431,7 @@ class _SettingsWidgetState extends State<SettingsWidget>
                   padding:
                       const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                   child: Text(
-                    ShteyLocalizations.of(context).getText(
-                      'fuxxrqyb' /* michal@domainname.com */,
-                    ),
+                    _userProfile != null ? _userProfile!.email : 'Loading...',
                     style: IoT_Theme.of(context).titleSmall.override(
                           fontFamily: 'Inter',
                           color: IoT_Theme.of(context).secondary,
