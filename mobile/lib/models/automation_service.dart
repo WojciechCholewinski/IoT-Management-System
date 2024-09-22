@@ -6,7 +6,9 @@ import 'automation/automation_add_devices_model.dart';
 import 'automation/automation_remove_devices_model.dart';
 
 class AutomationService {
-  final String baseUrl = 'https://localhost:5000/api/automation';
+  // final String baseUrl = 'https://localhost:5000/api/automation';
+  final String baseUrl =
+      'https://iot-api-app-efeyd8czcufwcgc9.polandcentral-01.azurewebsites.net/api/automation';
 
   Future<List<Automation>> fetchAutomations() async {
     final response = await http.get(Uri.parse(baseUrl));

@@ -8,7 +8,9 @@ class DeviceService {
   // await http.get(Uri.parse(
   //     'http://10.0.2.2:5000/api/device')); // środowisko: emulator, .net: http, prod,
   // await http.get(Uri.parse('http://localhost:7051/api/device'));
-  final String baseUrl = 'https://localhost:5000/api/device';
+  // final String baseUrl = 'https://localhost:5000/api/device';
+  final String baseUrl =
+      'https://iot-api-app-efeyd8czcufwcgc9.polandcentral-01.azurewebsites.net/api/device';
 
   Future<List<Device>> fetchDevices() async {
     final response = await http.get(Uri.parse(baseUrl));
