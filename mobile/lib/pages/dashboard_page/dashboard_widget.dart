@@ -186,124 +186,115 @@ class _DashboardWidgetState extends State<DashboardWidget>
                                         ),
                                       ],
                                     ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Flexible(
-                                          child: Align(
-                                            alignment:
-                                                AlignmentDirectional(0, 0),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(8, 8, 22, 8),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                    child: Image.memory(
-                                                      Theme.of(context)
-                                                                  .brightness ==
-                                                              Brightness.dark
-                                                          ? device
-                                                              .darkThemeImage
-                                                          : device
-                                                              .lightThemeImage,
-                                                      width: 70,
-                                                      height: 70,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            16, 0, 0, 0),
-                                                    child: Text(
-                                                      ShteyLocalizations.of(
-                                                                      context)
-                                                                  .languageCode ==
-                                                              "en"
-                                                          ? device.name
-                                                          : device.namePL,
-                                                      style: IoT_Theme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .override(
-                                                            fontFamily: 'Inter',
-                                                            letterSpacing: 0,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  Align(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            0, 0),
-                                                    child: IotIconButton(
-                                                      borderRadius: 50,
-                                                      borderWidth: 0,
-                                                      buttonSize: 40,
-                                                      icon: Icon(
-                                                        Icons.info_outline,
-                                                        color: IoT_Theme.of(
-                                                                context)
-                                                            .primaryText,
-                                                        size: 22,
-                                                      ),
-                                                      onPressed: () {
-                                                        print(
-                                                            'IconButton pressed ...');
-                                                      },
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Align(
-                                                      alignment:
-                                                          AlignmentDirectional
-                                                              .centerEnd,
-                                                      child: Container(
-                                                        height:
-                                                            70, // Tyle samo, co wysokość obrazka, po to by wyrównać przestrzeń
-                                                        alignment: Alignment
-                                                            .centerRight,
-                                                        child: ToggleIcon(
-                                                          onPressed: () async {
-                                                            appState
-                                                                .toggleDeviceState(
-                                                                    device);
-                                                          },
-                                                          value: device.isOn,
-                                                          onIcon: Icon(
-                                                            Icons
-                                                                .toggle_on_outlined,
-                                                            color: IoT_Theme.of(
-                                                                    context)
-                                                                .primary,
-                                                          ),
-                                                          offIcon: Icon(
-                                                            Icons
-                                                                .toggle_off_outlined,
-                                                            color: IoT_Theme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
+                                    child: LayoutBuilder(
+                                      builder: (context, constraints) {
+                                        return Row(
+                                          children: [
+                                            // Obrazek urządzenia
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              child: Image.memory(
+                                                Theme.of(context).brightness ==
+                                                        Brightness.dark
+                                                    ? device.darkThemeImage
+                                                    : device.lightThemeImage,
+                                                width: 70,
+                                                height: 70,
+                                                fit: BoxFit.cover,
                                               ),
                                             ),
-                                          ),
-                                        ),
-                                      ],
+
+                                            // Tekst urządzenia z "..."
+                                            Expanded(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(16, 0, 0, 0),
+                                                child: Row(
+                                                  children: [
+                                                    // Elastyczny tekst, który może być skrócony (z ...)
+                                                    Flexible(
+                                                      child: Text(
+                                                        ShteyLocalizations.of(
+                                                                        context)
+                                                                    .languageCode ==
+                                                                "en"
+                                                            ? device.name
+                                                            : device.namePL,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: IoT_Theme.of(
+                                                                context)
+                                                            .bodyLarge
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Inter',
+                                                              letterSpacing: 0,
+                                                            ),
+                                                      ),
+                                                    ),
+
+                                                    // Przycisk informacji - wyświetlany tylko jeśli jest wystarczająco dużo miejsca
+                                                    if (constraints.maxWidth >
+                                                        400)
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                left: 8.0),
+                                                        child: IotIconButton(
+                                                          borderRadius: 50,
+                                                          borderWidth: 0,
+                                                          buttonSize: 40,
+                                                          icon: Icon(
+                                                            Icons.info_outline,
+                                                            color: IoT_Theme.of(
+                                                                    context)
+                                                                .primaryText,
+                                                            size: 22,
+                                                          ),
+                                                          onPressed: () {
+                                                            print(
+                                                                'IconButton pressed ...');
+                                                          },
+                                                        ),
+                                                      ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+
+                                            // ToggleIcon, który zawsze pozostaje na końcu i z marginesem odsuwającym od prawej strony
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 10.0),
+                                              child: Container(
+                                                height: 70,
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: ToggleIcon(
+                                                  onPressed: () async {
+                                                    appState.toggleDeviceState(
+                                                        device);
+                                                  },
+                                                  value: device.isOn,
+                                                  onIcon: Icon(
+                                                    Icons.toggle_on_outlined,
+                                                    color: IoT_Theme.of(context)
+                                                        .primary,
+                                                  ),
+                                                  offIcon: Icon(
+                                                    Icons.toggle_off_outlined,
+                                                    color: IoT_Theme.of(context)
+                                                        .secondaryText,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
                                     ),
                                   ),
                                 );
