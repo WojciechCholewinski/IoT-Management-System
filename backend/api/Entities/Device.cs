@@ -10,7 +10,7 @@
         public LocationType? Location { get; set; }
         public bool IsOn { get; set; }
         public DateTime? LastUpdate { get; set; }
-        public TimeSpan RunTime { get; set; }
+        public long RunTimeTicks { get; set; }
 
         // Automatyzacje, w których urządzenie jest włączane
         public ICollection<Automation>? AutomationsToTurnOn { get; set; }

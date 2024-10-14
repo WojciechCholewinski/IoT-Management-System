@@ -40,6 +40,8 @@ namespace api.Services
 
         public bool? UpdateIsOn(int id, bool isOn)
         {
+            var now = DateTime.Now;
+
             var device = 
                 _dbContext
                 .Devices
@@ -55,11 +57,11 @@ namespace api.Services
             }
             if (device.LastUpdate.HasValue && !isOn)
             {
-                var timeSpan = DateTime.Now - device.LastUpdate.Value;
-                device.RunTime += timeSpan;
+                var timeSpan = now - device.LastUpdate.Value;
+                device.RunTimeTicks += (long)timeSpan.TotalMilliseconds;
             }
             device.IsOn = isOn;
-            device.LastUpdate = DateTime.Now;
+            device.LastUpdate = now;
 
             _dbContext.SaveChanges();
             return true;
