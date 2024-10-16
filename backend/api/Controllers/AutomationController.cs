@@ -24,8 +24,8 @@ namespace api.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<AutomationDetailDto>GetById(int id) 
-        { 
+        public ActionResult<AutomationDetailDto> GetById(int id)
+        {
             var automationDto = _automationService.GetById(id);
             return Ok(automationDto);
         }
@@ -33,18 +33,14 @@ namespace api.Controllers
         [HttpPut("{id}")]
         public IActionResult Update([FromRoute] int id, [FromBody] AutomationUpdateDto dto)
         {
-            var result = _automationService.Update(id, dto);
-
-            if (result == null) return NotFound(new { message = "Automation not found" });
-
-            if (result == false) return Conflict(new { message = "Automation is already in the requested state" });
+            _automationService.Update(id, dto);
 
             return Ok(new { message = "Automation state updated successfully" });
         }
 
         [HttpPost("{Automationid}/devices")]
         public IActionResult AddDevices([FromRoute] int Automationid, [FromBody] AddDevicesToAutomationDto dto)
-        { 
+        {
             _automationService.AddDevices(Automationid, dto);
             return Ok();
         }

@@ -8,7 +8,7 @@ namespace api.Services
     {
         IEnumerable<AutomationDetailDto> GetAll();
         AutomationDetailDto GetById(int id);
-        bool? Update(int id, AutomationUpdateDto dto);
+        void Update(int id, AutomationUpdateDto dto);
         void AddDevices(int automationId, AddDevicesToAutomationDto dto);
         void RemoveDevices(int automationId, RemoveDevicesFromAutomationDto dto);
 
