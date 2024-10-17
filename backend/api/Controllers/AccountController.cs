@@ -1,5 +1,4 @@
-﻿using api.Exceptions;
-using api.Models;
+﻿using api.Models;
 using api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,9 +24,7 @@ namespace api.Controllers
         public ActionResult<GetUserDto> GetMyProfileData()
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
             var user = _accountService.GetById(userId);
-
             return Ok(user);
         }
         //[HttpPost("register")]
@@ -52,15 +49,8 @@ namespace api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult Login([FromBody] LoginDto dto)
         {
-            try
-            {
-                string token = _accountService.GenerateJwt(dto);
-                return Ok(token);
-            }
-            catch (BadRequestException ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+            string token = _accountService.GenerateJwt(dto);
+            return Ok(token);
         }
 
         [Authorize]
@@ -95,21 +85,10 @@ namespace api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult ChangePassword([FromBody] UpdatePasswordDto dto)
         {
-            try
-            {
-                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-                dto.Id = userId;
-                _accountService.UpdatePassword(dto);
-                return NoContent();
-            }
-            catch (BadRequestException ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
-            catch (NotFoundException ex)
-            {
-                return NotFound(new { message = ex.Message });
-            }
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            dto.Id = userId;
+            _accountService.UpdatePassword(dto);
+            return NoContent();
         }
 
         [Authorize]

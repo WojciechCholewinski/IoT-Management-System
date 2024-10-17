@@ -1,5 +1,4 @@
 ﻿using api.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace api.Services
 {
@@ -7,6 +6,6 @@ namespace api.Services
     {
         IEnumerable<DeviceDto> GetAll();
         IEnumerable<DeviceNameDto> GetAllNames();
-        bool? UpdateIsOn(int id, bool isOn);
+        void UpdateIsOn(int id, bool isOn);
     }
 }

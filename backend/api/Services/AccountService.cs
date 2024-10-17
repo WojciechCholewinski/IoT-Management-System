@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography.Xml;
 using System.Text;
 
 namespace api.Services
@@ -65,17 +64,12 @@ namespace api.Services
         {
             var user = _context.Users
                 .Include(u => u.Role)
-                .FirstOrDefault(u => u.Email == dto.Email);
-            if (user == null)
-            {
-                throw new BadRequestException("Invalid username or password");
-            }
+                .FirstOrDefault(u => u.Email == dto.Email)
+                ?? throw new UnauthorizedException("Invalid username or password");
 
             var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
             if (result == PasswordVerificationResult.Failed)
-            {
-                throw new BadRequestException("Invalid username or password");
-            }
+                throw new UnauthorizedException("Invalid username or password");
 
             var claims = new List<Claim>()
             {
@@ -114,12 +108,8 @@ namespace api.Services
             var user = _context
                 .Users
                 .Include(u => u.Role)
-                .FirstOrDefault(u => u.Id == id);
-
-            if (user == null)
-            {
-                throw new NotFoundException("User not found");
-            }
+                .FirstOrDefault(u => u.Id == id)
+                ?? throw new NotFoundException("User not found");
             return user;
         }
 
@@ -149,9 +139,7 @@ namespace api.Services
 
             var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.PreviousPassword);
             if (result == PasswordVerificationResult.Failed)
-            {
-                throw new BadRequestException("Old password is incorrect");
-            }
+                throw new ForbiddenException("Old password is incorrect");
 
             var hashedPassword = _passwordHasher.HashPassword(user, dto.Password);
             user.PasswordHash = hashedPassword;

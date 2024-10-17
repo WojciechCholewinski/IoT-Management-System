@@ -1,8 +1,7 @@
 ﻿using api.Entities;
+using api.Exceptions;
 using api.Models;
 using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace api.Services
 {
@@ -18,7 +17,7 @@ namespace api.Services
         }
         public IEnumerable<DeviceDto> GetAll()
         {
-            var devices = 
+            var devices =
                 _dbContext
                 .Devices
                 .ToList();
@@ -38,23 +37,19 @@ namespace api.Services
             return devicesDtos;
         }
 
-        public bool? UpdateIsOn(int id, bool isOn)
+        public void UpdateIsOn(int id, bool isOn)
         {
             var now = DateTime.Now;
 
-            var device = 
+            var device =
                 _dbContext
                 .Devices
-                .FirstOrDefault(d => d.Id == id);
+                .FirstOrDefault(d => d.Id == id)
+                ?? throw new NotFoundException($"Device with id {id} not found.");
 
-            if (device == null)
-            {
-                return null;
-            }
-            if (device.IsOn == isOn) 
-            {
-                return false;
-            }
+            if (device.IsOn == isOn)
+                throw new ConflictException($"Device with id {id} is already in the requested state.");
+
             if (device.LastUpdate.HasValue && !isOn)
             {
                 var timeSpan = now - device.LastUpdate.Value;
@@ -64,7 +59,6 @@ namespace api.Services
             device.LastUpdate = now;
 
             _dbContext.SaveChanges();
-            return true;
         }
     }
 }

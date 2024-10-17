@@ -1,7 +1,6 @@
 ﻿using api.Models;
 using api.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers
 {
@@ -11,11 +10,11 @@ namespace api.Controllers
     {
         private readonly IDeviceService _deviceService;
 
-        public DeviceController( IDeviceService deviceService)
+        public DeviceController(IDeviceService deviceService)
         {
             _deviceService = deviceService;
         }
-        
+
         [HttpGet]
         public ActionResult<IEnumerable<DeviceDto>> GetAll()
         {
@@ -35,12 +34,8 @@ namespace api.Controllers
         [HttpPatch("{id}/ison")]
         public IActionResult UpdateIsOn(int id, [FromBody] bool isOn)
         {
-            var result = _deviceService.UpdateIsOn(id, isOn);
+            _deviceService.UpdateIsOn(id, isOn);
 
-            if (result == null) return NotFound(new { message = "Device not found" });
-            
-            if (result == false) return Conflict(new { message = "Device is already in the requested state" });
-            
             return Ok(new { message = "Device state updated successfully", updatedState = isOn });
         }
     }
