@@ -1,4 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Uprawnienie do dostępu do internetu -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:label="Aiomee"
         android:name="${applicationName}"
