@@ -35,11 +35,13 @@ namespace api.Services
             return Task.CompletedTask;
         }
 
-        private void DoWork(object state)
+        private async void DoWork(object state)
         {
             using (var scope = _serviceProvider.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<IoT_DbContext>();
+                var deviceService = scope.ServiceProvider.GetRequiredService<IDeviceService>();
+
                 var now = DateTime.Now;
 
                 var automations = dbContext.Automations
@@ -57,22 +59,20 @@ namespace api.Services
                     {
                         if (!device.IsOn)
                         {
-                            device.IsOn = true;
-                            device.LastUpdate = now;
+                            await deviceService.UpdateIsOn(device.Id, true);
                         }
                     }
                     foreach (var device in automation.DevicesToTurnOff)
                     {
                         if (device.IsOn)
                         {
-                            device.IsOn = false;
-                            device.LastUpdate = now;
+                            await deviceService.UpdateIsOn(device.Id, false);
                         }
                     }
                     automation.IsTriggeredToday = true;
                 }
 
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
             }
         }
 
