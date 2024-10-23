@@ -40,6 +40,12 @@ namespace api.Middleware
                 _logger.LogError(conflictException.Message);
                 await context.Response.WriteAsync(conflictException.Message);
             }
+            catch (MqttException mqttException)
+            {
+                context.Response.StatusCode = 503;
+                _logger.LogError(mqttException.Message);
+                await context.Response.WriteAsync(mqttException.Message);
+            }
             catch (Exception ex)
             {
                 context.Response.StatusCode = 500;

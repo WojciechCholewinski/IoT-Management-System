@@ -67,7 +67,7 @@ namespace api.Services
             }
             catch (Exception)
             {
-                throw new Exception();
+                throw new MqttException($"Failed to publish MQTT message for device {device.Name} (id={device.Id}) on topic {topic}.");
             }
 
             device.IsOn = isOn;
