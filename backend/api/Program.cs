@@ -74,7 +74,9 @@ builder.Services.AddControllers()
 builder.Services.AddScoped<IDeviceService, DeviceService>();
 builder.Services.AddScoped<IAutomationService, AutomationService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddSingleton<IMqttService, MqttService>();
 
+builder.Services.Configure<MqttSettings>(builder.Configuration.GetSection("MqttSettings"));
 
 builder.Logging.ClearProviders();
 builder.Host.UseNLog();

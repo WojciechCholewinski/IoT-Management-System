@@ -32,10 +32,9 @@ namespace api.Controllers
         }
 
         [HttpPatch("{id}/ison")]
-        public IActionResult UpdateIsOn(int id, [FromBody] bool isOn)
+        public async Task<IActionResult> UpdateIsOn(int id, [FromBody] bool isOn)
         {
-            _deviceService.UpdateIsOn(id, isOn);
-
+            await _deviceService.UpdateIsOn(id, isOn);
             return Ok(new { message = "Device state updated successfully", updatedState = isOn });
         }
     }

@@ -6,6 +6,6 @@ namespace api.Services
     {
         IEnumerable<DeviceDto> GetAll();
         IEnumerable<DeviceNameDto> GetAllNames();
-        void UpdateIsOn(int id, bool isOn);
+        Task UpdateIsOn(int id, bool isOn);
     }
 }

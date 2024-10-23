@@ -9,11 +9,13 @@ namespace api.Services
     {
         private readonly IoT_DbContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly IMqttService _mqttService;
 
-        public DeviceService(IoT_DbContext dbContext, IMapper mapper)
+        public DeviceService(IoT_DbContext dbContext, IMapper mapper, IMqttService mqttService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _mqttService = mqttService;
         }
         public IEnumerable<DeviceDto> GetAll()
         {
@@ -37,7 +39,7 @@ namespace api.Services
             return devicesDtos;
         }
 
-        public void UpdateIsOn(int id, bool isOn)
+        public async Task UpdateIsOn(int id, bool isOn)
         {
             var now = DateTime.Now;
 
@@ -55,10 +57,23 @@ namespace api.Services
                 var timeSpan = now - device.LastUpdate.Value;
                 device.RunTimeTicks += (long)timeSpan.TotalMilliseconds;
             }
+
+            var topic = $"devices/{device.Id}/status";
+            var message = isOn ? "ON" : "OFF";
+
+            try
+            {
+                await _mqttService.PublishMessageAsync(topic, message);
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+
             device.IsOn = isOn;
             device.LastUpdate = now;
 
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
