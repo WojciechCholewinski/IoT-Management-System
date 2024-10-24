@@ -55,7 +55,7 @@ namespace api.Services
             if (device.LastUpdate.HasValue && !isOn)
             {
                 var timeSpan = now - device.LastUpdate.Value;
-                device.RunTimeTicks += (long)timeSpan.TotalMilliseconds;
+                device.RunTimeTicks += (long)timeSpan.Ticks;
             }
 
             var topic = $"devices/{device.Id}/status";

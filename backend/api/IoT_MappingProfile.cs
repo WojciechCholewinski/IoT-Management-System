@@ -8,7 +8,8 @@ namespace api
     {
         public IoT_MappingProfile()
         {
-            CreateMap<Device, DeviceDto>();
+            CreateMap<Device, DeviceDto>()
+                .ForMember(dest => dest.RunTime, opt => opt.MapFrom(src => TimeSpan.FromTicks(src.RunTimeTicks)));
             CreateMap<Automation, AutomationDetailDto>()
                 .ForMember(m => m.CreatedByEmail, c => c.MapFrom(s => s.CreatedBy.Email))
                 .ForMember(m => m.DevicesToTurnOn, c => c.MapFrom(s => s.DevicesToTurnOn))
