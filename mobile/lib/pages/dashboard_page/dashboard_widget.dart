@@ -192,7 +192,8 @@ class _DashboardWidgetState extends State<DashboardWidget>
                                                   padding: const EdgeInsets.all(
                                                       16.0),
                                                   decoration: BoxDecoration(
-                                                    color: Colors.white,
+                                                    color: IoT_Theme.of(context)
+                                                        .secondaryBackground,
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             8),
@@ -209,9 +210,19 @@ class _DashboardWidgetState extends State<DashboardWidget>
                                                         MainAxisSize.min,
                                                     children: [
                                                       Text(
-                                                        "Urządzenie \"${device.namePL}\" działa łącznie ${device.formattedRunTime}",
-                                                        style: const TextStyle(
-                                                            fontSize: 16),
+                                                        "${ShteyLocalizations.of(context).getText('he85t38o' /* Urządzenie */)} \"${ShteyLocalizations.of(context).languageCode == "en" ? device.name : device.namePL}\" ${ShteyLocalizations.of(context).getText('n6z8leq2' /* działa */)} ${device.formattedRunTime}",
+                                                        style: IoT_Theme.of(
+                                                                context)
+                                                            .titleLarge
+                                                            .override(
+                                                                fontFamily:
+                                                                    'Inter',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontSize: 16,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400),
                                                         textAlign:
                                                             TextAlign.center,
                                                       ),

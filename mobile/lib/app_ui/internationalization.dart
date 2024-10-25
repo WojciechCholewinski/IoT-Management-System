@@ -437,6 +437,14 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'Cancel',
       'pl': 'Anuluj',
     },
+    'he85t38o': {
+      'en': 'The device',
+      'pl': 'Urządzenie',
+    },
+    'n6z8leq2': {
+      'en': 'has been running for a total of',
+      'pl': 'działa łącznie',
+    },
   },
   // AutomationDetails
   {
@@ -527,14 +535,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   },
   // Miscellaneous
   {
-    'he85t38o': {
-      'en': '',
-      'pl': '',
-    },
-    'n6z8leq2': {
-      'en': '',
-      'pl': '',
-    },
     '2j3udxa0': {
       'en': '',
       'pl': '',
