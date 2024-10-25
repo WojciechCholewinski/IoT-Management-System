@@ -425,6 +425,18 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'Account',
       'pl': 'Konto',
     },
+    'icx3ccl9': {
+      'en': 'First name',
+      'pl': 'Imię',
+    },
+    'n2bhlw7s': {
+      'en': 'Last name',
+      'pl': 'Nazwisko',
+    },
+    'xyay4gib': {
+      'en': 'Cancel',
+      'pl': 'Anuluj',
+    },
   },
   // AutomationDetails
   {
@@ -515,18 +527,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   },
   // Miscellaneous
   {
-    'xyay4gib': {
-      'en': '',
-      'pl': '',
-    },
-    'icx3ccl9': {
-      'en': '',
-      'pl': '',
-    },
-    'n2bhlw7s': {
-      'en': '',
-      'pl': '',
-    },
     'he85t38o': {
       'en': '',
       'pl': '',
