@@ -1,21 +1,36 @@
 import 'package:flutter/material.dart';
+import '../models/user_service.dart';
 import 'custom_rect_tween.dart';
 import 'internationalization.dart';
 import 'theme.dart';
 
 class ChangePasswordPopup extends StatefulWidget {
-  final String? firstName;
-  final String? lastName;
-  const ChangePasswordPopup({Key? key, this.firstName, this.lastName})
-      : super(key: key);
+  const ChangePasswordPopup({Key? key}) : super(key: key);
   @override
   _ChangePasswordPopupState createState() => _ChangePasswordPopupState();
 }
 
 class _ChangePasswordPopupState extends State<ChangePasswordPopup> {
-  @override
-  void initState() {
-    super.initState();
+  final TextEditingController _oldPasswordController = TextEditingController();
+  final TextEditingController _newPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+  final UserService _userService = UserService();
+
+  void _savePasswordChanges() async {
+    final passwordData = {
+      "previousPassword": _oldPasswordController.text,
+      "password": _newPasswordController.text,
+      "confirmPassword": _confirmPasswordController.text
+    };
+
+    try {
+      await _userService.changePassword(passwordData);
+      Navigator.of(context).pop();
+    } catch (e) {
+      print("Error updating password: $e");
+      //TODO:  error message for user
+    }
   }
 
   @override
@@ -41,7 +56,8 @@ class _ChangePasswordPopupState extends State<ChangePasswordPopup> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextField(
-                      // controller: _firstNameController,
+                      controller: _oldPasswordController,
+                      obscureText: true,
                       decoration: InputDecoration(
                         labelText: ShteyLocalizations.of(context).getText(
                           'iul8e0wu' /* Old password */,
@@ -55,7 +71,8 @@ class _ChangePasswordPopupState extends State<ChangePasswordPopup> {
                       ),
                     ),
                     TextField(
-                      // controller: _lastNameController,
+                      controller: _newPasswordController,
+                      obscureText: true,
                       decoration: InputDecoration(
                         labelText: ShteyLocalizations.of(context).getText(
                           '2j3udxa0' /* New password */,
@@ -69,7 +86,8 @@ class _ChangePasswordPopupState extends State<ChangePasswordPopup> {
                       ),
                     ),
                     TextField(
-                      // controller: _lastNameController,
+                      controller: _confirmPasswordController,
+                      obscureText: true,
                       decoration: InputDecoration(
                         labelText: ShteyLocalizations.of(context).getText(
                           'pm08xcwv' /* Confirm password */,
@@ -99,10 +117,7 @@ class _ChangePasswordPopupState extends State<ChangePasswordPopup> {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {
-                            // TODO:  logika do zapisania imienia i nazwiska
-                            Navigator.of(context).pop();
-                          },
+                          onPressed: _savePasswordChanges,
                           child: Text(
                             ShteyLocalizations.of(context).getText(
                               'rq1mzqny' /* Save  */,

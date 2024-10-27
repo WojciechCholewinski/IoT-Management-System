@@ -533,10 +533,7 @@ class _SettingsWidgetState extends State<SettingsWidget>
                     onTap: () {
                       Navigator.of(context).push(HeroDialogRoute(
                           builder: (context) {
-                            return ChangePasswordPopup(
-                              firstName: _userProfile?.firstName,
-                              lastName: _userProfile?.lastName,
-                            );
+                            return const ChangePasswordPopup();
                           },
                           settings: null));
                     },

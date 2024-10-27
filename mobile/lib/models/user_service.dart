@@ -59,4 +59,25 @@ class UserService {
       throw Exception('Failed to update user profile');
     }
   }
+
+  Future<void> changePassword(Map<String, dynamic> passwordData) async {
+    final token = await getToken();
+
+    if (token == null) {
+      throw Exception('Brak tokenu JWT. Zaloguj się ponownie.');
+    }
+
+    final response = await http.patch(
+      Uri.parse('$baseUrl/password'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: json.encode(passwordData),
+    );
+
+    if (response.statusCode != 200 && response.statusCode != 204) {
+      throw Exception('Failed to update password');
+    }
+  }
 }
