@@ -445,6 +445,14 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'has been running for a total of',
       'pl': 'działa łącznie',
     },
+    'iul8e0wu': {
+      'en': 'Old password',
+      'pl': 'Stare hasło',
+    },
+    '2j3udxa0': {
+      'en': 'New password',
+      'pl': 'Nowe hasło',
+    },
   },
   // AutomationDetails
   {
@@ -535,14 +543,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   },
   // Miscellaneous
   {
-    '2j3udxa0': {
-      'en': '',
-      'pl': '',
-    },
-    'iul8e0wu': {
-      'en': '',
-      'pl': '',
-    },
     'ypnyxy8z': {
       'en': '',
       'pl': '',

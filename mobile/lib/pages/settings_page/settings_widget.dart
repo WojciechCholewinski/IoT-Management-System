@@ -1,4 +1,5 @@
 import 'dart:convert';
+import '../../app_ui/change_password_popup.dart';
 import '/app_ui/change_name_popup.dart';
 import '/app_ui/hero_dialog_route.dart';
 import 'package:mobile/models/user/user_model.dart';
@@ -460,6 +461,7 @@ class _SettingsWidgetState extends State<SettingsWidget>
                             return ChangeNamePopup(
                               firstName: _userProfile?.firstName,
                               lastName: _userProfile?.lastName,
+                              onSave: _fetchUserProfile,
                             );
                           },
                           settings: null));
@@ -527,55 +529,72 @@ class _SettingsWidgetState extends State<SettingsWidget>
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(
                       16.0, 12.0, 16.0, 0.0),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: IoT_Theme.of(context).secondaryBackground,
-                      borderRadius: BorderRadius.circular(12.0),
-                      border: Border.all(
-                        color: IoT_Theme.of(context).alternate,
-                        width: 2.0,
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          8.0, 12.0, 8.0, 12.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                8.0, 0.0, 0.0, 0.0),
-                            child: Icon(
-                              Icons.password,
-                              color: IoT_Theme.of(context).primaryText,
-                              size: 24.0,
-                            ),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(HeroDialogRoute(
+                          builder: (context) {
+                            return ChangePasswordPopup(
+                              firstName: _userProfile?.firstName,
+                              lastName: _userProfile?.lastName,
+                            );
+                          },
+                          settings: null));
+                    },
+                    child: Hero(
+                      tag: 'change-password-popup',
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: IoT_Theme.of(context).secondaryBackground,
+                          borderRadius: BorderRadius.circular(12.0),
+                          border: Border.all(
+                            color: IoT_Theme.of(context).alternate,
+                            width: 2.0,
                           ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                12.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              ShteyLocalizations.of(context).getText(
-                                '302zxkxl' /* Change Password */,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              8.0, 12.0, 8.0, 12.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    8.0, 0.0, 0.0, 0.0),
+                                child: Icon(
+                                  Icons.password,
+                                  color: IoT_Theme.of(context).primaryText,
+                                  size: 24.0,
+                                ),
                               ),
-                              style: IoT_Theme.of(context).bodyMedium.override(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    12.0, 0.0, 0.0, 0.0),
+                                child: Text(
+                                  ShteyLocalizations.of(context).getText(
+                                    '302zxkxl' /* Change Password */,
                                   ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Align(
-                              alignment: const AlignmentDirectional(1.0, 0.0),
-                              child: Icon(
-                                Icons.chevron_right_rounded,
-                                color: IoT_Theme.of(context).primary,
-                                size: 24.0,
+                                  style:
+                                      IoT_Theme.of(context).bodyMedium.override(
+                                            fontFamily: 'Inter',
+                                            letterSpacing: 0.0,
+                                          ),
+                                ),
                               ),
-                            ),
+                              Expanded(
+                                child: Align(
+                                  alignment:
+                                      const AlignmentDirectional(1.0, 0.0),
+                                  child: Icon(
+                                    Icons.chevron_right_rounded,
+                                    color: IoT_Theme.of(context).primary,
+                                    size: 24.0,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ).animateOnPageLoad(

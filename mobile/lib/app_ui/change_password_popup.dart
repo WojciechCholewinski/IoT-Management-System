@@ -1,46 +1,21 @@
 import 'package:flutter/material.dart';
-import '../models/user_service.dart';
 import 'custom_rect_tween.dart';
 import 'internationalization.dart';
 import 'theme.dart';
 
-class ChangeNamePopup extends StatefulWidget {
+class ChangePasswordPopup extends StatefulWidget {
   final String? firstName;
   final String? lastName;
-  final VoidCallback onSave;
-  const ChangeNamePopup(
-      {Key? key, this.firstName, this.lastName, required this.onSave})
+  const ChangePasswordPopup({Key? key, this.firstName, this.lastName})
       : super(key: key);
   @override
-  _ChangeNamePopupState createState() => _ChangeNamePopupState();
+  _ChangePasswordPopupState createState() => _ChangePasswordPopupState();
 }
 
-class _ChangeNamePopupState extends State<ChangeNamePopup> {
-  late TextEditingController _firstNameController;
-  late TextEditingController _lastNameController;
-  final UserService _userService = UserService();
-
+class _ChangePasswordPopupState extends State<ChangePasswordPopup> {
   @override
   void initState() {
     super.initState();
-
-    _firstNameController = TextEditingController(text: widget.firstName ?? '');
-    _lastNameController = TextEditingController(text: widget.lastName ?? '');
-  }
-
-  void _saveChanges() async {
-    final updatedProfile = {
-      'firstName': _firstNameController.text,
-      'lastName': _lastNameController.text,
-    };
-    try {
-      await _userService.updateUserProfile(updatedProfile);
-      widget.onSave();
-      Navigator.of(context).pop();
-    } catch (e) {
-      print("Error updating profile: $e");
-      // Logika do obsługi błędów
-    }
   }
 
   @override
@@ -49,7 +24,7 @@ class _ChangeNamePopupState extends State<ChangeNamePopup> {
 
     return Center(
       child: Hero(
-        tag: 'change-name-popup',
+        tag: 'change-password-popup',
         createRectTween: (Rect? begin, Rect? end) =>
             CustomRectTween(begin: begin ?? Rect.zero, end: end ?? Rect.zero),
         child: Padding(
@@ -66,10 +41,10 @@ class _ChangeNamePopupState extends State<ChangeNamePopup> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextField(
-                      controller: _firstNameController,
+                      // controller: _firstNameController,
                       decoration: InputDecoration(
                         labelText: ShteyLocalizations.of(context).getText(
-                          'icx3ccl9' /* First name */,
+                          'iul8e0wu' /* Old password */,
                         ),
                         labelStyle: TextStyle(
                           color: theme.primaryText,
@@ -80,10 +55,24 @@ class _ChangeNamePopupState extends State<ChangeNamePopup> {
                       ),
                     ),
                     TextField(
-                      controller: _lastNameController,
+                      // controller: _lastNameController,
                       decoration: InputDecoration(
                         labelText: ShteyLocalizations.of(context).getText(
-                          'n2bhlw7s' /* Last name */,
+                          '2j3udxa0' /* New password */,
+                        ),
+                        labelStyle: TextStyle(
+                          color: theme.primaryText,
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: theme.primary),
+                        ),
+                      ),
+                    ),
+                    TextField(
+                      // controller: _lastNameController,
+                      decoration: InputDecoration(
+                        labelText: ShteyLocalizations.of(context).getText(
+                          'pm08xcwv' /* Confirm password */,
                         ),
                         labelStyle: TextStyle(
                           color: theme.primaryText,
@@ -110,7 +99,10 @@ class _ChangeNamePopupState extends State<ChangeNamePopup> {
                           ),
                         ),
                         TextButton(
-                          onPressed: _saveChanges,
+                          onPressed: () {
+                            // TODO:  logika do zapisania imienia i nazwiska
+                            Navigator.of(context).pop();
+                          },
                           child: Text(
                             ShteyLocalizations.of(context).getText(
                               'rq1mzqny' /* Save  */,

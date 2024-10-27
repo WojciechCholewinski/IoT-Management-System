@@ -39,17 +39,24 @@ class UserService {
     }
   }
 
-  // Future<void> updateUserProfile(UserProfile profile) async {
-  //   final url = Uri.parse(baseUrl);
+  Future<void> updateUserProfile(Map<String, dynamic> profile) async {
+    final token = await getToken();
 
-  //   final response = await http.patch(
-  //     url,
-  //     headers: {'Content-Type': 'application/json'},
-  //     body: json.encode(profile.toJson()),
-  //   );
+    if (token == null) {
+      throw Exception('Brak tokenu JWT. Zaloguj się ponownie.');
+    }
 
-  //   if (response.statusCode != 200 && response.statusCode != 204) {
-  //     throw Exception('Failed to update user profile');
-  //   }
-  // }
+    final response = await http.patch(
+      Uri.parse('$baseUrl/name'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: json.encode(profile),
+    );
+
+    if (response.statusCode != 200 && response.statusCode != 204) {
+      throw Exception('Failed to update user profile');
+    }
+  }
 }
