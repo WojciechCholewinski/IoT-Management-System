@@ -41,7 +41,7 @@ System do zarządzania DIY urządzeniami inteligentnego domu (IoT) stworzony na 
 - **Broker MQTT** – Odpowiada za przekazywanie wiaodmości między rdzeniem systemu - backendem, a końcowymi punktami - urządzeniami. Wiaodmości te zawierają polecenie o włączeniu/wyłączneiu urządzenia, lub parametry pobrane przez urządzenia takie jak zmierzona temperatura, czy obecność ruchu w pomieszczeniu.
 - **Urządzenia IoT (ESP32)** – DIY urządzenia, takie jak budzik, które można konfigurować i kontrolować z poziomu aplikacji mobilnej.
 
-![Architecture Diagram](doc/diagram.jpg)
+![Architecture Diagram](docs/diagram.jpg)
 
 ## Dokumentacja API
 
