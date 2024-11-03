@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using System.Data;
-using System.Net;
 
 namespace api.Entities
 {
@@ -9,7 +6,7 @@ namespace api.Entities
     {
         public IoT_DbContext(DbContextOptions<IoT_DbContext> options) : base(options)
         {
-            
+
         }
         public DbSet<Device> Devices { get; set; }
         public DbSet<LocationType> LocationTypes { get; set; }
@@ -34,6 +31,11 @@ namespace api.Entities
             modelBuilder.Entity<Device>()
                 .Property(d => d.IsOn)
                 .IsRequired();
+
+            modelBuilder.Entity<Device>()
+                .HasDiscriminator<string>("DeviceType") // Kolumna discriminatora
+                .HasValue<Device>("StandardDevice")     // Wartość dla standardowego urządzenia
+                .HasValue<AdvancedDevice>("AdvancedDevice"); // Wartość dla zaawansowanego urządzenia
 
             modelBuilder.Entity<LocationType>()
                 .Property(l => l.Name)

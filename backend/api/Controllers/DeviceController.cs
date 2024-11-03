@@ -16,7 +16,7 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<DeviceDto>> GetAll()
+        public ActionResult<IEnumerable<object>> GetAll()
         {
             var result = _deviceService.GetAll();
 

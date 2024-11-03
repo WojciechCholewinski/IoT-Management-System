@@ -2,12 +2,13 @@
 using api.Exceptions;
 using api.Models;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Services
 {
     public class DeviceService : IDeviceService
     {
-        private readonly IoT_DbContext _dbContext;
+        protected readonly IoT_DbContext _dbContext;
         private readonly IMapper _mapper;
         private readonly IMqttService _mqttService;
 
@@ -17,15 +18,32 @@ namespace api.Services
             _mapper = mapper;
             _mqttService = mqttService;
         }
-        public IEnumerable<DeviceDto> GetAll()
+        public IEnumerable<object> GetAll()
         {
-            var devices =
+            // Pobierz standardowe urządzenia i zamapuj je na DeviceDto
+            var standardDevices =
                 _dbContext
                 .Devices
+                .Where(d => EF.Property<string>(d, "DeviceType") == "StandardDevice") // Pobiera tylko standardowe urządzenia
+                .Select(d => _mapper.Map<DeviceDto>(d))
                 .ToList();
 
-            var devicesDtos = _mapper.Map<List<DeviceDto>>(devices);
-            return devicesDtos;
+            // Pobierz zaawansowane urządzenia i zamapuj je na AdvancedDeviceDto
+            var advancedDevices =
+                _dbContext
+                .Devices
+                .OfType<AdvancedDevice>() // Pobiera tylko zaawansowane urządzenia
+                .Select(ad => _mapper.Map<AdvancedDeviceDto>(ad))
+                .ToList();
+
+            // Połącz obie listy, posortuj po id i zwróć
+            var allDevices = standardDevices.Cast<object>()
+                .Concat(advancedDevices)
+                .OrderBy(d => ((DeviceDto)d).Id) // Sortowanie po Id
+                .ToList();
+
+            return allDevices;
+
         }
 
         public IEnumerable<DeviceNameDto> GetAllNames()
@@ -37,9 +55,10 @@ namespace api.Services
 
             var devicesDtos = _mapper.Map<List<DeviceNameDto>>(devices);
             return devicesDtos;
+            // ew TODO: jak wyżej
         }
 
-        public async Task UpdateIsOn(int id, bool isOn)
+        public virtual async Task UpdateIsOn(int id, bool isOn)
         {
             var now = DateTime.Now;
 

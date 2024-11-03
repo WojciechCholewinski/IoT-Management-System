@@ -10,6 +10,8 @@ namespace api
         {
             CreateMap<Device, DeviceDto>()
                 .ForMember(dest => dest.RunTime, opt => opt.MapFrom(src => TimeSpan.FromTicks(src.RunTimeTicks)));
+            CreateMap<AdvancedDevice, AdvancedDeviceDto>()
+                .ForMember(dest => dest.RunTime, opt => opt.MapFrom(src => TimeSpan.FromTicks(src.RealRuntimeTicks)));
             CreateMap<Automation, AutomationDetailDto>()
                 .ForMember(m => m.CreatedByEmail, c => c.MapFrom(s => s.CreatedBy.Email))
                 .ForMember(m => m.DevicesToTurnOn, c => c.MapFrom(s => s.DevicesToTurnOn))
