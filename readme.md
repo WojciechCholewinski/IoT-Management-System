@@ -10,9 +10,9 @@ System do zarządzania DIY urządzeniami inteligentnego domu (IoT) stworzony na 
 - **Entity Framework Core**: 8.0.6
 - **AutoMapper**: 13.0.1
 - **FluentValidation**: 11.3.0
-- **JwtBearer**: 8.0.6
+- **JWT Bearer**: 8.0.6
 - **NLog**: 5.3.14
-- **MQTT (MQTTnet)**: 4.3.7.1207
+- **MQTT (MQTTnet)**: 4.3.7
 
 ### Aplikacja mobilna (Flutter)
 
@@ -29,25 +29,29 @@ System do zarządzania DIY urządzeniami inteligentnego domu (IoT) stworzony na 
 
 ### Urządzenia IoT
 
-- **esp32-devkitc v1** - lub jakiekolwiek inne ESP32 (system na arduino też działa, lecz kod [firmware](./firmware) posiada funkcje działające jedynie na ESP)
+- **esp32-devkitc v1** - lub jakiekolwiek inne ESP32 (system działa również na arduino, lecz kod [firmware](./firmware) posiada funkcje działające jedynie na ESP)
 - Arduino Core for ESP32: 1.0.6
 - PubSubClient: 2.8
 - WiFiClientSecure
 
 ## Architektura systemu
 
-- **Aplikacja mobilna (Flutter)** – Interfejs użytkownika pozwalający na komunikację użytkownika z systemem..
+- **Aplikacja mobilna (Flutter)** – Interfejs użytkownika pozwalający na komunikację użytkownika z systemem.
 - **Backend (.NET)** – Odpowiada za autoryzację użytkownika, przetwarzanie danych, oraz komunikację z online brokerem MQTT który jest łącznikiem między backendem a urządzeniami IoT.
 - **Broker MQTT** – Odpowiada za przekazywanie wiaodmości między rdzeniem systemu - backendem, a końcowymi punktami - urządzeniami. Wiaodmości te zawierają polecenie o włączeniu/wyłączneiu urządzenia, lub parametry pobrane przez urządzenia takie jak zmierzona temperatura, czy obecność ruchu w pomieszczeniu.
 - **Urządzenia IoT (ESP32)** – DIY urządzenia, takie jak budzik, które można konfigurować i kontrolować z poziomu aplikacji mobilnej.
 
 ![Architecture Diagram](doc/diagram.jpg)
 
+## Dokumentacja API
+
+Szczegółowa dokumentacja endpointów dostępna jest [tutaj](https://WojciechCholewinski.github.io/IoT-Management-System/).
+
 ## Wymagania
 
 - **Backend**: .NET Core 8
 - **Mobile**: Flutter SDK 2.5+
-- **IoT Device**: ESP32 np użyte w projekcie **esp32-devkitc v1**
+- **IoT Device**: ESP32 np użyte w projekcie: **ESP32-DevKit ESP-WROOM-32 WiFi + BT 4.2.**
 
 ## Instalacja i Konfiguracja
 
@@ -66,24 +70,20 @@ System do zarządzania DIY urządzeniami inteligentnego domu (IoT) stworzony na 
    - Zainstaluj zależności Fluttera oraz skonfiguruj środowisko.
 
 4. **Urządzenia IoT (ESP32)**:
-   - Przejdź do [instrukcji konfiguracji urządzeń IoT](./firmware/alarm_clock/README.md) w folderze `firmware/alarm_clock`.
+   - Przejdź do [instrukcji konfiguracji urządzeń IoT](./firmware/alarm_clock/readme.md) w folderze `firmware/alarm_clock`.
    - Skonfiguruj dane połączenia MQTT i wgraj firmware na ESP32.
 
 ## Przykłady użycia
 
-System pozwala na ustawienie alarmu w aplikacji mobilnej, umożliwiając użytkownikowi wybór dnia oraz godziny, o której urządzenie ESP32 zostanie uruchomione (np. budzik uruchomi alarm).
+System pozwala na ustawienie alarmu w aplikacji mobilnej. Użytkownik może wybrać dzień oraz godzinę, o której urządzenie ESP32 (np. budzik) ma się uruchomić.
 
 Przykład:
 
 1. Użytkownik ustawia aplikacji mobilnej alarm na każdy poniedziałek i środę na godzinę 7:00.
-2. Aplikacja wysyła informację do backendu, który zapisuje je w bazie danych oraz przekazuje je do mrokera MQTT.
-3. Broker mqtt przekazuje tą wiadomość na określony ustawiony podczs konfiguracji temat.
-4. ESP32 subskrybujące przenzaczony temat odbiera wiadomość od brokera o konieczności włączenia alarmu i aktywuje alarm o wyznaczonej godzinie.
-
-## Dokumentacja API
-
-Szczegółowa dokumentacja endpointów dostępna jest [tutaj](link_do_swagger).
+2. Aplikacja wysyła informację do backendu, który zapisuje je w bazie danych oraz przekazuje je do brokera MQTT.
+3. Broker mqtt przekazuje tę wiadomość na określony, ustawiony podczas konfiguracji temat.
+4. ESP32 subskrybujące przeznaczony temat odbiera wiadomość od brokera o konieczności włączenia alarmu i aktywuje alarm o wyznaczonej godzinie.
 
 ## Licencja
 
-Projekt jest dostępny na licencji [MIT](./firmware\alarm_clock\LICENSE). Więcej informacji znajdziesz w pliku LICENSE.
+Projekt jest dostępny na licencji [MIT](./firmware/alarm_clock/LICENSE). Więcej informacji znajdziesz w pliku LICENSE.
