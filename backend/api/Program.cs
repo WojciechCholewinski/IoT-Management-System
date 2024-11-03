@@ -77,7 +77,8 @@ builder.Services.AddControllers()
     });
 
 
-builder.Services.AddScoped<IDeviceService, DeviceService>();
+builder.Services.AddScoped<IDeviceService, AdvancedDeviceService>();
+builder.Services.AddScoped<IAdvancedDeviceHandler, AdvancedDeviceHandler>();
 builder.Services.AddScoped<IAutomationService, AutomationService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddSingleton<IMqttService, MqttService>();
@@ -95,8 +96,11 @@ app.UseCors("FrontendClient");
 
 var scope = app.Services.CreateScope();
 // Zastosowanie migracji przy starcie aplikacji
-var dbContext = scope.ServiceProvider.GetRequiredService<IoT_DbContext>();
-dbContext.Database.Migrate();
+if (app.Environment.IsDevelopment())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<IoT_DbContext>();
+    dbContext.Database.Migrate();
+}
 
 var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
 var seeder = scope.ServiceProvider.GetRequiredService<ApiSeeder>();
