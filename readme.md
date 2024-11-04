@@ -84,7 +84,7 @@ System do zarządzania DIY urządzeniami inteligentnego domu (IoT) stworzony na 
 
 ## Dokumentacja API
 
-Dokumentacja endpointów dostępna jest tutaj -> [swagger](https://WojciechCholewinski.github.io/repo-test/index.html).
+Dokumentacja endpointów dostępna jest tutaj -> [swagger](https://WojciechCholewinski.github.io/IoT-Management-System/).
 
 ## Wymagania
 
