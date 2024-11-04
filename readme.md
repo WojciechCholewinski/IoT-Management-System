@@ -1,38 +1,77 @@
 # IoT Management System
 
+![WakaTime project stats](https://wakatime.com/badge/user/dbbc3989-d939-47fa-9843-84740830b781/project/6e34a6d9-e075-4a79-b29c-f6b525d7adab.svg?style=default)
+
+<!--
+![WakaTime project stats](https://wakatime.com/badge/user/dbbc3989-d939-47fa-9843-84740830b781/project/6e34a6d9-e075-4a79-b29c-f6b525d7adab.svg?style=plastic)
+
+![WakaTime project stats](https://wakatime.com/badge/user/dbbc3989-d939-47fa-9843-84740830b781/project/6e34a6d9-e075-4a79-b29c-f6b525d7adab.svg?style=flat)
+
+![WakaTime project stats](https://wakatime.com/badge/user/dbbc3989-d939-47fa-9843-84740830b781/project/6e34a6d9-e075-4a79-b29c-f6b525d7adab.svg?style=flat-square)
+
+![WakaTime project stats](https://wakatime.com/badge/user/dbbc3989-d939-47fa-9843-84740830b781/project/6e34a6d9-e075-4a79-b29c-f6b525d7adab.svg?style=for-the-badge)
+
+![WakaTime project stats](https://wakatime.com/badge/user/dbbc3989-d939-47fa-9843-84740830b781/project/6e34a6d9-e075-4a79-b29c-f6b525d7adab.svg?style=social) -->
+
 System do zarządzania DIY urządzeniami inteligentnego domu (IoT) stworzony na bazie urządzeń ESP32 z backendem w .NET i aplikacją mobilną we Flutterze. System pozwala na uruchamianie urządzeń pojedynczo lub grupowanie ich w automatyzacje których dni, oraz czas uruchamiania i dezaktywacji ustawia użytkownik poprzez aplikację mobilną. Zarządzanie oraz monitorowanie urządzeń obywa się za pomocą MQTT oraz REST API.
 
 ## Stack technologiczny
 
-### Backend (.NET Core)
+<!-- Stack technologiczny -->
+<h3>
+<details>
+  <summary>Backend (.NET)</summary>
+  <ul>
+    <li><small><a href="https://dotnet.microsoft.com/en-us/download/dotnet/8.0">.NET</a> 8</small></li>
+    <li><small><a href="https://learn.microsoft.com/en-us/ef/core/">Entity Framework Core:</a> 8.0.6</small></li>
+    <li><small><a href="https://automapper.org/">AutoMapper:</a> 13.0.1</small></li>
+    <li><small><a href="https://docs.fluentvalidation.net/en/latest/">FluentValidation:</a> 11.3.0</small></li>
+    <li><small><a href="https://jwt.io/">JWT Bearer:</a> 8.0.6</small></li>
+    <li><small><a href="https://nlog-project.org/">NLog:</a> 5.3.14</small></li>
+    <li><small><a href="https://github.com/dotnet/MQTTnet/wiki">MQTTnet:</a> 4.3.7</small></li>
+  </ul>
+</details>
+<h3>
 
-- **.NET Core**: 8
-- **Entity Framework Core**: 8.0.6
-- **AutoMapper**: 13.0.1
-- **FluentValidation**: 11.3.0
-- **JWT Bearer**: 8.0.6
-- **NLog**: 5.3.14
-- **MQTT (MQTTnet)**: 4.3.7
+<h3>
+<details>
+  <summary>Aplikacja mobilna (Flutter)</summary>
+  <ul>
+    <li><small><a href="https://docs.flutter.dev/">Flutter SDK:</a> 2.5.3</small></li>
+    <li><small><a href="https://dart.dev/guides/">Dart:</a> 3.4.3</small></li>
+  </ul>
+</details> 
+</h3>
 
-### Aplikacja mobilna (Flutter)
+<h3>
+<details>
+  <summary>Baza danych</summary>
+  <ul>
+    <li><small>SQL Server: <a href="https://www.microsoft.com/en-us/sql-server/">SQL Server 2019</a></small></li>
+    <li><small>DBMS: <a href="https://learn.microsoft.com/en-us/sql/ssms/">SQL Server Management Studio 20</a></small></li>
+    <li><small>ORM: <a href="https://learn.microsoft.com/en-us/ef/core/">Entity Framework Core</a></small></li>
+  </ul>
+</details>
+</h3>
 
-- **Flutter SDK**: 2.5.3
-- **Dart**: 3.4.3
-
-### Baza danych
-
-- **SQL Server**: SQL Server 2019
-
-### Broker MQTT
-
-- Online - **HiveMQ.com**
-
-### Urządzenia IoT
-
-- **esp32-devkitc v1** - lub jakiekolwiek inne ESP32 (system działa również na arduino, lecz kod [firmware](./firmware) posiada funkcje działające jedynie na ESP)
-- Arduino Core for ESP32: 1.0.6
-- PubSubClient: 2.8
-- WiFiClientSecure
+<h3>
+<details>
+  <summary>Urządzenia IoT</summary>
+  <ul>
+    <li><small>Mikrokontroler: <a href="https://botland.com.pl/moduly-wifi-i-bt-esp32/8893-esp32-wifi-bt-42-platforma-z-modulem-esp-wroom-32-zgodny-z-esp32-devkit-5904422337438.html">ESP32-DevKit ESP-WROOM-32 WiFi+BT 4.2</a></small></li>
+    <li><small>IDE: <a href="https://github.com/espressif/arduino-esp32">Arduino Core for ESP32:</a> 1.0.6</small></li>
+    <li>
+        <small>
+            Libraries:
+            <ul>
+                <li>PubSubClient 2.8</li>
+                <li>WiFiClientSecure</li>
+            </ul>
+      </small>
+    </li>
+  </ul>
+</details>
+</h3>
 
 ## Architektura systemu
 
@@ -45,13 +84,13 @@ System do zarządzania DIY urządzeniami inteligentnego domu (IoT) stworzony na 
 
 ## Dokumentacja API
 
-Szczegółowa dokumentacja endpointów dostępna jest [tutaj](https://WojciechCholewinski.github.io/IoT-Management-System/).
+Dokumentacja endpointów dostępna jest tutaj -> [swagger](https://WojciechCholewinski.github.io/repo-test/index.html).
 
 ## Wymagania
 
-- **Backend**: .NET Core 8
+- **Backend**: .NET 8
 - **Mobile**: Flutter SDK 2.5+
-- **IoT Device**: ESP32 np użyte w projekcie: **ESP32-DevKit ESP-WROOM-32 WiFi + BT 4.2.**
+- **IoT Device**: ESP32 np użyte w projekcie: **ESP32-DevKit ESP-WROOM-32 WiFi + BT 4.2.** lub jakiekolwiek inne ESP32 (system działa również na arduino, lecz kod [firmware](./firmware) posiada funkcje działające jedynie na ESP).
 
 ## Instalacja i Konfiguracja
 
@@ -75,15 +114,17 @@ Szczegółowa dokumentacja endpointów dostępna jest [tutaj](https://WojciechCh
 
 ## Przykłady użycia
 
-System pozwala na ustawienie alarmu w aplikacji mobilnej. Użytkownik może wybrać dzień oraz godzinę, o której urządzenie ESP32 (np. budzik) ma się uruchomić.
+System pozwala na ustawienie automatyzacji łączącej kilka urządzeń w aplikacji mobilnej.
+Użytkownik może wybrać dzień oraz godzinę, o której urządzenia mają się uruchomić.
 
 Przykład:
 
-1. Użytkownik ustawia aplikacji mobilnej alarm na każdy poniedziałek i środę na godzinę 7:00.
-2. Aplikacja wysyła informację do backendu, który zapisuje je w bazie danych oraz przekazuje je do brokera MQTT.
-3. Broker mqtt przekazuje tę wiadomość na określony, ustawiony podczas konfiguracji temat.
-4. ESP32 subskrybujące przeznaczony temat odbiera wiadomość od brokera o konieczności włączenia alarmu i aktywuje alarm o wyznaczonej godzinie.
+1. Użytkownik ustawia w aplikacji mobilnej budzik, podnoszenie rolet, oraz uruchomienie klimatyzacji na każdy poniedziałek i środę na godzinę 7:00.
+2. Aplikacja wysyła ustawienia do backendu, który zapisuje je w bazie danych oraz czeka na ustawioną godzinę.
+3. O ustawionej przez użytkownika godzinie, backend przekazuje wiadomość o konieczności włączenia urządzenia do bazy i do brokera MQTT.
+4. Broker mqtt przekazuje tę wiadomość na określony, ustawiony podczas konfiguracji temat.
+5. ESP32 subskrybujące przeznaczony temat odbiera wiadomość od brokera o konieczności włączenia urządzeń i je aktywuje.
 
 ## Licencja
 
-Projekt jest dostępny na licencji [MIT](./firmware/alarm_clock/LICENSE). Więcej informacji znajdziesz w pliku LICENSE.
+Projekt jest dostępny na licencji [MIT](./firmware/alarm_clock/LICENSE).
