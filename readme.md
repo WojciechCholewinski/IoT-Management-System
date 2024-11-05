@@ -127,4 +127,4 @@ Przykład:
 
 ## Licencja
 
-Projekt jest dostępny na licencji [MIT](./firmware/alarm_clock/LICENSE).
+Projekt jest dostępny na licencji [Custom License: Attribution-NonCommercial with Trademark Restrictions](./LICENSE).
