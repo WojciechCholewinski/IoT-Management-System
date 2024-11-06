@@ -58,6 +58,7 @@ System do zarządzania DIY urządzeniami inteligentnego domu (IoT) stworzony na 
 <details>
   <summary>Urządzenia IoT</summary>
   <ul>
+    <li><small>Język programowania: <a href="https://learn.microsoft.com/pl-pl/cpp/cpp/">C++</a></small></li>
     <li><small>Mikrokontroler: <a href="https://botland.com.pl/moduly-wifi-i-bt-esp32/8893-esp32-wifi-bt-42-platforma-z-modulem-esp-wroom-32-zgodny-z-esp32-devkit-5904422337438.html">ESP32-DevKit ESP-WROOM-32 WiFi+BT 4.2</a></small></li>
     <li><small>IDE: <a href="https://github.com/espressif/arduino-esp32">Arduino Core for ESP32:</a> 1.0.6</small></li>
     <li>
@@ -66,10 +67,19 @@ System do zarządzania DIY urządzeniami inteligentnego domu (IoT) stworzony na 
             <ul>
                 <li>PubSubClient 2.8</li>
                 <li>WiFiClientSecure</li>
+                <li>WiFi.h</li>
             </ul>
       </small>
     </li>
   </ul>
+</details>
+</h3>
+
+<h3>
+<details>
+  <summary>Broker MQTT</summary>
+  <ul>
+    <li><small>Broker Online: <a href="http://HiveMQ.com">HiveMQ.com</a></small></li>
 </details>
 </h3>
 
@@ -90,7 +100,7 @@ Dokumentacja endpointów dostępna jest tutaj -> [swagger](https://WojciechChole
 
 - **Backend**: .NET 8
 - **Mobile**: Flutter SDK 2.5+
-- **IoT Device**: ESP32 np użyte w projekcie: **ESP32-DevKit ESP-WROOM-32 WiFi + BT 4.2.** lub jakiekolwiek inne ESP32 (system działa również na arduino, lecz kod [firmware](./firmware) posiada funkcje działające jedynie na ESP).
+- **IoT Device**: Dowolne ESP32 z modułem wifi, np użyte w projekcie: **ESP32-DevKit ESP-WROOM-32 WiFi + BT 4.2.** lub jakiekolwiek inne ESP32 (system działa również na arduino, lecz kod [firmware](./firmware) posiada funkcje działające jedynie na ESP).
 
 ## Instalacja i Konfiguracja
 
@@ -127,4 +137,4 @@ Przykład:
 
 ## Licencja
 
-Projekt jest dostępny na licencji [Custom License: Attribution-NonCommercial with Trademark Restrictions](./LICENSE).
+Projekt jest dostępny na licencji [Custom License: Attribution-NonCommercial with Trademark Restrictions](./LICENSE.md).

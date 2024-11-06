@@ -48,4 +48,4 @@ In this example, `espClient.setInsecure()` is used to skip SSL certificate verif
 
 ## License
 
-The project is available under the [MIT](./LICENSE)license.
+The project is available under the [MIT](./LICENSE) license.
