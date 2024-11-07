@@ -1,12 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:mobile/config.dart';
 
 class AuthService {
-  // final String baseUrl = 'http://10.0.2.2:5000/api/account';
-  // final String baseUrl = 'https://localhost:5000/api/account';
-  final String baseUrl =
-      'https://iot-api-app-efeyd8czcufwcgc9.polandcentral-01.azurewebsites.net/api/account';
+  final String baseUrl = '${Config.backendUrl}/account';
 
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 

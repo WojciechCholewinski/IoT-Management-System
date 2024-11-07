@@ -428,3 +428,4 @@ mobile/**/*generated*
 /backend/api/appsettings.Development.json
 
 **/config.h
+**/config.dart

@@ -1,16 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:mobile/config.dart';
 import 'package:mobile/models/device/device_name_model.dart';
 import 'device/device_model.dart';
 
 class DeviceService {
-  // await http.get(Uri.parse('http://10.0.2.2:5158/api/device'));
-  // await http.get(Uri.parse(
-  //     'http://10.0.2.2:5000/api/device')); // środowisko: emulator, .net: http, prod,
-  // await http.get(Uri.parse('http://localhost:7051/api/device'));
-  // final String baseUrl = 'https://localhost:5000/api/device';
-  final String baseUrl =
-      'https://iot-api-app-efeyd8czcufwcgc9.polandcentral-01.azurewebsites.net/api/device';
+  final String baseUrl = '${Config.backendUrl}/device';
 
   Future<List<Device>> fetchDevices() async {
     final response = await http.get(Uri.parse(baseUrl));
