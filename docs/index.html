@@ -10,6 +10,39 @@ W tym celu konieczne jest uruchomienie aplikacji poleceniem dotnet run,
  a następnie pobranie na urządzenie pliku swagger.json z uruchomionego swaggerUI,
  oraz wklejenie go poniżej. -->
 <!-- ---------------------------------------------------------------------------------------------------- -->
+<!-- Proces automatycznego generowania pliku json(opisany powyżej) powoduje wygenerowanie pewnych domyślnych elementów schematu. 
+ Niektóre z tych automatycznie dołączonych sekcji, szczególnie te związane z ProblemDetails, nie są pożądane w wersji docelowej, ponieważ nie odzwierciedlają rzeczywistych pól błędów zwracanych z API. 
+
+ Aby zautomatyzować proces usuwania tych niepotrzebnych fragmentów schematów, stworzono skrypt hooka Git `pre-commit`. 
+ Skrypt ten automatycznie usuwa fragmenty zawierające `ProblemDetails` z kodu poniżej przed każdym commitem.
+
+ Aby użyć skryptu:
+    1. Umieść go w katalogu `.git/hooks/` repozytorium.
+    2. Wykonuj commity w standardowy sposób. Skrypt automatycznie oczyści plik `index.html` w tle przed każdym commitem.
+-->
+<!-- ---------------------------------------------------------------------------------------------------- -->
+
+
+<!-- ---------------------------------------------------------------------------------------------------- -->
+<!-- When updating the documentation, manually insert the content of swagger.json into the "spec" section below.
+(Using a URL to the JSON file is not possible due to CORS errors in GitHub Pages, which is a common issue when hosting 
+swagger.json on GitHub Pages).
+
+To update, run the application with the `dotnet run` command, download the swagger.json file from the running Swagger UI, 
+and paste its content below. -->
+<!-- ---------------------------------------------------------------------------------------------------- -->
+<!-- The automatic generation of the JSON file (described above) introduces certain default schema elements. 
+Some of these automatically included sections, particularly those related to `ProblemDetails`, are not desired in the final 
+version as they do not reflect the actual error fields returned by the API. 
+
+To automate the removal of these unnecessary schema fragments, a Git pre-commit hook script was created. This script
+removes sections containing `ProblemDetails` from the code below before every commit. 
+
+To use the script:
+    1. Place it in the `.git/hooks/` directory of the repository.
+    2. Perform commits as usual. The script will automatically clean the `index.html` file in the background before committing.
+-->
+<!-- ---------------------------------------------------------------------------------------------------- -->
 
 <head>
     <meta charset="UTF-8">
