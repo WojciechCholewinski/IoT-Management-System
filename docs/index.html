@@ -60,43 +60,9 @@ W tym celu konieczne jest uruchomienie aplikacji poleceniem dotnet run,
                                 },
                                 "401": {
                                     "description": "(Unauthorized) Returned when the user is not authenticated.",
-                                    "content": {
-                                        "text/plain": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "application/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "text/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        }
-                                    }
                                 },
                                 "404": {
                                     "description": "(NotFound)     Returned when the user with the given ID was not found.",
-                                    "content": {
-                                        "text/plain": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "application/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "text/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        }
-                                    }
                                 }
                             }
                         }
@@ -132,23 +98,6 @@ W tym celu konieczne jest uruchomienie aplikacji poleceniem dotnet run,
                                 },
                                 "400": {
                                     "description": "(BadRequest)   Returned when: the email is not a valid email address, the password is shorter than 4 characters or does not match the ConfirmPassword, or the email is already in use by another account.",
-                                    "content": {
-                                        "text/plain": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "application/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "text/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        }
-                                    }
                                 }
                             }
                         }
@@ -184,43 +133,9 @@ W tym celu konieczne jest uruchomienie aplikacji poleceniem dotnet run,
                                 },
                                 "400": {
                                     "description": "(BadRequest)   Returned when the input data is invalid, such as missing email, invalid email format, or missing password.",
-                                    "content": {
-                                        "text/plain": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "application/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "text/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        }
-                                    }
                                 },
                                 "401": {
                                     "description": "(Unauthorized) Returned when the email or password is incorrect.",
-                                    "content": {
-                                        "text/plain": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "application/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "text/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        }
-                                    }
                                 }
                             }
                         }
@@ -256,43 +171,9 @@ W tym celu konieczne jest uruchomienie aplikacji poleceniem dotnet run,
                                 },
                                 "401": {
                                     "description": "(Unauthorized) Returned when the user is not authenticated.",
-                                    "content": {
-                                        "text/plain": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "application/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "text/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        }
-                                    }
                                 },
                                 "404": {
                                     "description": "(NotFound)     Returned when a user with the given ID was not found.",
-                                    "content": {
-                                        "text/plain": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "application/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "text/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        }
-                                    }
                                 }
                             }
                         }
@@ -328,63 +209,12 @@ W tym celu konieczne jest uruchomienie aplikacji poleceniem dotnet run,
                                 },
                                 "401": {
                                     "description": "(Unauthorized) Returned when the user is not authenticated.",
-                                    "content": {
-                                        "text/plain": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "application/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "text/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        }
-                                    }
                                 },
                                 "400": {
                                     "description": "(BadRequest)   Returned when the input data is invalid, such as missing email, incorrect format, or if the email is already in use.",
-                                    "content": {
-                                        "text/plain": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "application/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "text/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        }
-                                    }
                                 },
                                 "404": {
                                     "description": "(NotFound)     Returned when a user with the given ID was not found.",
-                                    "content": {
-                                        "text/plain": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "application/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "text/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        }
-                                    }
                                 }
                             }
                         }
@@ -420,83 +250,15 @@ W tym celu konieczne jest uruchomienie aplikacji poleceniem dotnet run,
                                 },
                                 "400": {
                                     "description": "(BadRequest) Returned when the Password is empty, less than 4 characters long, matches the PreviousPassword, or when ConfirmPassword is not provided or does not match the new Password.",
-                                    "content": {
-                                        "text/plain": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "application/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "text/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        }
-                                    }
                                 },
                                 "401": {
                                     "description": "(Unauthorized) Returned when the user is not authenticated.",
-                                    "content": {
-                                        "text/plain": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "application/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "text/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        }
-                                    }
                                 },
                                 "403": {
                                     "description": "(Forbidden) Returned when the provided previous password is incorrect.",
-                                    "content": {
-                                        "text/plain": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "application/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "text/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        }
-                                    }
                                 },
                                 "404": {
                                     "description": "(NotFound) Returned when a user with the given ID was not found.",
-                                    "content": {
-                                        "text/plain": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "application/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "text/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        }
-                                    }
                                 }
                             }
                         }
@@ -532,43 +294,9 @@ W tym celu konieczne jest uruchomienie aplikacji poleceniem dotnet run,
                                 },
                                 "401": {
                                     "description": "(Unauthorized) Returned when the user is not authenticated.",
-                                    "content": {
-                                        "text/plain": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "application/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "text/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        }
-                                    }
                                 },
                                 "404": {
                                     "description": "(NotFound) Returned when a user with the given ID was not found.",
-                                    "content": {
-                                        "text/plain": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "application/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        },
-                                        "text/json": {
-                                            "schema": {
-                                                "$ref": "#/components/schemas/ProblemDetails"
-                                            }
-                                        }
-                                    }
                                 }
                             }
                         }
