@@ -339,9 +339,10 @@ To use the script:
                             "tags": [
                                 "Automation"
                             ],
+                            "summary": "Retrieves all automations available in the system.",
                             "responses": {
                                 "200": {
-                                    "description": "OK",
+                                    "description": "(OK)           Returned when the automations data has been successfully retrieved.",
                                     "content": {
                                         "text/plain": {
                                             "schema": {
@@ -368,6 +369,9 @@ To use the script:
                                             }
                                         }
                                     }
+                                },
+                                "401": {
+                                    "description": "(Unauthorized) Returned when the user is not authenticated.",
                                 }
                             }
                         }
@@ -377,6 +381,7 @@ To use the script:
                             "tags": [
                                 "Automation"
                             ],
+                            "summary": "Retrieves the details of an automation by its ID.",
                             "parameters": [
                                 {
                                     "name": "id",
@@ -390,7 +395,7 @@ To use the script:
                             ],
                             "responses": {
                                 "200": {
-                                    "description": "OK",
+                                    "description": "(OK)           Returned when the automation details are successfully retrieved.",
                                     "content": {
                                         "text/plain": {
                                             "schema": {
@@ -408,6 +413,12 @@ To use the script:
                                             }
                                         }
                                     }
+                                },
+                                "401": {
+                                    "description": "(Unauthorized) Returned when the user is not authenticated.",
+                                },
+                                "404": {
+                                    "description": "(NotFound)     Returned when the automation with the given ID was not found.",
                                 }
                             }
                         },
@@ -415,6 +426,7 @@ To use the script:
                             "tags": [
                                 "Automation"
                             ],
+                            "summary": "Updates the details of a specific automation, excluding the management of associated devices.",
                             "parameters": [
                                 {
                                     "name": "id",
@@ -447,7 +459,13 @@ To use the script:
                             },
                             "responses": {
                                 "200": {
-                                    "description": "OK"
+                                    "description": "(OK)           Returned when the automation details are successfully updated."
+                                },
+                                "401": {
+                                    "description": "(Unauthorized) Returned when the user is not authenticated.",
+                                },
+                                "404": {
+                                    "description": "(NotFound)     Returned when the automation with the given ID was not found.",
                                 }
                             }
                         }
@@ -457,6 +475,7 @@ To use the script:
                             "tags": [
                                 "Automation"
                             ],
+                            "summary": "Adds devices to the lists of devices to turn on and turn off for an automation.",
                             "parameters": [
                                 {
                                     "name": "Automationid",
@@ -489,7 +508,13 @@ To use the script:
                             },
                             "responses": {
                                 "200": {
-                                    "description": "OK"
+                                    "description": "(OK)           Returned when the device lists are successfully updated."
+                                },
+                                "401": {
+                                    "description": "(Unauthorized) Returned when the user is not authenticated.",
+                                },
+                                "404": {
+                                    "description": "(NotFound)     Returned when either the automation or one or more devices with the given IDs are not found in the database.",
                                 }
                             }
                         },
@@ -497,6 +522,7 @@ To use the script:
                             "tags": [
                                 "Automation"
                             ],
+                            "summary": "Removes devices from the lists of devices to turn on and turn off for an automation.",
                             "parameters": [
                                 {
                                     "name": "Automationid",
@@ -528,8 +554,14 @@ To use the script:
                                 }
                             },
                             "responses": {
-                                "200": {
-                                    "description": "OK"
+                                "204": {
+                                    "description": "(NoContent)    Returned when the device lists are successfully updated."
+                                },
+                                "401": {
+                                    "description": "(Unauthorized) Returned when the user is not authenticated.",
+                                },
+                                "404": {
+                                    "description": "(NotFound)     Returned when either the automation or one or more devices with the given IDs are not found in the database.",
                                 }
                             }
                         }
