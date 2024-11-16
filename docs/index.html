@@ -571,9 +571,10 @@ To use the script:
                             "tags": [
                                 "Device"
                             ],
+                            "summary": "Retrieves all devices available in the system along with their details.",
                             "responses": {
                                 "200": {
-                                    "description": "OK",
+                                    "description": "(OK)               Returned when the devices data has been successfully retrieved.",
                                     "content": {
                                         "text/plain": {
                                             "schema": {
@@ -594,6 +595,9 @@ To use the script:
                                             }
                                         }
                                     }
+                                },
+                                "401": {
+                                    "description": "(Unauthorized)     Returned when the user is not authenticated.",
                                 }
                             }
                         }
@@ -603,9 +607,10 @@ To use the script:
                             "tags": [
                                 "Device"
                             ],
+                            "summary": "Retrieves only the names of all devices available in the system.",
                             "responses": {
                                 "200": {
-                                    "description": "OK",
+                                    "description": "(OK)               Returned when the device names has been successfully retrieved.",
                                     "content": {
                                         "text/plain": {
                                             "schema": {
@@ -632,6 +637,9 @@ To use the script:
                                             }
                                         }
                                     }
+                                },
+                                "401": {
+                                    "description": "(Unauthorized)     Returned when the user is not authenticated.",
                                 }
                             }
                         }
@@ -641,10 +649,12 @@ To use the script:
                             "tags": [
                                 "Device"
                             ],
+                            "summary": "Toggles (enables or disables) the specified device.",
                             "parameters": [
                                 {
                                     "name": "id",
                                     "in": "path",
+                                    "description": "The ID of the device to update.",
                                     "required": true,
                                     "schema": {
                                         "type": "integer",
@@ -653,6 +663,7 @@ To use the script:
                                 }
                             ],
                             "requestBody": {
+                                "description": "The desired state of the device (true for ON, false for OFF).",
                                 "content": {
                                     "application/json": {
                                         "schema": {
@@ -673,7 +684,19 @@ To use the script:
                             },
                             "responses": {
                                 "200": {
-                                    "description": "OK"
+                                    "description": "(OK)               Returned when the device state has been successfully updated (ON/OFF)."
+                                },
+                                "401": {
+                                    "description": "(Unauthorized)     Returned when the user is not authenticated.",
+                                },
+                                "404": {
+                                    "description": "(NotFound)         Returned when a device with the specified ID is not found.",
+                                },
+                                "409": {
+                                    "description": "(Conflict)         Returned when the device is already in the requested state.",
+                                },
+                                "503": {
+                                    "description": "(ServiceUnavailable)Returned when the MQTT message to update the device state could not be published."
                                 }
                             }
                         }
