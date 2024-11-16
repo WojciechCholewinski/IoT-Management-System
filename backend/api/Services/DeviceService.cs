@@ -55,7 +55,7 @@ namespace api.Services
 
             var devicesDtos = _mapper.Map<List<DeviceNameDto>>(devices);
             return devicesDtos;
-            // ew TODO: jak wyżej
+            // TODO: ew jak wyżej jeśli będziemy zwracać też w UI rodzaj device
         }
 
         public virtual async Task UpdateIsOn(int id, bool isOn)
