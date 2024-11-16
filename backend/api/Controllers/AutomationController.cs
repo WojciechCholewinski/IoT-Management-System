@@ -5,6 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
+    /// <summary>
+    /// Controller responsible for managing automations that control devices within the system.
+    /// Provides endpoints for retrieving automation details, updating them, and managing associated devices,
+    /// by adding devices to, or removing them from, the automation's assigned devices lists.
+    /// All actions require user authentication.
+    /// </summary>
     [Route("api/automation")]
     [ApiController]
     public class AutomationController : ControllerBase
