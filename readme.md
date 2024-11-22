@@ -15,6 +15,10 @@
 
 System do zarządzania DIY urządzeniami inteligentnego domu (IoT) stworzony na bazie urządzeń ESP32 z backendem w .NET i aplikacją mobilną we Flutterze. System pozwala na uruchamianie urządzeń pojedynczo lub grupowanie ich w automatyzacje których dni, oraz czas uruchamiania i dezaktywacji ustawia użytkownik poprzez aplikację mobilną. Zarządzanie oraz monitorowanie urządzeń obywa się za pomocą MQTT oraz REST API.
 
+## Wizualizacja działania aplikacji
+
+<img src="./docs/wizualizacja.gif" alt="App view" height="800">
+
 ## Stack technologiczny
 
 <!-- Stack technologiczny -->
