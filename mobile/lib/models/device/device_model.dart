@@ -25,7 +25,7 @@ class Device {
       id: json['id'],
       name: json['name'],
       namePL: json['namePL'],
-      runTime: _parseDuration(json['runTime']),
+      runTime: _parseDuration(json['runTime'] ?? '0:00:00'),
       lightThemeImage: base64Decode(json['lightThemeImage']),
       darkThemeImage: base64Decode(json['darkThemeImage']),
       isOn: json['isOn'],
@@ -34,38 +34,46 @@ class Device {
 
   // Funkcja do parsowania ciągu znaków TimeSpan na obiekt Duration
   static Duration _parseDuration(String timeSpan) {
-    final parts = timeSpan.split('.');
-    int days = 0;
-    String timePart = parts[0];
-    int milliseconds = 0;
-
-    // Jeśli są dni, parsujemy je
-    if (parts.length == 3) {
-      days = int.parse(parts[0]);
-      timePart = parts[1];
-      milliseconds = int.parse(parts[2].padRight(3, '0').substring(0, 3));
-    } else
-    // Jeśli są milisekundy, parsujemy je
-    if (parts.length == 2) {
-      timePart = parts[0];
-      milliseconds = int.parse(parts[1].padRight(3, '0').substring(0, 3));
-      // padRight dodaje brakujące zera w przypadku gdy są mniej niż 3 cyfry milisekund
-    } else {
-      timePart = parts[0];
+    if (timeSpan.isEmpty) {
+      return Duration.zero;
     }
+    try {
+      final parts = timeSpan.split('.');
+      int days = 0;
+      String timePart = parts[0];
+      int milliseconds = 0;
 
-    final timeParts = timePart.split(':');
-    final hours = int.parse(timeParts[0]);
-    final minutes = int.parse(timeParts[1]);
-    final seconds = int.parse(timeParts[2]);
+      // Jeśli są dni, parsujemy je
+      if (parts.length == 3) {
+        days = int.parse(parts[0]);
+        timePart = parts[1];
+        milliseconds = int.parse(parts[2].padRight(3, '0').substring(0, 3));
+      } else
+      // Jeśli są milisekundy, parsujemy je
+      if (parts.length == 2) {
+        timePart = parts[0];
+        milliseconds = int.parse(parts[1].padRight(3, '0').substring(0, 3));
+        // padRight dodaje brakujące zera w przypadku gdy są mniej niż 3 cyfry milisekund
+      } else {
+        timePart = parts[0];
+      }
 
-    return Duration(
-      days: days,
-      hours: hours,
-      minutes: minutes,
-      seconds: seconds,
-      milliseconds: milliseconds,
-    );
+      final timeParts = timePart.split(':');
+      final hours = int.parse(timeParts[0]);
+      final minutes = int.parse(timeParts[1]);
+      final seconds = int.parse(timeParts[2]);
+
+      return Duration(
+        days: days,
+        hours: hours,
+        minutes: minutes,
+        seconds: seconds,
+        milliseconds: milliseconds,
+      );
+    } catch (e) {
+      print('Error parsing duration: $e');
+      return Duration.zero;
+    }
   }
 
   // Funkcja pomocnicza do formatowania czasu jako godziny, minuty i sekundy
