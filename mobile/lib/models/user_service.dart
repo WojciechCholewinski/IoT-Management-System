@@ -7,24 +7,26 @@ import 'user/user_model.dart';
 class UserService {
   final String baseUrl = '${Config.backendUrl}/account';
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
+  static const String contentType = 'application/json; charset=UTF-8';
 
   Future<String?> getToken() async {
     return await _secureStorage.read(key: 'jwt_token');
   }
 
-  Future<UserProfile> fetchUserProfile() async {
+  Future<Map<String, String>> _buildHeaders() async {
     final token = await getToken();
-
     if (token == null) {
       throw Exception('Brak tokenu JWT. Zaloguj się ponownie.');
     }
-    final response = await http.get(
-      Uri.parse('$baseUrl/me'),
-      headers: {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-    );
+    return {
+      'Authorization': 'Bearer $token',
+      'Content-Type': contentType,
+    };
+  }
+
+  Future<UserProfile> fetchUserProfile() async {
+    final headers = await _buildHeaders();
+    final response = await http.get(Uri.parse('$baseUrl/me'), headers: headers);
 
     if (response.statusCode == 200) {
       Map<String, dynamic> body = jsonDecode(response.body);
@@ -35,49 +37,36 @@ class UserService {
 
       return UserProfile.fromJson(body);
     } else {
-      throw Exception('Failed to load user profile');
+      throw Exception(
+          'Failed to load user profile. StatusCode: ${response.statusCode}');
     }
   }
 
   Future<void> updateUserProfile(Map<String, dynamic> profile) async {
-    final token = await getToken();
-
-    if (token == null) {
-      throw Exception('Brak tokenu JWT. Zaloguj się ponownie.');
-    }
-
+    final headers = await _buildHeaders();
     final response = await http.patch(
       Uri.parse('$baseUrl/name'),
-      headers: {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
+      headers: headers,
       body: json.encode(profile),
     );
 
     if (response.statusCode != 200 && response.statusCode != 204) {
-      throw Exception('Failed to update user profile');
+      throw Exception(
+          'Failed to update user profile. StatusCode: ${response.statusCode}');
     }
   }
 
   Future<void> changePassword(Map<String, dynamic> passwordData) async {
-    final token = await getToken();
-
-    if (token == null) {
-      throw Exception('Brak tokenu JWT. Zaloguj się ponownie.');
-    }
-
+    final headers = await _buildHeaders();
     final response = await http.patch(
       Uri.parse('$baseUrl/password'),
-      headers: {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
+      headers: headers,
       body: json.encode(passwordData),
     );
 
     if (response.statusCode != 200 && response.statusCode != 204) {
-      throw Exception('Failed to update password');
+      throw Exception(
+          'Failed to update password. StatusCode: ${response.statusCode}');
     }
   }
 }
