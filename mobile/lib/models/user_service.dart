@@ -69,4 +69,22 @@ class UserService {
           'Failed to update password. StatusCode: ${response.statusCode}');
     }
   }
+
+  Future<void> updateProfilePhoto(String base64Photo) async {
+    final headers = await _buildHeaders();
+    final body = json.encode({
+      'photo': base64Photo,
+    });
+
+    final response = await http.patch(
+      Uri.parse('$baseUrl/photo'),
+      headers: headers,
+      body: body,
+    );
+
+    if (response.statusCode != 200 && response.statusCode != 204) {
+      throw Exception(
+          'Failed to update profile photo. StatusCode: ${response.statusCode}');
+    }
+  }
 }

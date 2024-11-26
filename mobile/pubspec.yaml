@@ -36,6 +36,7 @@ dependencies:
   flutter_secure_storage: ^5.0.2
   flutter_localizations:
     sdk: flutter
+  image_picker: ^0.8.6
   auto_size_text: 3.0.0
   cached_network_image: 3.3.1
   collection: 1.18.0

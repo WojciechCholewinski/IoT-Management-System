@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../app_ui/change_password_popup.dart';
 import '/app_ui/change_name_popup.dart';
 import '/app_ui/hero_dialog_route.dart';
@@ -396,23 +398,77 @@ class _SettingsWidgetState extends State<SettingsWidget>
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50.0),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(60.0),
-                      child: _userProfile != null && _userProfile!.photo != null
-                          ? Image.memory(
-                              base64Decode(_userProfile!.photo!),
-                              width: 100.0,
-                              height: 100.0,
-                              fit: BoxFit.cover,
-                            )
-                          : Image.asset(
-                              'assets/images/ProfilePhoto.png',
-                              width: 100.0,
-                              height: 100.0,
-                              fit: BoxFit.cover,
-                            ),
+                  child: GestureDetector(
+                    onLongPress: () async {
+                      final ImagePicker picker = ImagePicker();
+                      final pickedFile = await picker.pickImage(
+                        source: ImageSource.gallery,
+                        maxWidth: 1024,
+                        maxHeight: 1024,
+                      );
+
+                      if (pickedFile != null) {
+                        String? fileExtension;
+
+                        if (kIsWeb) {
+                          // Na web, path to `blob`, więc sprawdzenie rozszerzenia nie zadziała
+                          fileExtension =
+                              pickedFile.name.split('.').last.toLowerCase();
+                        } else {
+                          // Na urządzeniach mobilnych możemy sprawdzić rozszerzenie z path
+                          fileExtension =
+                              pickedFile.path.split('.').last.toLowerCase();
+                        }
+
+                        if (!['png', 'jpg', 'jpeg'].contains(fileExtension)) {
+                          // TODO: dodać wyskakujące okienko błędu
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                content: Text(
+                                    'Invalid file type. Please select a photo.')),
+                          );
+                          return;
+                        }
+                        final bytes = await pickedFile.readAsBytes();
+                        final base64Photo = base64Encode(bytes);
+
+                        try {
+                          final userService = UserService();
+                          await userService.updateProfilePhoto(base64Photo);
+                          await _fetchUserProfile(); // Odśwież dane użytkownika po zmianie zdjęcia
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                content: Text(
+                                    'Profile photo updated successfully.')),
+                          );
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                content:
+                                    Text('Failed to update profile photo.')),
+                          );
+                        }
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(60.0),
+                        child:
+                            _userProfile != null && _userProfile!.photo != null
+                                ? Image.memory(
+                                    base64Decode(_userProfile!.photo!),
+                                    width: 100.0,
+                                    height: 100.0,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.asset(
+                                    'assets/images/ProfilePhoto.png',
+                                    width: 100.0,
+                                    height: 100.0,
+                                    fit: BoxFit.cover,
+                                  ),
+                      ),
                     ),
                   ),
                 ).animateOnPageLoad(animationsMap['cardOnPageLoadAnimation']!),
