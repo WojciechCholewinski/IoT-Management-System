@@ -43,7 +43,13 @@ namespace api
                     SeedLocations();
 
                     var devices = GetDevices();
-                    _dbContext.Devices.AddRange(devices);
+
+                    // Dodawanie obiektów pojedynczo w odpowiedniej kolejności by EF nie zapisywał (jak przy użyciu AddRange(devices))pierw AdvancedDevices a później Device tylko by przy seedzie zapisywane były w bazie zgodnie z kolejnością tworzenia w GetDevices()
+                    foreach (var device in devices)
+                    {
+                        _dbContext.Devices.Add(device);
+                        _dbContext.SaveChanges();
+                    }
 
                     _dbContext.SaveChanges();
 
@@ -115,7 +121,7 @@ namespace api
             var devices = new List<Device>()
             {
                 CreateDevice("Desk Lighting", "Oświetlenie biurka", myRoom),
-                CreateDevice("Hallway Lighting", "Oświetlenie korytarza", hallway),
+                CreateDevice("Hallway Lighting", "Oświetlenie korytarza", hallway, true),
                 CreateDevice("Under Lighting", "Podświetlenie", myRoom),
                 CreateDevice("Kitchen Lighting", "Oświetlenie kuchni", kitchen),
                 CreateDevice("Drawer Lock", "Zamek szuflady", myRoom),
@@ -130,16 +136,30 @@ namespace api
             return devices;
         }
 
-        private Device CreateDevice(string name, string namePL, LocationType location)
+        private Device CreateDevice(string name, string namePL, LocationType location, bool isAdvanced = false)
         {
-            return new Device
+            if (isAdvanced)
             {
-                Name = name,
-                NamePL = namePL,
-                Location = location,
-                LightThemeImage = LoadImage($"{name.Replace(" ", "_")}_-_Light_mode.png"),
-                DarkThemeImage = LoadImage($"{name.Replace(" ", "_")}_-_Dark_mode.png")
-            };
+                return new AdvancedDevice
+                {
+                    Name = name,
+                    NamePL = namePL,
+                    Location = location,
+                    LightThemeImage = LoadImage($"{name.Replace(" ", "_")}_-_Light_mode.png"),
+                    DarkThemeImage = LoadImage($"{name.Replace(" ", "_")}_-_Dark_mode.png")
+                };
+            }
+            else
+            {
+                return new Device
+                {
+                    Name = name,
+                    NamePL = namePL,
+                    Location = location,
+                    LightThemeImage = LoadImage($"{name.Replace(" ", "_")}_-_Light_mode.png"),
+                    DarkThemeImage = LoadImage($"{name.Replace(" ", "_")}_-_Dark_mode.png")
+                };
+            }
         }
 
         private byte[] LoadImage(string fileName)
