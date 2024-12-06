@@ -1,5 +1,5 @@
-﻿using api.Models;
-using api.Services;
+﻿using Common.DTOs;
+using Common.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

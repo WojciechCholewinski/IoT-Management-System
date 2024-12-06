@@ -1,4 +1,4 @@
-﻿using api.Entities;
+﻿using Common.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
 using System.Collections.Generic;

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using api.Entities;
+using Common.Entities;
 
 #nullable disable
 
@@ -55,7 +55,7 @@ namespace api.Migrations
                     b.ToTable("AutomationDevicesToTurnOff", (string)null);
                 });
 
-            modelBuilder.Entity("api.Entities.Automation", b =>
+            modelBuilder.Entity("Common.Entities.Automation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -98,7 +98,7 @@ namespace api.Migrations
                     b.ToTable("Automations");
                 });
 
-            modelBuilder.Entity("api.Entities.Device", b =>
+            modelBuilder.Entity("Common.Entities.Device", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -150,7 +150,7 @@ namespace api.Migrations
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("api.Entities.LocationType", b =>
+            modelBuilder.Entity("Common.Entities.LocationType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -167,7 +167,7 @@ namespace api.Migrations
                     b.ToTable("LocationTypes");
                 });
 
-            modelBuilder.Entity("api.Entities.Role", b =>
+            modelBuilder.Entity("Common.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -184,7 +184,7 @@ namespace api.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("api.Entities.User", b =>
+            modelBuilder.Entity("Common.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -220,9 +220,9 @@ namespace api.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("api.Entities.AdvancedDevice", b =>
+            modelBuilder.Entity("Common.Entities.AdvancedDevice", b =>
                 {
-                    b.HasBaseType("api.Entities.Device");
+                    b.HasBaseType("Common.Entities.Device");
 
                     b.Property<DateTime>("LastTrigger")
                         .HasColumnType("datetime2");
@@ -238,13 +238,13 @@ namespace api.Migrations
 
             modelBuilder.Entity("AutomationDevice", b =>
                 {
-                    b.HasOne("api.Entities.Automation", null)
+                    b.HasOne("Common.Entities.Automation", null)
                         .WithMany()
                         .HasForeignKey("AutomationsToTurnOnId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("api.Entities.Device", null)
+                    b.HasOne("Common.Entities.Device", null)
                         .WithMany()
                         .HasForeignKey("DevicesToTurnOnId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -253,22 +253,22 @@ namespace api.Migrations
 
             modelBuilder.Entity("AutomationDevice1", b =>
                 {
-                    b.HasOne("api.Entities.Automation", null)
+                    b.HasOne("Common.Entities.Automation", null)
                         .WithMany()
                         .HasForeignKey("AutomationsToTurnOffId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("api.Entities.Device", null)
+                    b.HasOne("Common.Entities.Device", null)
                         .WithMany()
                         .HasForeignKey("DevicesToTurnOffId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("api.Entities.Automation", b =>
+            modelBuilder.Entity("Common.Entities.Automation", b =>
                 {
-                    b.HasOne("api.Entities.User", "CreatedBy")
+                    b.HasOne("Common.Entities.User", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -277,18 +277,18 @@ namespace api.Migrations
                     b.Navigation("CreatedBy");
                 });
 
-            modelBuilder.Entity("api.Entities.Device", b =>
+            modelBuilder.Entity("Common.Entities.Device", b =>
                 {
-                    b.HasOne("api.Entities.LocationType", "Location")
+                    b.HasOne("Common.Entities.LocationType", "Location")
                         .WithMany()
                         .HasForeignKey("LocationId");
 
                     b.Navigation("Location");
                 });
 
-            modelBuilder.Entity("api.Entities.User", b =>
+            modelBuilder.Entity("Common.Entities.User", b =>
                 {
-                    b.HasOne("api.Entities.Role", "Role")
+                    b.HasOne("Common.Entities.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)

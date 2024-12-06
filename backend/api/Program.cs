@@ -1,9 +1,9 @@
 ﻿using api;
-using api.Entities;
+using Common.Entities;
 using api.Middleware;
-using api.Models;
-using api.Models.Validators;
-using api.Services;
+using Common.DTOs;
+using Common.DTOs.Validators;
+using Common.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
@@ -13,8 +13,28 @@ using NLog.Web;
 using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
+using Common.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Pobierz katalog roboczy projektu
+var basePath = Directory.GetCurrentDirectory();
+var commonConfigPath = Path.Combine(basePath, "../Common/Configuration");
+
+builder.Configuration
+    .SetBasePath(basePath)
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+    .AddJsonFile(Path.Combine(commonConfigPath, "appsettings.common.json"), optional: true, reloadOnChange: true)
+    .AddJsonFile(Path.Combine(commonConfigPath, $"appsettings.common.{builder.Environment.EnvironmentName}.json"), optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables();
+
+// Rejestracja ustawień
+builder.Services.Configure<AuthenticationSettings>(
+    builder.Configuration.GetSection("Authentication"));
+
+builder.Services.Configure<MqttSettings>(
+    builder.Configuration.GetSection("MqttSettings"));
 
 // Add services to the container.
 
@@ -83,7 +103,7 @@ builder.Services.AddScoped<IAutomationService, AutomationService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddSingleton<IMqttService, MqttService>();
 
-builder.Services.Configure<MqttSettings>(builder.Configuration.GetSection("MqttSettings"));
+//builder.Services.Configure<MqttSettings>(builder.Configuration.GetSection("MqttSettings"));
 
 builder.Logging.ClearProviders();
 builder.Host.UseNLog();

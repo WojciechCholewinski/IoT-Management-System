@@ -1,5 +1,5 @@
-﻿using api.Entities;
-using api.Models;
+﻿using Common.Entities;
+using Common.DTOs;
 using AutoMapper;
 
 namespace api
