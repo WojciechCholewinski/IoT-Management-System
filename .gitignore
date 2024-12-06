@@ -425,7 +425,10 @@ migrate_working_dir/
 mobile/**/*Generated*
 mobile/**/*generated*
 
-/backend/api/appsettings.Development.json
+**/appsettings.Development.json
 
 **/config.h
 **/config.dart
+**/appsettings.common.json
+**/appsettings.common.Production.json
+**/appsettings.common.Development.json
