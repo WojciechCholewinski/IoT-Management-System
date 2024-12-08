@@ -45,15 +45,25 @@ namespace Common.Services
 
             _mqttClient.DisconnectedAsync += async e =>
             {
-                _logger.LogInformation("Disconnected from MQTT Broker.");
-                await Task.Delay(TimeSpan.FromSeconds(5));
-                try
+                _logger.LogInformation($"Disconnected from MQTT Broker. Reason: {e.Reason}");
+                _logger.LogInformation($"Disconnected from MQTT Broker. ReasonString: {e.ReasonString}");
+
+                if (e.Reason == MqttClientDisconnectReason.KeepAliveTimeout ||
+                    e.Reason == MqttClientDisconnectReason.ServerBusy)
                 {
-                    await _mqttClient.ConnectAsync(_mqttOptions);
+                    await Task.Delay(TimeSpan.FromSeconds(5));
+                    try
+                    {
+                        await _mqttClient.ConnectAsync(_mqttOptions);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError($"Reconnect failed: {ex.Message}");
+                    }
                 }
-                catch
+                else
                 {
-                    _logger.LogInformation("Reconnect failed.");
+                    _logger.LogWarning($"Unexpected disconnection reason: {e.Reason}. No reconnection attempt.");
                 }
             };
 

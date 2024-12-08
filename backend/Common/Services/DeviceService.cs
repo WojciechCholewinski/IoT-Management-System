@@ -1,5 +1,4 @@
 ﻿using Common.Entities;
-using api;
 using Common.DTOs;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -93,6 +92,40 @@ namespace Common.Services
             device.IsOn = isOn;
             device.LastUpdate = now;
 
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task DoWorkAsync()
+        {
+            var now = DateTime.Now;
+
+            var automations = await _dbContext.Automations
+                .Include(a => a.DevicesToTurnOn)
+                .Include(a => a.DevicesToTurnOff)
+                .Where(a => a.IsOn &&
+                            a.TriggerDays.Contains(now.DayOfWeek) &&
+                            a.TriggerTime <= TimeOnly.FromTimeSpan(now.TimeOfDay) &&
+                            !a.IsTriggeredToday)
+                .ToListAsync();
+
+            foreach (var automation in automations)
+            {
+                foreach (var device in automation.DevicesToTurnOn)
+                {
+                    if (!device.IsOn)
+                    {
+                        await UpdateIsOn(device.Id, true);
+                    }
+                }
+                foreach (var device in automation.DevicesToTurnOff)
+                {
+                    if (device.IsOn)
+                    {
+                        await UpdateIsOn(device.Id, false);
+                    }
+                }
+                automation.IsTriggeredToday = true;
+            }
             await _dbContext.SaveChangesAsync();
         }
     }

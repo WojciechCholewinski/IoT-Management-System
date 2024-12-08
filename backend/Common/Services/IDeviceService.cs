@@ -7,5 +7,6 @@ namespace Common.Services
         IEnumerable<object> GetAll();
         IEnumerable<DeviceNameDto> GetAllNames();
         Task UpdateIsOn(int id, bool isOn);
+        Task DoWorkAsync();
     }
 }
