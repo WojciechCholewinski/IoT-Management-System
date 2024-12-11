@@ -32,8 +32,7 @@ builder.Configuration
 var configuration = builder.Configuration;
 
 // Konfiguracja reszty us?ug
-var connectionString = configuration.GetConnectionString("DefaultConnection") ??
-    "Server=(localdb)\\mssqllocaldb;Database=bin7Db; Trusted_Connection=True;";
+var connectionString = configuration.GetConnectionString("DefaultConnection");
 
 if (string.IsNullOrEmpty(connectionString))
 {

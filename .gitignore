@@ -432,3 +432,9 @@ mobile/**/*generated*
 **/appsettings.common.json
 **/appsettings.common.Production.json
 **/appsettings.common.Development.json
+
+# Ignorowanie plików wygenerowanych podczas publikacji
+*.arm.json
+* - Zip Deploy.json
+ServiceDependencies/*.json
+**serviceDependencies.json

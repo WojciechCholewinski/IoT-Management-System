@@ -73,7 +73,6 @@ builder.Services.AddScoped<IValidator<UpdateEmailDto>, UpdateEmailDtoValidator>(
 builder.Services.AddScoped<IValidator<UpdatePasswordDto>, UpdatePasswordDtoValidator>();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
-builder.Services.AddHostedService<AutomationSchedulerService>();
 
 builder.Services.AddCors(options =>
 {
